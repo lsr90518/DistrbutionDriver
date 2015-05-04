@@ -45,7 +45,7 @@
         case TAB_DELIVERY:
             _normalImage   = [UIImage imageNamed:@"delivery_tab_unactive@2x"];
             _selectedImage = [UIImage imageNamed:@"delivery_tab_active@2x"];
-            title.text = @"依頼を探す";
+            title.text = @"配送の依頼";
             break;
         case TAB_SETTING:
             _normalImage   = [UIImage imageNamed:@"setting_tab_unactive@2x"];

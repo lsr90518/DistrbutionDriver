@@ -36,5 +36,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon</string>
+		<string>Icon@2x</string>
+		<string>Icon-Small</string>
+		<string>Icom-Small@2x</string>
+		<string>iTunesArtwork</string>
+	</array>
 </dict>
 </plist>

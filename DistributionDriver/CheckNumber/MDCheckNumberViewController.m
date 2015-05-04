@@ -29,6 +29,8 @@
     _inputView = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
     _inputView.title.text = @"認証番号";
     [_inputView.title sizeToFit];
+    [_inputView.input becomeFirstResponder];
+    [_inputView.input setKeyboardType:UIKeyboardTypeNumberPad];
     _inputView.input.placeholder = @"5桁の番号";
     [self.view addSubview:_inputView];
     
@@ -70,11 +72,18 @@
                                  withCode:_inputView.input.text
                                onComplete:^(MKNetworkOperation *completeOperation) {
                                    [SVProgressHUD dismiss];
-                                   NSLog(@"%@",[completeOperation responseJSON]);
-                                   if([[completeOperation responseJSON][@"code"] integerValue] == 0) {
+                                   if([[completeOperation responseJSON][@"code"] integerValue] == 0 && [[completeOperation responseJSON][@"check"] integerValue] == 1) {
                                        MDUser *user = [MDUser getInstance];
                                        user.checknumber = _inputView.input.text;
                                        [self checkHash];
+                                   } else {
+                                       UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"認識番号"
+                                                                                       message:@"認証番号は正しくありません。"
+                                                                                      delegate:self
+                                                                             cancelButtonTitle:nil
+                                                                             otherButtonTitles:@"OK", nil];
+                                       alert.delegate = self;
+                                       [alert show];
                                    }
                                }
                                   onError:^(MKNetworkOperation *completeOperartion, NSError *error){

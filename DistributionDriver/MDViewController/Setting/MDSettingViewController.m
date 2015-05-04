@@ -12,6 +12,8 @@
 #import "MDPhoneViewController.h"
 #import "MDRequestViewController.h"
 #import "MDDeliveryViewController.h"
+#import "MDProfileViewController.h"
+#import "MDTranspotationViewController.h"
 
 @interface MDSettingViewController ()
 
@@ -38,10 +40,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [_settingView setViewData:[MDUser getInstance]];
+}
+
 #pragma delegate methods
+-(void) profileImagePushed{
+    MDProfileViewController *pvc = [[MDProfileViewController alloc]init];
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
 -(void) phoneNumberPushed {
-    MDPhoneViewController *phoneNumberSettingViewController = [[MDPhoneViewController alloc]init];
-    [self.navigationController pushViewController:phoneNumberSettingViewController animated:YES];
+    MDPhoneViewController *phoneViewController = [[MDPhoneViewController alloc]init];
+    UINavigationController *signNavigationController = [[UINavigationController alloc]initWithRootViewController:phoneViewController];
+    [self presentViewController:signNavigationController animated:YES completion:nil];
 }
 
 -(void) nameButtonPushed {
@@ -58,6 +70,11 @@
     MDRequestViewController *rvc = [[MDRequestViewController alloc]init];
     UINavigationController *rvcNavigationController = [[UINavigationController alloc]initWithRootViewController:rvc];
     [self presentViewController:rvcNavigationController animated:NO completion:nil];
+}
+
+-(void)gotoTansptationView{
+    MDTranspotationViewController *tttvc = [[MDTranspotationViewController alloc]init];
+    [self.navigationController pushViewController:tttvc animated:YES];
 }
 
 @end

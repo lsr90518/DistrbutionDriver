@@ -39,6 +39,36 @@
     if(_checknumber.length < 1){
         _checknumber = @"";
     }
+    if(_walk.length < 1){
+        _walk = @"";
+    }
+    if(_bike.length < 1){
+        _bike = @"";
+    }
+    if(_motorBike.length < 1){
+        _motorBike = @"";
+    }
+    if(_car.length < 1){
+        _car = @"";
+    }
+    if(_intro.length < 1){
+        _intro = @"";
+    }
+}
+
+-(void) setData:(NSDictionary *)data{
+    _phoneNumber = data[@"phone"];
+    NSString *fullname = data[@"name"];
+    _lastname = [fullname componentsSeparatedByString:@" "][0];
+    _firstname = [fullname componentsSeparatedByString:@" "][1];
+    _intro = data[@"intro"];
+    _walk = data[@"walk"];
+    _bike = data[@"bike"];
+    _motorBike = data[@"motorbike"];
+    _car = data[@"car"];
+    _image = data[@"image"];
+    _status = data[@"status"];
+    _deposit = data[@"deposit"];
 }
 
 @end

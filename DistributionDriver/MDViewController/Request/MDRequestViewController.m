@@ -20,7 +20,7 @@
 -(void)loadView{
     [super loadView];
     
-    self.navigationItem.title = @"依頼一覧";
+    self.navigationItem.title = @"引き受け依頼";
     _requestView = [[MDRequestView alloc]initWithFrame:self.view.frame];
     _requestView.delegate = self;
     [self.view addSubview:_requestView];
@@ -69,7 +69,8 @@
 
 -(void) makeUpData:(NSDictionary *)data{
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
-    rdvc.data = data;
+    MDPackage *tmpPackage = [[MDPackage alloc]initWithData:data];
+    rdvc.package = tmpPackage;
     [self.navigationController pushViewController:rdvc animated:YES];
 }
 

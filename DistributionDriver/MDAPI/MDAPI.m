@@ -49,7 +49,8 @@
 {
     MKNetworkOperation *op     = [_engine operationWithPath:url
                                                      params:params
-                                                 httpMethod:method];
+                                                 httpMethod:method
+                                                        ssl:YES];
     
     [images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
@@ -117,14 +118,31 @@
     [dic setValue:user.bike         forKey:@"bike"];
     [dic setValue:user.motorBike    forKey:@"motorbike"];
     [dic setValue:user.car          forKey:@"car"];
+    [dic setValue:@"111"            forKeyPath:@"intro"];
     [dic setValue:@"ios"            forKey:@"client"];
+//    [dic setValue:user.imageData forKey:@"image"];
+//    [dic setValue:user.idImageData forKey:@"id_image"];
     
-    [self callApi:dic
-          withUrl:API_DRIVERS_NEWPROFILE
-       withImages:@[]
-   withHttpMethod:@"POST"
-       onComplete:complete
-          onError:error];
+    int a = 0;
+    
+//    [self callApi:dic
+//          withUrl:API_DRIVERS_NEWPROFILE
+//       withImages:@[]
+//   withHttpMethod:@"POST"
+//       onComplete:complete
+//          onError:error];
+    
+
+    MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_NEWPROFILE
+                                                     params:dic
+                                                 httpMethod:@"POST"
+                                                        ssl:YES];
+    
+    [op addData:user.imageData forKey:@"image"];
+    [op addData:user.idImageData forKey:@"id_image"];
+    
+    [op addCompletionHandler:complete errorHandler:error];
+    [_engine enqueueOperation:op];
 }
 
 -(void) loginWithPhone:(NSString *)phoneNumber
@@ -137,7 +155,7 @@
     [dic setValue:USER_DEVICE forKey:@"client"];
     
     [self callApi:dic
-          withUrl:API_USER_LOGIN
+          withUrl:API_DRIVERS_LOGIN
        withImages:@[]
    withHttpMethod:@"POST"
        onComplete:complete
@@ -217,6 +235,39 @@
           withUrl:API_GET_MY_PACKAGE
        withImages:@[]
    withHttpMethod:@"GET"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) getWaitingPackageWithHash:(NSString *)hash
+                       OnComplete:(void (^)(MKNetworkOperation *))complete
+                          onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    
+    [self callApi:dic
+          withUrl:API_GET_WAITING_PACKAGE
+       withImages:@[]
+   withHttpMethod:@"GET"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) acceptPackageWithHash:(NSString *)hash
+                    packageId:(NSString *)package_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:package_id forKey:@"package_id"];
+    
+    
+    [self callApi:dic
+          withUrl:API_PACKAGE_ACCEPT
+       withImages:@[]
+   withHttpMethod:@"POST"
        onComplete:complete
           onError:error];
 }

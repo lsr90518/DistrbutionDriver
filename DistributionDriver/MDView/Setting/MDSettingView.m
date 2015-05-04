@@ -8,8 +8,13 @@
 
 #import "MDSettingView.h"
 #import "MDUser.h"
+#import "MDUtil.h"
 
-@implementation MDSettingView
+@implementation MDSettingView{
+    MDSelect *nameButton;
+    MDSelect *phoneButton;
+    MDSelect *transportation;
+}
 
 #pragma mark - View Life Cycle
 
@@ -36,8 +41,15 @@
         _scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
         [self addSubview:_scrollView];
         
+        //profile image
+        MDSelect *profileImage = [[MDSelect alloc]initWithFrame:CGRectMake(10, 10, frame.size.width-20, 50)];
+        profileImage.buttonTitle.text = @"プロフィール表示";
+        [profileImage.buttonTitle sizeToFit];
+        [profileImage addTarget:self action:@selector(profileImageTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:profileImage];
+        
         //name button
-        MDSelect *nameButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 10, frame.size.width-20, 50)];
+        nameButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 70, frame.size.width-20, 50)];
         nameButton.buttonTitle.text = @"お名前";
         nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
         [nameButton setUnactive];
@@ -45,23 +57,30 @@
         [_scrollView addSubview:nameButton];
         
         //phone button
-        MDSelect *phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 70, frame.size.width-20, 50)];
+        phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 130, frame.size.width-20, 50)];
         phoneButton.buttonTitle.text = @"電話番号";
         phoneButton.selectLabel.text = [NSString stringWithFormat:@"%@", user.phoneNumber];
         [phoneButton setUnactive];
         [phoneButton addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneButton];
         
+        //配達方法
+        transportation = [[MDSelect alloc]initWithFrame:CGRectMake(10, 190, frame.size.width - 20, 50)];
+        transportation.buttonTitle.text = @"交通手段";
+        [transportation addTarget:self action:@selector(gotoTansptationView) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:transportation];
+        
+        
         //pay button
-        MDSelect *payButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 130, frame.size.width-20, 50)];
-        payButton.buttonTitle.text = @"お支払い方法";
+        MDSelect *payButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 250, frame.size.width-20, 50)];
+        payButton.buttonTitle.text = @"振込口座";
         payButton.selectLabel.text = [NSString stringWithFormat:@"%@",user.creditNumber];
         [payButton setUnactive];
         [payButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:payButton];
         
         //name button
-        MDSelect *blockButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 190, frame.size.width-20, 50)];
+        MDSelect *blockButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 310, frame.size.width-20, 50)];
         blockButton.buttonTitle.text = @"ブロックドライバー";
         [blockButton.buttonTitle sizeToFit];
         blockButton.selectLabel.text = @"";
@@ -70,7 +89,7 @@
         [_scrollView addSubview:blockButton];
         
         //name button
-        MDSelect *qaButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 250, frame.size.width-20, 50)];
+        MDSelect *qaButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 370, frame.size.width-20, 50)];
         qaButton.buttonTitle.text = @"よくある質問";
         qaButton.selectLabel.text = @"";
         [qaButton setUnactive];
@@ -78,7 +97,7 @@
         [_scrollView addSubview:qaButton];
         
         //name button
-        MDSelect *privateButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 310, frame.size.width-20, 50)];
+        MDSelect *privateButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 430, frame.size.width-20, 50)];
         privateButton.buttonTitle.text = @"プライバシーポリシー";
         [privateButton.buttonTitle sizeToFit];
         privateButton.selectLabel.text = @"";
@@ -87,7 +106,7 @@
         [_scrollView addSubview:privateButton];
         
         //name button
-        MDSelect *protocolButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 370, frame.size.width-20, 50)];
+        MDSelect *protocolButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 490, frame.size.width-20, 50)];
         protocolButton.buttonTitle.text = @"利用契約";
         protocolButton.selectLabel.text = @"";
         [protocolButton setUnactive];
@@ -116,6 +135,12 @@
         
     }
     return self;
+}
+
+-(void) profileImageTouched{
+    if([self.delegate respondsToSelector:@selector(profileImagePushed)]){
+        [self.delegate profileImagePushed];
+    }
 }
 
 -(void) nameButtonTouched {
@@ -167,7 +192,31 @@
     }
 }
 
+-(void) gotoTansptationView{
+    if([self.delegate respondsToSelector:@selector(gotoTansptationView)]){
+        [self.delegate gotoTansptationView];
+    }
+}
 
+-(void) setViewData:(MDUser *)user{
+    nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
+    phoneButton.selectLabel.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+    
+    NSString *transportationStr = @"";
+    if([user.walk isEqualToString:@"1"]){
+        transportationStr = @"徒歩";
+    }
+    if([user.bike isEqualToString:@"1"]){
+        transportationStr = [NSString stringWithFormat:@"%@ %@",transportationStr, @"自転車"];
+    }
+    if([user.motorBike isEqualToString:@"1"]){
+        transportationStr = [NSString stringWithFormat:@"%@ %@",transportationStr, @"バイク"];
+    }
+    if([user.car isEqualToString:@"1"]){
+        transportationStr = [NSString stringWithFormat:@"%@ %@",transportationStr, @"車"];
+    }
+    transportation.selectLabel.text = transportationStr;
+}
 
 @end
 

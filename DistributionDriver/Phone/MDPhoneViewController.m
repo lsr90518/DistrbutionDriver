@@ -25,7 +25,10 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     _inputView = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
     _inputView.title.text = @"携帯番号";
+    _inputView.input.placeholder = @"090XXXXXXXX";
+    [_inputView.input becomeFirstResponder];
     [_inputView.title sizeToFit];
+    [_inputView.input setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view addSubview:_inputView];
     
     //well
@@ -94,10 +97,10 @@
         
         //test
         
-        //phone number 09028280392
-        //check_number 74676
+        //phone number 82155 09065698655
+        //check_number 95961
         
-        if([phoneNumber isEqualToString:@"+819028280392"]){
+        if([phoneNumber isEqualToString:@"+819065698655"]){
             MDUser *user = [MDUser getInstance];
             user.phoneNumber = phoneNumber;
             MDCheckNumberViewController *checkNumberController = [[MDCheckNumberViewController alloc]init];

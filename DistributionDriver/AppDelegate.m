@@ -14,6 +14,7 @@
 #import "MDCustomerDAO.h"
 #import "MDUser.h"
 #import "MDDevice.h"
+#import "MDCurrentPackage.h"
 
 @implementation AppDelegate
 
@@ -99,6 +100,7 @@
     [sqlManager initCoreData];
     MDAPI *api = [[MDAPI alloc]init];
     MDCustomerDAO   *customerDAO = [[MDCustomerDAO alloc]init];
+    MDCurrentPackage *currentPackage = [[MDCurrentPackage alloc]init];
     
     MDUser *customer = [customerDAO findCustomer];
     [customer initDataClear];

@@ -7,6 +7,9 @@
 //
 
 #import "MDRequestDetailViewController.h"
+#import "MDAPI.h"
+#import <SVProgressHUD.h>
+#import "MDUtil.h"
 
 @interface MDRequestDetailViewController ()
 
@@ -19,14 +22,14 @@
     _requestDetailView = [[MDRequestDetailView alloc]initWithFrame:self.view.frame];
     [self.view addSubview:_requestDetailView];
     
-    [_requestDetailView setStatus:[_data[@"status"] intValue]];
+    [_requestDetailView setStatus:[_package.status intValue]];
     
-    [_requestDetailView makeupByData:_data];
+    [_requestDetailView makeupByData:_package];
     
 }
 
 -(void)initNavigationBar {
-    NSString *number = [NSString stringWithFormat:@"%@",_data[@"package_number"]];
+    NSString *number = [NSString stringWithFormat:@"%@",_package.package_number];
     int length = number.length/2;
     NSString *numberLeft = [number substringToIndex:length];
     NSString *numberRight = [number substringFromIndex:length];
@@ -42,12 +45,12 @@
     
     //add right button item
     
-    if ([_data[@"status"] intValue] == 0) {
+    if ([_package.status intValue] == 0) {
         UIButton *_postButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_postButton setTitle:@"編集" forState:UIControlStateNormal];
+        [_postButton setTitle:@"受ける" forState:UIControlStateNormal];
         _postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        _postButton.frame = CGRectMake(0, 0, 25, 44);
-        [_postButton addTarget:self action:@selector(editDetail) forControlEvents:UIControlEventTouchUpInside];
+        _postButton.frame = CGRectMake(0, 0, 40, 44);
+        [_postButton addTarget:self action:@selector(reciveOrder) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:_postButton];
         self.navigationItem.rightBarButtonItem = rightBarButton;
     }
@@ -72,8 +75,25 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void) editDetail {
+-(void) reciveOrder {
+    //call api
+    [SVProgressHUD show];
+    [[MDAPI sharedAPI] acceptPackageWithHash:[MDUser getInstance].userHash
+                                   packageId:_package.package_id
+                                  OnComplete:^(MKNetworkOperation *operation) {
+                                      NSLog(@"%@", [operation responseJSON]);
+                                      
+                                      if([[operation responseJSON][@"code"] intValue] == 3){
+                                          [MDUtil makeAlertWithTitle:@"惜しい" message:@"他のドライバーに決まられた。" done:@"OK" viewController:self];
+                                      } else if([[operation responseJSON][@"code"] intValue] == 2){
+                                          [MDUtil makeAlertWithTitle:@"不正番号" message:@"改めてログインしてください。" done:@"OK" viewController:self];
+                                      } else {
+                                      }
+                                      
+                                      [SVProgressHUD dismiss];
+                                  } onError:^(MKNetworkOperation *operation, NSError *error) {
     
+                                  }];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDSelect.h"
 #import "MDTabButton.h"
+#import "MDUser.h"
 
 @protocol MDSettingViewDelegate;
 
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) UIView        *tabbar;
 
 @property (nonatomic, assign) id<MDSettingViewDelegate> delegate;
+
+-(void) setViewData:(MDUser *)user;
 
 @end
 
@@ -32,5 +35,7 @@
 -(void) agreementButtonPushed;
 -(void) gotoRequestView;
 -(void) gotoDeliveryView;
+-(void) profileImagePushed;
+-(void) gotoTansptationView;
 
 @end

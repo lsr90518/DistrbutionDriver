@@ -66,13 +66,9 @@
                                     [SVProgressHUD dismiss];
                                     if([[completeOperation responseJSON][@"code"] integerValue] == 0){
                                         MDUser *user = [MDUser getInstance];
-                                        user.phoneNumber = [util japanesePhoneNumber:phoneNumber];
-                                        user.password = password;
                                         user.userHash = [completeOperation responseJSON][@"hash"];
-                                        NSString *username = [completeOperation responseJSON][@"data"][@"name"];
-                                        NSArray *nameArray = [username componentsSeparatedByString:@" "];
-                                        user.lastname = nameArray[0];
-                                        user.firstname = nameArray[1];
+                                        [user setData:[completeOperation responseJSON][@"data"]];
+                                        
                                         
 //                                        MDViewController *viewController = [[MDViewController alloc]init];
 //                                        [self presentViewController:viewController animated:YES completion:nil];
@@ -82,6 +78,7 @@
                                         [self presentViewController:deliveryNavigationController animated:YES completion:nil];
                                         
                                     } else if([[completeOperation responseJSON][@"code"] integerValue] == 2){
+                                        NSLog(@"%@", [completeOperation responseJSON][@"code"]);
                                         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"不正番号"
                                                                                         message:@"パスワードは正しくありません。"
                                                                                         delegate:self

@@ -8,8 +8,11 @@
 
 #import "MDRequestDetailView.h"
 #import "MDSelect.h"
-#import "MDAddressInputTable.h"
+#import "MDAddressTable.h"
+#import "MDPackage.h"
 #import "MDBigRed.h"
+#import <UIButton+WebCache.h>
+#import <UIImageView+WebCache.h>
 
 @implementation MDRequestDetailView{
     UIView *processViews;
@@ -24,8 +27,8 @@
     MDSelect *requestTerm;
     MDSelect *beCarefulPicker;
     UIButton *cameraButton;
-    MDAddressInputTable *requestAddressView;
-    MDAddressInputTable *destinationAddressView;
+    MDAddressTable *requestAddressView;
+    MDAddressTable *destinationAddressView;
     UILabel *matchingProcessLabel;
     UILabel *distributionProcessLabel;
     UILabel *completeProcessLabel;
@@ -122,23 +125,21 @@
         
         //状態
         statusButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 95, frame.size.width-20, 50)];
-        statusButton.buttonTitle.text = @"配送員";
-        statusButton.selectLabel.text = @"マッチング中";
+        statusButton.buttonTitle.text = @"連絡先";
+        statusButton.selectLabel.text = @"09028280392";
         [statusButton setUnactive];
         [_scrollView addSubview:statusButton];
         
         //cameraButton
-        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 155, frame.size.width-20, 136)];
+        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 155,  frame.size.width-20, (frame.size.width-20)*0.6)];
         [cameraButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
-        UIImageView *cameraIcon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 42)];
-        [cameraIcon setImage:[UIImage imageNamed:@"whiteCamera"]];
-        [cameraIcon setCenter:CGPointMake(cameraButton.frame.size.width/2, cameraButton.frame.size.height/2)];
-//        [cameraButton addTarget:self action:@selector(cameraButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-        [cameraButton addSubview:cameraIcon];
+        [cameraButton addTarget:self action:@selector(cameraButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:cameraButton];
         
+        
+        
         //address
-        requestAddressView = [[MDAddressInputTable alloc]initWithFrame:CGRectMake(10, 301, frame.size.width-20, 100)];
+        requestAddressView = [[MDAddressTable alloc]initWithFrame:CGRectMake(10, cameraButton.frame.origin.y + cameraButton.frame.size.height + 10, frame.size.width-20, 100)];
         requestAddressView.layer.cornerRadius = 2.5;
         requestAddressView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
         requestAddressView.layer.borderWidth = 0.5;
@@ -149,7 +150,7 @@
         
         //destination address
         
-        destinationAddressView = [[MDAddressInputTable alloc]initWithFrame:CGRectMake(10, 400, frame.size.width-20, 100)];
+        destinationAddressView = [[MDAddressTable alloc]initWithFrame:CGRectMake(10, requestAddressView.frame.origin.y + requestAddressView.frame.size.height + 10, frame.size.width-20, 100)];
         [destinationAddressView setBackgroundColor:[UIColor whiteColor]];
         destinationAddressView.layer.cornerRadius = 2.5;
         destinationAddressView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
@@ -160,58 +161,50 @@
         [_scrollView addSubview:destinationAddressView];
         
         //list
-        sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 510, frame.size.width-20, 50)];
+        sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, destinationAddressView.frame.origin.y + destinationAddressView.frame.size.height + 10, frame.size.width-20, 50)];
         sizePicker.buttonTitle.text = @"サイズ";
         sizePicker.selectLabel.text = @"120";
-        sizePicker.options = [[NSArray alloc]initWithObjects:@"60",@"80",@"100",@"120",@"140",@"160", nil];
-//        [sizePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:sizePicker];
         
         
         //list
-        beCarefulPicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 570, frame.size.width-20, 50)];
+        beCarefulPicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, sizePicker.frame.origin.y + sizePicker.frame.size.height + 10, frame.size.width-20, 50)];
         beCarefulPicker.buttonTitle.text = @"取扱説明書";
         beCarefulPicker.selectLabel.text = @"特になし";
-        [beCarefulPicker setUnactive];
-//        [beCarefulPicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [beCarefulPicker setReadOnly];
         [_scrollView addSubview:beCarefulPicker];
         
         //list
-        costPicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 630, frame.size.width-20, 50)];
+        costPicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, beCarefulPicker.frame.origin.y + beCarefulPicker.frame.size.height + 10, frame.size.width-20, 50)];
         costPicker.buttonTitle.text = @"依頼金額";
-        costPicker.selectLabel.text = @"1400円";
-//        [costPicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        costPicker.selectLabel.text = @"1400";
         [costPicker setReadOnly];
         [_scrollView addSubview:costPicker];
         
         //list
-        cusTodyTimePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 690, frame.size.width-20, 50)];
+        cusTodyTimePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, costPicker.frame.origin.y + costPicker.frame.size.height + 10, frame.size.width-20, 50)];
         cusTodyTimePicker.buttonTitle.text = @"預かり時刻";
         cusTodyTimePicker.selectLabel.text = @"いつでも";
-        [cusTodyTimePicker setUnactive];
-//        [cusTodyTimePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        //        [cusTodyTimePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [cusTodyTimePicker setReadOnly];
         [_scrollView addSubview:cusTodyTimePicker];
         
         //list
-        destinateTimePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 750, frame.size.width-20, 50)];
+        destinateTimePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, cusTodyTimePicker.frame.origin.y + cusTodyTimePicker.frame.size.height + 10, frame.size.width-20, 50)];
         destinateTimePicker.buttonTitle.text = @"お届け期限";
-        [destinateTimePicker setUnactive];
-//        [destinateTimePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        //        [destinateTimePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [destinateTimePicker setReadOnly];
         [_scrollView addSubview:destinateTimePicker];
         
         
         //list
-        requestTerm = [[MDSelect alloc]initWithFrame:CGRectMake(10, 810, frame.size.width-20, 50)];
+        requestTerm = [[MDSelect alloc]initWithFrame:CGRectMake(10, destinateTimePicker.frame.origin.y + destinateTimePicker.frame.size.height + 10, frame.size.width-20, 50)];
         requestTerm.buttonTitle.text = @"依頼期限";
-        requestTerm.options = [[NSArray alloc]initWithObjects:@"3",@"6",@"9",@"12",@"15",@"18",@"21",@"24", nil];
-//        [requestTerm addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        //        [requestTerm addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [requestTerm setReadOnly];
         [_scrollView addSubview:requestTerm];
         
-        [_scrollView setContentSize:CGSizeMake(frame.size.width, 900)];
+        [_scrollView setContentSize:CGSizeMake(frame.size.width, requestTerm.frame.origin.y + requestTerm.frame.size.height + 10)];
         [self addSubview:_scrollView];
         
         
@@ -250,17 +243,22 @@
     }
 }
 
--(void) makeupByData:(NSDictionary *)data{
-    NSLog(@"%@",data);
-    //image
+-(void) makeupByData:(MDPackage *)package{
+    //upload image
+    uploadedImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 136, 136)];
+    [uploadedImage sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+    
+    [cameraButton sd_setImageWithURL:[NSURL URLWithString:package.image] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+    
+    
     //address
-    requestAddressView.zipField.text = data[@"from_zip"];
-    requestAddressView.addressField.text = data[@"from_addr"];
-    destinationAddressView.zipField.text = data[@"to_zip"];
-    destinationAddressView.addressField.text = data[@"to_addr"];
+    requestAddressView.zipField.text = package.from_zip;
+    requestAddressView.addressField.text = package.from_addr;
+    destinationAddressView.zipField.text = package.to_zip;
+    destinationAddressView.addressField.text = package.to_addr;
     
     //size
-    sizePicker.selectLabel.text = data[@"size"];
+    sizePicker.selectLabel.text = [NSString stringWithFormat:@"合計%@以内", package.size];
     
     //at_home_time
     //
@@ -268,22 +266,21 @@
     //note
     //    additionalServicePicker.selectLabel.text = [MDCurrentPackage getInstance].note;
     //取扱説明書
-    beCarefulPicker.selectLabel.text = (data[@"note"] == nil) ? @"特になし" : data[@"note"];
+    beCarefulPicker.selectLabel.text = (package.note == nil) ? @"特になし" : package.note;
     //price
-    costPicker.selectLabel.text = [NSString stringWithFormat:@"%@円",data[@"request_amount"]];
+    costPicker.selectLabel.text = [NSString stringWithFormat:@"%@円",package.reward_amount];
     //at home time;
-//    NSArray *dateStr = [[MDCurrentPackage getInstance].at_home_time[0][0] componentsSeparatedByString:@"-"];
-//    cusTodyTimePicker.selectLabel.text = [NSString stringWithFormat:@"%d月%d日 %@時-%@時", [dateStr[1] intValue], [dateStr[2] intValue], [MDCurrentPackage getInstance].at_home_time[0][1],[MDCurrentPackage getInstance].at_home_time[0][2]];
-//
-    NSString *deliver_limit = [NSString stringWithFormat:@"%@",data[@"deliver_limit"]];
+    
+    NSString *deliver_limit = [NSString stringWithFormat:@"%@",package.deliver_limit];
     destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [deliver_limit substringToIndex:13]];
     
     //expire
+    NSLog(@"%@", package.expire);
     NSDate * now = [NSDate date];
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setLocale:[NSLocale systemLocale]];
     [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:00"];
-    NSDate *expireDate =[dateFormat dateFromString:data[@"expire"]];
+    NSDate *expireDate =[dateFormat dateFromString:package.expire];
     NSTimeInterval timeBetween = [expireDate timeIntervalSinceDate:now];
     int hour = timeBetween/60/60;
     if (hour < 1) {
@@ -291,6 +288,16 @@
     } else {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"%d時間以内",hour+1];
     }
+}
+
+//-(void) cameraButtonTouched {
+//    if([self.delegate respondsToSelector:@selector(cameraButtonTouched)]){
+//        [self.delegate cameraButtonTouched];
+//    }
+//}
+
+-(UIImageView*) getUploadedImage{
+    return uploadedImage;
 }
 
 

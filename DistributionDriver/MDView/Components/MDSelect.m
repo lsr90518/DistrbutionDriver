@@ -14,6 +14,8 @@
     self = [super initWithFrame:frame];
     
     if (self) {
+        [self addTarget:self action:@selector(buttonTouched) forControlEvents:UIControlEventTouchUpInside];
+        
         //add frame
         self.layer.cornerRadius = 2.5;
         self.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
@@ -44,10 +46,43 @@
 -(void) setUnactive {
     self.selectLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
 }
+
+-(void) setActive {
+    self.selectLabel.textColor = [UIColor blackColor];
+}
+
 -(void) setReadOnly {
     [self.rightArrow setHidden:YES];
     [self setUserInteractionEnabled:NO];
     
 }
+
+-(void) buttonTouched {
+    if ([self.delegate respondsToSelector:@selector(buttonPushed:)]){
+        [self.delegate buttonPushed:self];
+    }
+}
+
+-(void) setOptions:(NSMutableArray *)options :(NSString *)startStr :(NSString *)lastStr{
+    if(_options == nil){
+        _options = [[NSMutableArray alloc]init];
+    }
+    if(_showOptions == nil){
+        _showOptions = [[NSMutableArray alloc]init];
+    }
+    
+    [_options removeAllObjects];
+    [_showOptions removeAllObjects];
+    
+    for (int i = 0; i<[options count]; i++) {
+        _options[i] = [[NSMutableArray alloc]init];
+        _showOptions[i] = [[NSMutableArray alloc]init];
+        for(int j = 0;j<[options[i] count];j++) {
+            [_options[i] addObject:options[i][j]];
+            [_showOptions[i] addObject:[NSString stringWithFormat:@"%@%@%@",startStr,options[i][j],lastStr]];
+        }
+    }
+}
+
 
 @end

@@ -10,16 +10,20 @@
 #import <MKNetworkKit.h>
 #import "MDUser.h"
 
-#define API_DRIVERS_CREATE       @"drivers/create"
-#define API_DRIVERS_CHECKNUMBER  @"drivers/check_number"
-#define API_DRIVERS_NEWPROFILE   @"drivers/new_profile"
-#define API_USER_LOGIN        @"users/login"
-#define API_USER_UPDATE_PHONE @"users/request_phone_number_change"
-#define API_PACKAGE_RESIGER   @"packages/user/register"
-#define API_PACKAGE_IMAGE     @"packages/user/upload_image"
-#define API_GET_MY_PACKAGE    @"packages/user/get_my_packages"
+#define API_DRIVERS_CREATE          @"drivers/create"
+#define API_DRIVERS_CHECKNUMBER     @"drivers/check_number"
+#define API_DRIVERS_NEWPROFILE      @"drivers/new_profile"
+#define API_DRIVERS_LOGIN           @"drivers/login"
+#define API_USERS_LOGIN             @"users/login"
+#define API_USER_UPDATE_PHONE       @"users/request_phone_number_change"
+#define API_GET_WAITING_PACKAGE     @"packages/driver/get_waiting_packages"
 
-#define USER_DEVICE           @"ios"
+#define API_PACKAGE_RESIGER         @"packages/user/register"
+#define API_PACKAGE_IMAGE           @"packages/user/upload_image"
+#define API_GET_MY_PACKAGE          @"packages/driver/get_my_packages"
+#define API_PACKAGE_ACCEPT          @"packages/driver/accept"
+
+#define USER_DEVICE                 @"ios"
 
 
 #define API_HOST_NAME @"modelordistribution-dev.elasticbeanstalk.com"
@@ -64,5 +68,13 @@
                   OnComplete:(void (^)(MKNetworkOperation *))complete
                      onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
+-(void) getWaitingPackageWithHash:(NSString *)hash
+                       OnComplete:(void (^)(MKNetworkOperation *))complete
+                          onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) acceptPackageWithHash:(NSString *)hash
+                    packageId:(NSString *)package_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

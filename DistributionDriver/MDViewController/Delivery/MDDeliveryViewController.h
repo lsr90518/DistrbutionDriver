@@ -22,9 +22,26 @@
 #import "MDRecieveTimeViewController.h"
 #import "MDExpireViewController.h"
 #import "MDDeliveryLimitViewController.h"
+#import "MDDeliveryMapView.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "MDPinCallout.h"
 
-@interface MDDeliveryViewController : UIViewController <DeliveryViewDelegate>
+#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@property (strong, nonatomic) MDDeliveryView *deliveryView;
+@interface MDDeliveryViewController : UIViewController <MKMapViewDelegate,MKAnnotation,MKOverlay,CLLocationManagerDelegate>
+
+@property (strong, nonatomic) MDDeliveryMapView *deliveryView;
+@property (strong, nonatomic) MDPinCallout *currentAnnotationView;
+@property (strong, nonatomic) UIView        *tabbar;
+
+//地图
+@property (strong, nonatomic) MKMapView *mapView;
+//自己经度
+@property (strong, nonatomic) NSString *longitude;
+//自己纬度
+@property (strong, nonatomic) NSString *latitude;
+
+@property(nonatomic, retain) CLLocationManager *locationManager;
 
 @end

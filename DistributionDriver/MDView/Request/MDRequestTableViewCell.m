@@ -179,7 +179,7 @@
             _statusLeft.text = @"荷物を預かりにお伺い中";
             _statusLeft.layer.borderColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0/255.0 alpha:1].CGColor;
             _statusLeft.textColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0/255.0 alpha:1];
-            _statusLeft.frame = CGRectMake(_statusLeft.frame.origin.x, _statusLeft.frame.origin.y, 100 , _statusLeft.frame.size.height);
+            _statusLeft.frame = CGRectMake(_statusLeft.frame.origin.x, _statusLeft.frame.origin.y, 140 , _statusLeft.frame.size.height);
             break;
         case 2:
             _statusLeft.text = @"お届け先へ配送中";

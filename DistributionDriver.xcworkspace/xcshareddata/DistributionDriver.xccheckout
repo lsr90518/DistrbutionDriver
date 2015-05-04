@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C7C73B42-B1F0-4D86-8242-4ABC10592526</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DistributionDriver</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>95AF86E51EF2DA2D339F570E7C0D579BB737B9EA</key>
+		<string>https://github.com/lsr90518/DistrbutionDriver.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DistributionDriver.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>95AF86E51EF2DA2D339F570E7C0D579BB737B9EA</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lsr90518/DistrbutionDriver.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>95AF86E51EF2DA2D339F570E7C0D579BB737B9EA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>95AF86E51EF2DA2D339F570E7C0D579BB737B9EA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DistributionDriver</string>
+		</dict>
+	</array>
+</dict>
+</plist>

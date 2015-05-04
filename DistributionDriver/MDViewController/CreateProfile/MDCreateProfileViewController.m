@@ -12,7 +12,13 @@
 #import "MDAPI.h"
 #import <SVProgressHUD.h>
 
-@interface MDCreateProfileViewController ()
+@interface MDCreateProfileViewController (){
+    UIActionSheet *myActionSheet;
+    NSString* filePath;
+    BOOL isCamera;
+    
+    NSString *viewTitle;
+}
 
 @end
 
@@ -24,7 +30,6 @@
     _createProfileView = [[MDCreateProfileView alloc]initWithFrame:self.view.frame];
     [self.view addSubview:_createProfileView];
     _createProfileView.delegate = self;
-    [_createProfileView.creditButton addTarget:self action:@selector(showCreditView) forControlEvents:UIControlEventTouchUpInside];
     
     [self initNavigationBar];
 }
@@ -56,6 +61,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void) toggleButton:(MDKindButton *)button{
+    if ([button.buttonTitle.text isEqualToString:@"徒歩"]){
+        [MDUser getInstance].walk = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
+    } else if([button.buttonTitle.text isEqualToString:@"バイク"]) {
+        [MDUser getInstance].motorBike = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
+    } else if([button.buttonTitle.text isEqualToString:@"自転車"]) {
+        [MDUser getInstance].bike = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
+    } else {
+        [MDUser getInstance].car = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
+    }
+}
+
 -(void) postData:(MDCreateProfileView *)createProfileView {
     if (![createProfileView.passwordInput.input.text isEqualToString:[NSString stringWithFormat:@"%@",createProfileView.repeatInput.input.text]]) {
         
@@ -71,19 +88,23 @@
         user.lastname = createProfileView.lastnameInput.input.text;
         user.firstname = createProfileView.givennameInput.input.text;
         user.password = createProfileView.passwordInput.input.text;
+        [_createProfileView.postButton setUserInteractionEnabled:NO];
+        
+        
         //call api
         [SVProgressHUD show];
         [[MDAPI sharedAPI] newProfileByUser:user
                                     onComplete:^(MKNetworkOperation *completeOperation) {
+                                        NSLog(@"%@", [completeOperation responseJSON]);
                                         user.userHash = [completeOperation responseJSON][@"hash"];
+                                        [SVProgressHUD dismiss];
                                         MDViewController *viewcontroller = [[MDViewController alloc]init];
                                         [self presentViewController:viewcontroller animated:YES completion:nil];
                                     } onError:^(MKNetworkOperation *completeOperarion, NSError *error){
                                         NSLog(@"error --------------  %@", error);
+                                        [SVProgressHUD dismiss];
                                         
                                     }];
-        
-//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
     
 }
@@ -98,5 +119,107 @@
 -(void) showCreditView {
     NSLog(@"credit view");
 }
+
+#pragma picture
+-(void) openCameraForView:(MDButtonAndDescriptionView *)view{
+    [self openMenu];
+    viewTitle = view.buttonTitle;
+}
+
+-(void)openMenu
+{
+    myActionSheet = [[UIActionSheet alloc]
+                     initWithTitle:nil
+                     delegate:self
+                     cancelButtonTitle:@"キャンセル"
+                     destructiveButtonTitle:nil
+                     otherButtonTitles: @"写真を撮る", @"カメラロール",nil];
+    [myActionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    switch (buttonIndex)
+    {
+        case 0:  //打开照相机拍照
+            isCamera = YES;
+            [self takePhoto];
+            break;
+        case 1:  //打开本地相册
+            isCamera = NO;
+            [self LocalPhoto];
+            break;
+    }
+}
+
+//开始拍照
+-(void)takePhoto
+{
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+    }else
+    {
+        NSLog(@"カメラがない");
+    }
+}
+//打开本地相册
+-(void)LocalPhoto
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.delegate = self;
+    //设置选择后的图片可被编辑
+    picker.allowsEditing = YES;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+//当选择一张图片后进入这里
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [SVProgressHUD show];
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    //当选择的类型是图片
+    if ([type isEqualToString:@"public.image"])
+    {
+        UIImage* image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+        NSData *data;
+        //transfer image to data
+        if (UIImagePNGRepresentation(image) == nil) {
+            data = UIImageJPEGRepresentation(image, 0.3);
+        } else {
+            data = UIImagePNGRepresentation(image);
+        }
+        
+        if(isCamera) {
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, NULL);
+        }
+                        
+        if ([viewTitle isEqualToString:@"顔"]){
+            [_createProfileView.personButtonAndDescription setPicture:image];
+            [MDUser getInstance].imageData = data;
+
+        } else {
+            [_createProfileView.idCardButtonAndDescription setPicture:image];
+            [MDUser getInstance].idImageData = data;
+        }
+        
+        [SVProgressHUD dismiss];
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        
+        
+
+    }
+}
+
+
+
+
 
 @end

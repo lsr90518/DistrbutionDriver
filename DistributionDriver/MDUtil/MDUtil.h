@@ -14,7 +14,7 @@
 
 -(NSString *)internationalPhoneNumber:(NSString *)phoneNumber;
 -(NSString *)japanesePhoneNumber:(NSString *)phoneNumber;
-
--(BOOL) isIos7;
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
++(void)makeAlertWithTitle:(NSString *)title message:(NSString *)message done:(NSString *)done viewController:(UIViewController *)viewController;
 
 @end

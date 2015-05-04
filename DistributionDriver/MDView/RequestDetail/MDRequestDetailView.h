@@ -7,13 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDPackage.h"
+
+@protocol MDRequestDetailViewDelegate;
 
 @interface MDRequestDetailView : UIView<UIScrollViewDelegate>
 
 @property (strong, nonatomic) UIScrollView  *scrollView;
 @property (strong, nonatomic) NSString      *process;
+@property (strong, nonatomic) id<MDRequestDetailViewDelegate> delegate;
 
 -(void) setStatus:(int) status;
--(void) makeupByData:(NSDictionary *)data;
+-(void) makeupByData:(MDPackage *)data;
+-(UIImageView *) getUploadedImage;
+
+
+@end
+
+@protocol MDRequestDetailViewDelegate <NSObject>
+
+@optional
+-(void) cameraButtonTouched;
 
 @end

@@ -38,5 +38,48 @@
     return phoneNumber;
 }
 
+//对图片尺寸进行压缩--
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
++(float)getOSVersion {
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
+}
+
++(void)makeAlertWithTitle:(NSString *)title message:(NSString *)message done:(NSString *)done viewController:(UIViewController *)viewController{
+    if([self getOSVersion] < 8.0){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                            message:message
+                                                           delegate:viewController
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:done, nil];
+        [alertView show];
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:done style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            // ボタンが押された時の処理
+            if([viewController respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]){
+                [(UIViewController <UIAlertViewDelegate> *)viewController alertView:nil clickedButtonAtIndex:0];
+            }
+        }]];
+        [viewController presentViewController:alertController animated:YES completion:nil];
+    }
+}
 
 @end

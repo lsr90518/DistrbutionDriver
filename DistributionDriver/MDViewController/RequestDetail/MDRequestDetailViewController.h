@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MDRequestDetailView.h"
+#import "MDPackage.h"
 
 @interface MDRequestDetailViewController : UIViewController
 
 @property (strong, nonatomic) MDRequestDetailView   *requestDetailView;
-@property (strong, nonatomic) NSDictionary          *data;
+@property (strong, nonatomic) MDPackage             *package;
 
 @end

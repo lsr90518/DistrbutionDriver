@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDCreateProfileView.h"
 
-@interface MDCreateProfileViewController : UIViewController<CreateProfileViewDelegate>
+@interface MDCreateProfileViewController : UIViewController<CreateProfileViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) MDCreateProfileView *createProfileView;
 

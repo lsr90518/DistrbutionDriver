@@ -19,31 +19,39 @@
 @property (strong, nonatomic) NSString *checknumber;
 @property (strong, nonatomic) NSString *userHash;
 @property (strong, nonatomic) NSString *image;
+@property (strong, nonatomic) NSData   *imageData;
+@property (strong, nonatomic) NSData   *idImageData;
+@property (strong, nonatomic) NSString *deposit;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *car;
 @property (strong, nonatomic) NSString *motorBike;
 @property (strong, nonatomic) NSString *bike;
 @property (strong, nonatomic) NSString *walk;
+@property (strong, nonatomic) NSString *intro;
 
 +(MDUser *)getInstance;
 
 -(void) initDataClear;
+-(void) setData:(NSDictionary *)data;
 
 //{
 //    "code": 0,
 //    "data": {
-//        "id": "11",
+//        "id": "19",
 //        "phone": "+819081593894",
-//        "name": "各務 将士",
-//        "walk": "1",
+//        "name": "Masashi Kakami",
+//        "mail": null,
+//        "intro": "初めまして、各務と申します。一所懸命させて頂きますので、よろしくお願い致します。初めまして、各務と申します。よろしくお願い致します。",
+//        "walk": "0",
 //        "bike": "1",
 //        "motorbike": "0",
 //        "car": "1",
-//        "image": "https://distribution-dev.s3-ap-northeast-1.amazonaws.com/driver/images/11",
+//        "image": "https://distribution-dev.s3-ap-northeast-1.amazonaws.com/driver/images/19",
 //        "status": "0",
-//        "created": "2015-04-02 02:30:34"
+//        "deposit": "0",
+//        "created": "2015-04-05 03:00:52"
 //    },
-//    "hash": "eYIFmpw/pe+QKp50MnkgGA=="
+//    "hash": "geeLSvlzByLmSSOtr7A+0A=="
 //}
 
 @end
