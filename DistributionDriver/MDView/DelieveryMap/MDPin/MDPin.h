@@ -12,17 +12,24 @@
 
 @interface MDPin : NSObject <MKAnnotation>
 //显示标注的经纬度
-@property (nonatomic,readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
 //标注的标题
-@property (nonatomic,copy,readonly) NSString    *title;
+@property (nonatomic,copy) NSString    *title;
 //标注的子标题
-@property (nonatomic,copy,readonly) NSString    *subtitle;
+@property (nonatomic,copy) NSString    *subtitle;
 @property (strong, nonatomic) MDPackage         *package;
 @property (strong, nonatomic) NSString          *packageType;
+
+
+@property (nonatomic, strong) MDPin *clusterAnnotation;
+@property (nonatomic, strong) NSArray *containedAnnotations;
+
+
 
 -(id)initWithCoordinates:(CLLocationCoordinate2D)paramCoordinates
                    title:(NSString *)paramTitle
                 subTitle:(NSString *)paramTitle
                     type:(NSString *)type;
+- (void)updateSubtitleIfNeeded;
 
 @end

@@ -16,8 +16,8 @@
     if (self) {
         //add code
         [self setBackgroundColor:[UIColor whiteColor]];
-        self.layer.shadowColor = [UIColor grayColor].CGColor;
-        self.layer.shadowOffset = CGSizeMake(1.0, 1.0);
+        self.layer.shadowColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1].CGColor;
+        self.layer.shadowOffset = CGSizeMake(0.5,0.5);
         self.layer.shadowOpacity = YES;
         
         //image
@@ -26,7 +26,7 @@
         [self addSubview:_image];
         
         //size
-        _sizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(_image.frame.origin.x + _image.frame.size.width + 20, _image.frame.origin.y + 8, 102, 17)];
+        _sizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(_image.frame.origin.x + _image.frame.size.width + 14, _image.frame.origin.y + 4, 102, 17)];
         _sizeLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:10];
         _sizeLabel.textAlignment = NSTextAlignmentCenter;
         _sizeLabel.layer.cornerRadius = 2.5;

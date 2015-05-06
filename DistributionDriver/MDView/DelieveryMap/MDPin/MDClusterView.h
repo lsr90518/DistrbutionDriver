@@ -7,7 +7,14 @@
 //
 
 #import <MapKit/MapKit.h>
+#import "MDPin.h"
 
 @interface MDClusterView : MKAnnotationView
+
+-(void) setNumber:(NSInteger)number;
+-(void) updatePinAnnotationByType:(MDPin *)pin;
+-(void) updateClusterAnnotationByType:(MDPin *)pin;
+-(void) showInfo:(MDPackage*)package;
+-(void) hideInfo;
 
 @end

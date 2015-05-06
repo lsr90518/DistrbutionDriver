@@ -23,8 +23,11 @@
     NSMutableArray *annotations;
     MDPinCalloutView *infoWindow;
     MKAnnotationView *currentAnnotationView;
+    MKCoordinateRegion currentUserRegion;
     BOOL isSelected;
     BOOL isMoved;
+    BOOL isTrack;
+    BOOL isCluster;
 }
 
 @end
@@ -42,6 +45,12 @@
     _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
     
     [self.view addSubview:_mapView];
+    
+    //currentLocation
+    UIButton *currentLocationButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 50, 69, 40, 40)];
+    [currentLocationButton setImage:[UIImage imageNamed:@"currentLocation"] forState:UIControlStateNormal];
+    [currentLocationButton addTarget:self  action:@selector(moveToUserLocation) forControlEvents:UIControlEventTouchUpInside];
+    
     
     //tab bar button
     _tabbar = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
@@ -61,11 +70,15 @@
         [_tabbar addSubview:tabButton];
     }
     [self.view addSubview:_tabbar];
+    [self.view addSubview:currentLocationButton];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _fromAnnotationsMapView = [[MKMapView alloc] initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
     [SVProgressHUD show];
@@ -74,6 +87,8 @@
                                          [[MDPackageService getInstance] initDataWithArray:[completeOperation responseJSON][@"Packages"]];
                                          [self putPackageIntoMap];
                                          [_mapView addAnnotations:annotations];
+                                         [_fromAnnotationsMapView addAnnotations:annotations];
+                                         [self updateVisibleAnnotations];
                                          [SVProgressHUD dismiss];
                                      }onError:^(MKNetworkOperation *operation, NSError *error) {
                                          
@@ -93,6 +108,124 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+- (void)updateVisibleAnnotations {
+    
+    static float marginFactor = 1.8;
+    
+    static float bucketSize = 60.0;
+    
+    // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
+    MKMapRect visibleMapRect = [self.mapView visibleMapRect];
+    MKMapRect adjustedVisibleMapRect = MKMapRectInset(visibleMapRect, -marginFactor * visibleMapRect.size.width, -marginFactor * visibleMapRect.size.height);
+    
+    // determine how wide each bucket will be, as a MKMapRect square
+    CLLocationCoordinate2D leftCoordinate = [self.mapView convertPoint:CGPointZero toCoordinateFromView:self.view];
+    CLLocationCoordinate2D rightCoordinate = [self.mapView convertPoint:CGPointMake(bucketSize, 0) toCoordinateFromView:self.view];
+    double gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x;
+    MKMapRect gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize);
+    
+    // condense annotations, with a padding of two squares, around the visibleMapRect
+    double startX = floor(MKMapRectGetMinX(adjustedVisibleMapRect) / gridSize) * gridSize;
+    double startY = floor(MKMapRectGetMinY(adjustedVisibleMapRect) / gridSize) * gridSize;
+    double endX = floor(MKMapRectGetMaxX(adjustedVisibleMapRect) / gridSize) * gridSize;
+    double endY = floor(MKMapRectGetMaxY(adjustedVisibleMapRect) / gridSize) * gridSize;
+    
+    // for each square in our grid, pick one annotation to show
+    gridMapRect.origin.y = startY;
+    while (MKMapRectGetMinY(gridMapRect) <= endY) {
+        gridMapRect.origin.x = startX;
+        
+        while (MKMapRectGetMinX(gridMapRect) <= endX) {
+            NSSet *allAnnotationsInBucket = [self.fromAnnotationsMapView annotationsInMapRect:gridMapRect];
+            NSSet *visibleAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+            
+            // we only care about PhotoAnnotations
+            NSMutableSet *filteredAnnotationsInBucket = [[allAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                return ([obj isKindOfClass:[MDPin class]]);
+            }] mutableCopy];
+            
+            if (filteredAnnotationsInBucket.count > 0) {
+                int stop = 1;
+                MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredAnnotationsInBucket];
+//
+                [filteredAnnotationsInBucket removeObject:annotationForGrid];
+//
+//                // give the annotationForGrid a reference to all the annotations it will represent
+                annotationForGrid.containedAnnotations = [filteredAnnotationsInBucket allObjects];
+//
+                [self.mapView addAnnotation:annotationForGrid];
+//
+                for (MDPin *annotation in filteredAnnotationsInBucket) {
+                    // give all the other annotations a reference to the one which is representing them
+                    annotation.clusterAnnotation = annotationForGrid;
+                    annotation.containedAnnotations = nil;
+                    
+                    // remove annotations which we've decided to cluster
+                    if ([visibleAnnotationsInBucket containsObject:annotation]) {
+                        CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+                        annotation.coordinate = annotation.clusterAnnotation.coordinate;
+                        annotation.coordinate = actualCoordinate;
+                        [self.mapView removeAnnotation:annotation];
+//                        [UIView animateWithDuration:0.3 animations:^{
+//                            annotation.coordinate = annotation.clusterAnnotation.coordinate;
+//                        } completion:^(BOOL finished) {
+//                            annotation.coordinate = actualCoordinate;
+//                            [self.mapView removeAnnotation:annotation];
+//                        }];
+                    }
+                }
+            }
+            
+            gridMapRect.origin.x += gridSize;
+        }
+        
+        gridMapRect.origin.y += gridSize;
+    }
+}
+
+- (id<MKAnnotation>)annotationInGrid:(MKMapRect)gridMapRect usingAnnotations:(NSSet *)annotations {
+    
+    // first, see if one of the annotations we were already showing is in this mapRect
+    NSSet *visibleAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+    NSSet *annotationsForGridSet = [annotations objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+        BOOL returnValue = ([visibleAnnotationsInBucket containsObject:obj]);
+        if (returnValue)
+        {
+            *stop = YES;
+        }
+        return returnValue;
+    }];
+    
+    if (annotationsForGridSet.count != 0) {
+        return [annotationsForGridSet anyObject];
+    }
+    
+    // otherwise, sort the annotations based on their distance from the center of the grid square,
+    // then choose the one closest to the center to show
+    MKMapPoint centerMapPoint = MKMapPointMake(MKMapRectGetMidX(gridMapRect), MKMapRectGetMidY(gridMapRect));
+    NSArray *sortedAnnotations = [[annotations allObjects] sortedArrayUsingComparator:^(id obj1, id obj2) {
+        MKMapPoint mapPoint1 = MKMapPointForCoordinate(((id<MKAnnotation>)obj1).coordinate);
+        MKMapPoint mapPoint2 = MKMapPointForCoordinate(((id<MKAnnotation>)obj2).coordinate);
+        
+        CLLocationDistance distance1 = MKMetersBetweenMapPoints(mapPoint1, centerMapPoint);
+        CLLocationDistance distance2 = MKMetersBetweenMapPoints(mapPoint2, centerMapPoint);
+        
+        
+        if (distance1 < distance2) {
+            return NSOrderedAscending;
+        } else if (distance1 > distance2) {
+            return NSOrderedDescending;
+        }
+        
+        return NSOrderedSame;
+    }];
+    
+    return sortedAnnotations[0];
+}
+
+
 #pragma mapDelegate
 -(void) configMap{
     _mapView.delegate = self;
@@ -103,8 +236,6 @@
         [self.locationManager requestAlwaysAuthorization];
     }
 #endif
-    
-    
     
     _mapView.showsUserLocation = YES;
     [_mapView setMapType:MKMapTypeStandard];
@@ -126,18 +257,24 @@
     
     //View Area
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.locationManager.location.coordinate, 4000, 4000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.locationManager.location.coordinate, 2000, 2000);
         region.center.latitude = self.locationManager.location.coordinate.latitude;
         region.center.longitude = self.locationManager.location.coordinate.longitude;
-        region.span.longitudeDelta = 0.05f;
-        region.span.longitudeDelta = 0.05f;
+//        region.span.longitudeDelta = 0.01f;
+//        region.span.longitudeDelta = 0.01f;
     [self.mapView setRegion:region animated:YES];
+    isTrack = true;
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    
-    
+    //跟踪用户
+    if(isTrack){
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
+        [self.mapView setRegion:region animated:YES];
+        isTrack = false;
+    }
+    currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
 }
 
 #pragma device location
@@ -161,25 +298,34 @@
     // 判断annotation的类型
     if (![annotation isKindOfClass:[MDPin class]]) return nil;
     
-    // 创建MKAnnotationView
     static NSString *ID = @"transy";
-    MKAnnotationView *annoView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:ID];
+    MDClusterView *annoView = (MDClusterView *)[mapView dequeueReusableAnnotationViewWithIdentifier:ID];
+    MDPin *pin = annotation;
     if (annoView == nil) {
         annoView = [[MDClusterView alloc] initWithAnnotation:annotation reuseIdentifier:ID];
         annoView.canShowCallout = NO;
+    } else {
+        [annoView updatePinAnnotationByType:pin];
+        annoView.image = nil;
     }
     // 传递模型数据
     annoView.annotation = annotation;
     
+    if([pin.containedAnnotations count] > 0){
+        // 创建MKAnnotationView
+        [annoView updateClusterAnnotationByType:pin];
+    } else {
+        [annoView updatePinAnnotationByType:pin];
+        if([pin.packageType isEqualToString:@"from"]){
+            
+            //大头针的图片
+            annoView.image = [UIImage imageNamed:@"pinFrom"];
+        } else {
+            annoView.image = [UIImage imageNamed:@"pinTo"];
+        }
+    }
+    [annoView setNumber:[pin.containedAnnotations count]];
     
-//    // 设置图片
-//    MDPin *pin = annotation;
-//    if([pin.packageType isEqualToString:@"from"]){
-//        annoView.image = [UIImage imageNamed:@"pinFrom"];
-//    } else {
-//        annoView.image = [UIImage imageNamed:@"pinTo"];
-//    }
-//    
     return annoView;
 }
 
@@ -188,6 +334,8 @@
     if(annotations == nil){
         annotations = [[NSMutableArray alloc] init];
     }
+    [_mapView removeAnnotations:annotations];
+    [_fromAnnotationsMapView removeAnnotations:annotations];
     [annotations removeAllObjects];
     NSMutableArray *packageList = [MDPackageService getInstance].packageList;
     
@@ -229,41 +377,72 @@
     MDPin *tmpView = (MDPin *)view.annotation;
     if(![view.annotation isKindOfClass:[MKUserLocation class]]) {
         
-        isSelected = true;
+        if([tmpView.containedAnnotations count] > 0){
+            
+            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(tmpView.coordinate,
+                                                                           _mapView.region.span.latitudeDelta *300,
+                                                                           _mapView.region.span.longitudeDelta *300);
+            //找到最大距离
+            isCluster = YES;
+            [self.mapView setRegion:region animated:YES];
+        } else {
+            NSLog(@"普通点击");
+            if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"]){
+                isSelected = YES;
+                
+                MKCoordinateRegion region = MKCoordinateRegionMake(tmpView.coordinate, _mapView.region.span);
+                [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+                
+            }
+        }
     }
-    
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(tmpView.coordinate, 4000, 4000);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+
 }
 
--(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MDPinCallout *)view{
-    [infoWindow removeFromSuperview];
-    isSelected = false;
-    isMoved = false;
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+    
+    isSelected = NO;
+    isMoved = NO;
+    isCluster = NO;
 }
 
 -(void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated{
     if(isSelected && isMoved){
-        isSelected = false;
+        isSelected = NO;
     }
     [infoWindow removeFromSuperview];
+//    [infoWindow removeFromSuperview];
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
 
     MDPin *currentPin = currentAnnotationView.annotation;
-    if(isSelected){
-        isMoved = true;
-        CGSize  calloutSize = CGSizeMake(self.view.frame.size.width - 30, 166);
-        infoWindow = [[MDPinCalloutView alloc] initWithFrame:CGRectMake(15, 121, calloutSize.width, calloutSize.height)];
-        [infoWindow setData:currentPin.package];
-        [infoWindow addTarget:self action:@selector(seeDetail) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:infoWindow];
+    if(isSelected && !isCluster){
+            isMoved = YES;
+            CGSize  calloutSize = CGSizeMake(self.view.frame.size.width - 30, 166);
+            infoWindow = [[MDPinCalloutView alloc] initWithFrame:CGRectMake(15, 121, calloutSize.width, calloutSize.height)];
+            [infoWindow setData:currentPin.package];
+            [infoWindow addTarget:self action:@selector(seeDetail) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:infoWindow];
+        
+    } else {
+        NSSet *visitableAnnotations = [mapView annotationsInMapRect:[mapView visibleMapRect]];
+        [visitableAnnotations enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            [mapView removeAnnotation:obj];
+        }];
+        
+        [visitableAnnotations enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+            [mapView addAnnotation:obj];
+        }];
+        
+        [self updateVisibleAnnotations];
+        isCluster = NO;
     }
     
-    NSSet *nearbySet = [self.mapView annotationsInMapRect:self.mapView.visibleMapRect];
-    NSLog(@"%f,  %f", mapView.centerCoordinate.latitude , mapView.centerCoordinate.longitude);
-    NSLog(@"%@", nearbySet);
+}
+
+-(void)moveToUserLocation {
+    [self.mapView setRegion:currentUserRegion animated:YES];
 }
 
 

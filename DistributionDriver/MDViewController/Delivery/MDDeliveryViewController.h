@@ -37,6 +37,8 @@
 
 //地图
 @property (strong, nonatomic) MKMapView *mapView;
+@property (strong, nonatomic) MKMapView *fromAnnotationsMapView;
+@property (strong, nonatomic) MKMapView *toAnnotationsMapView;
 //自己经度
 @property (strong, nonatomic) NSString *longitude;
 //自己纬度

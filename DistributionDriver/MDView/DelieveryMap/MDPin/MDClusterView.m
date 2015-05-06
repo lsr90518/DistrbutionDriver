@@ -7,9 +7,13 @@
 //
 
 #import "MDClusterView.h"
+#import "MDPin.h"
+#import "MDPinCalloutView.h"
 
 @implementation MDClusterView{
+    UIImageView *imageView;
     UILabel *numberLabel;
+    MDPinCalloutView *infoWindow;
 }
 
 -(id) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier{
@@ -17,25 +21,54 @@
     
     if(self){
         self.backgroundColor = [UIColor clearColor];
-        //大头针的图片
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-35, -35, 70, 70)];
-        [imageView setImage:[UIImage imageNamed:@"numberFrom"]];
-        [self addSubview:imageView];
-        numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(-35, -35, 70, 70)];
-        numberLabel.text = @"1";
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-17, -17, 70, 70)];
+        numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(-17, -17, 70, 70)];
         numberLabel.textColor = [UIColor whiteColor];
         numberLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:imageView];
         [self addSubview:numberLabel];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void) updatePinAnnotationByType:(MDPin *)pin{
+    [imageView setHidden:YES];
+    [numberLabel setHidden:YES];
 }
-*/
+
+-(void) updateClusterAnnotationByType:(MDPin *)pin{
+    if([pin.packageType isEqualToString:@"from"]){
+        [imageView setImage:[UIImage imageNamed:@"numberFrom"]];
+    } else {
+        [imageView setImage:[UIImage imageNamed:@"numberTo"]];
+    }
+    [imageView setHidden:NO];
+    [numberLabel setHidden:NO];
+}
+
+-(void) showInfo:(MDPackage*)package{
+    CGSize  calloutSize = CGSizeMake(290, 166);
+    
+    infoWindow = [[MDPinCalloutView alloc] initWithFrame:CGRectMake(-126, -calloutSize.height-20, calloutSize.width, calloutSize.height)];
+    infoWindow.tag = 100;
+    [infoWindow addTarget:self action:@selector(seeInside) forControlEvents:UIControlEventTouchUpInside];
+    [infoWindow setData:package];
+    [self addSubview:infoWindow];
+}
+
+-(void) seeInside {
+    NSLog(@"click");
+}
+
+-(void) hideInfo{
+    [infoWindow removeFromSuperview];
+}
+
+-(void) setNumber:(NSInteger)number {
+    numberLabel.text = [NSString stringWithFormat:@"%ld",(long)number];
+}
+
+
+
 
 @end
