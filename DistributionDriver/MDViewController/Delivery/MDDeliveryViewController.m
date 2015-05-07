@@ -16,7 +16,8 @@
 #import "MDPin.h"
 #import "MDPinCalloutView.h"
 #import "MDPinCallout.h"
-#import "MDClusterView.h";
+#import "MDClusterView.h"
+#import "MDDeliveryListViewController.h"
 
 
 @interface MDDeliveryViewController () {
@@ -466,12 +467,26 @@
     [_backButton addTarget:self action:@selector(gotoFilterView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:_backButton];
     self.navigationItem.leftBarButtonItem = leftButton;
+    
+    //right button
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setTitle:@"リスト" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
+    rightButton.frame = CGRectMake(0, 0, 37, 44);
+    [rightButton addTarget:self action:@selector(gotoListView) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightBtn;
 }
 
 #pragma DeliveryDelegate
 -(void) gotoFilterView{
     MDMapFilterViewController *mfvc = [[MDMapFilterViewController alloc]init];
     [self.navigationController pushViewController:mfvc animated:YES];
+}
+
+-(void) gotoListView{
+    MDDeliveryListViewController *dlvc = [[MDDeliveryListViewController alloc]init];
+    [self.navigationController pushViewController:dlvc animated:YES];
 }
 
 
