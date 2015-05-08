@@ -11,6 +11,7 @@
 #import <SVProgressHUD.h>
 #import "MDUtil.h"
 #import "MDSelect.h"
+#import "MDReviewViewController.h"
 
 @interface MDRequestDetailViewController ()
 
@@ -74,7 +75,12 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self initNavigationBar];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,6 +207,13 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     [webView loadRequest:request];
     [self.view addSubview:webView];
+}
+
+-(void) reviewButtonPushed{
+    MDReviewViewController *rvc = [[MDReviewViewController alloc]init];
+    rvc.package = _package;
+    [self.navigationController pushViewController:rvc animated:YES];
+    
 }
 
 @end

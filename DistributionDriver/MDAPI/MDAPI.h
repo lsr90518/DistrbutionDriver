@@ -14,6 +14,7 @@
 #define API_DRIVERS_CHECKNUMBER     @"drivers/check_number"
 #define API_DRIVERS_NEWPROFILE      @"drivers/new_profile"
 #define API_DRIVERS_LOGIN           @"drivers/login"
+#define API_DRIVERS_REVIREW         @"drivers/post_review"
 #define API_USERS_LOGIN             @"users/login"
 #define API_USER_UPDATE_PHONE       @"users/request_phone_number_change"
 #define API_GET_WAITING_PACKAGE     @"packages/driver/get_waiting_packages"
@@ -93,5 +94,12 @@
                       packageId:(NSString *)package_id
                      OnComplete:(void (^)(MKNetworkOperation *))complete
                         onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) postReviewWithHash:(NSString *)hash
+                 packageId:(NSString *)package_id
+                      star:(NSString *)star
+                      text:(NSString *)text
+                OnComplete:(void (^)(MKNetworkOperation *))complete
+                   onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

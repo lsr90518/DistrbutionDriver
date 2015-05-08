@@ -32,7 +32,7 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:animated];
     //call api
     [SVProgressHUD show];
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
@@ -47,6 +47,11 @@
                                         [SVProgressHUD dismiss];
                                     }];
 }
+
+-(void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

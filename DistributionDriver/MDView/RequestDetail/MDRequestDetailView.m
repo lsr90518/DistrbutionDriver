@@ -129,10 +129,8 @@
         
         //状態
         statusButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, frame.origin.y + 10, frame.size.width-20, 50)];
-        statusButton.buttonTitle.text = @"連絡先";
-        statusButton.selectLabel.text = @"09028280392";
-        [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:statusButton];
+        
         
         //cameraButton
         cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10,  frame.size.width-20, (frame.size.width-20)*0.6)];
@@ -233,13 +231,26 @@
     switch (status) {
         case 0:
             [self addSubview:postButtonView];
+            //下のバー
             [_scrollView setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - 70)];
+            
+            //状態のボタン
+            statusButton.buttonTitle.text = @"連絡先";
+            statusButton.selectLabel.text = @"09028280392";
+            [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case 2:
-
+            //ドライバーのプロフィール
+            //状態のボタン
+            statusButton.buttonTitle.text = @"連絡先";
+            statusButton.selectLabel.text = @"09028280392";
+            [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case 3:
-
+            //評価ボタン
+            statusButton.buttonTitle.text = @"依頼者評価";
+            statusButton.selectLabel.text = @"";
+            [statusButton addTarget:self action:@selector(reviewButtonTouched) forControlEvents:UIControlEventTouchUpInside];
             break;
         default:
             break;
@@ -302,6 +313,12 @@
 -(void) callUserPhone:(MDSelect *)phoneSelect{
     if([self.delegate respondsToSelector:@selector(phoneButtonPushed:)]){
         [self.delegate phoneButtonPushed:phoneSelect];
+    }
+}
+
+-(void)reviewButtonTouched{
+    if([self.delegate respondsToSelector:@selector(reviewButtonPushed)]){
+        [self.delegate reviewButtonPushed];
     }
 }
 

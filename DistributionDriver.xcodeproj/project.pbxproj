@@ -150,6 +150,11 @@
 		0DF0811B1AF73E5400437700 /* numberTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081191AF73E5400437700 /* numberTo.png */; };
 		0DF0811E1AF7402F00437700 /* MDClusterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0811D1AF7402F00437700 /* MDClusterView.m */; };
 		0DF081271AF8716F00437700 /* currentLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081261AF8716F00437700 /* currentLocation.png */; };
+		839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */; };
+		839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503E1AFC7E99000A8A1D /* MDReviewView.m */; };
+		839C50421AFC8ADC000A8A1D /* MDStarRatingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */; };
+		839C50441AFC8CBE000A8A1D /* star_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 839C50431AFC8CBE000A8A1D /* star_highlight.png */; };
+		839C50461AFC8CC3000A8A1D /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 839C50451AFC8CC3000A8A1D /* star.png */; };
 		EE1DEC397BB4F21CA430B1A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D367410DBF7EBB8C2BCA8A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -386,6 +391,14 @@
 		0DF0811C1AF7402F00437700 /* MDClusterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDClusterView.h; path = DelieveryMap/MDPin/MDClusterView.h; sourceTree = "<group>"; };
 		0DF0811D1AF7402F00437700 /* MDClusterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDClusterView.m; path = DelieveryMap/MDPin/MDClusterView.m; sourceTree = "<group>"; };
 		0DF081261AF8716F00437700 /* currentLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = currentLocation.png; sourceTree = "<group>"; };
+		839C50391AFC7E74000A8A1D /* MDReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDReviewViewController.h; path = Review/MDReviewViewController.h; sourceTree = "<group>"; };
+		839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDReviewViewController.m; path = Review/MDReviewViewController.m; sourceTree = "<group>"; };
+		839C503D1AFC7E99000A8A1D /* MDReviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDReviewView.h; path = Review/MDReviewView.h; sourceTree = "<group>"; };
+		839C503E1AFC7E99000A8A1D /* MDReviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDReviewView.m; path = Review/MDReviewView.m; sourceTree = "<group>"; };
+		839C50401AFC8ADC000A8A1D /* MDStarRatingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDStarRatingBar.h; sourceTree = "<group>"; };
+		839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDStarRatingBar.m; sourceTree = "<group>"; };
+		839C50431AFC8CBE000A8A1D /* star_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_highlight.png; sourceTree = "<group>"; };
+		839C50451AFC8CC3000A8A1D /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		99D367410DBF7EBB8C2BCA8A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C727F09FD4BA085BED5A77EE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -511,6 +524,8 @@
 		0D0F8A821AE61A5700755A22 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				839C50451AFC8CC3000A8A1D /* star.png */,
+				839C50431AFC8CBE000A8A1D /* star_highlight.png */,
 				0DF081261AF8716F00437700 /* currentLocation.png */,
 				0DF081181AF73E5400437700 /* numberFrom.png */,
 				0DF081191AF73E5400437700 /* numberTo.png */,
@@ -687,6 +702,7 @@
 		0D0F8ABB1AE61B7000755A22 /* MDView */ = {
 			isa = PBXGroup;
 			children = (
+				839C503C1AFC7E7C000A8A1D /* Review */,
 				0D1500E31AFBAE16003686AA /* MapFilter */,
 				0DEAD8CF1AF5D26900202F01 /* Transpotation */,
 				0DDDA64B1AEC80B100067016 /* Profile */,
@@ -730,6 +746,8 @@
 				0DE785AB1AE7378500E56333 /* MDButtonAndDescriptionView.m */,
 				0DEAD8CB1AF5CCBF00202F01 /* MDTitleWell.h */,
 				0DEAD8CC1AF5CCBF00202F01 /* MDTitleWell.m */,
+				839C50401AFC8ADC000A8A1D /* MDStarRatingBar.h */,
+				839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -827,6 +845,7 @@
 		0D0F8AEE1AE61B7000755A22 /* MDViewController */ = {
 			isa = PBXGroup;
 			children = (
+				839C50381AFC7E56000A8A1D /* Review */,
 				0DEAD8CE1AF5D22400202F01 /* Transpotation */,
 				0DDDA6471AEC808C00067016 /* Profile */,
 				0DE785B11AEA843C00E56333 /* MapFilter */,
@@ -1145,6 +1164,24 @@
 			name = Icon;
 			sourceTree = "<group>";
 		};
+		839C50381AFC7E56000A8A1D /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				839C50391AFC7E74000A8A1D /* MDReviewViewController.h */,
+				839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
+		839C503C1AFC7E7C000A8A1D /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				839C503D1AFC7E99000A8A1D /* MDReviewView.h */,
+				839C503E1AFC7E99000A8A1D /* MDReviewView.m */,
+			);
+			name = Review;
+			sourceTree = "<group>";
+		};
 		B71DE37D6285F1FA08C0776B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1237,12 +1274,14 @@
 			files = (
 				0D07873E1AF45D58007607E9 /* trankIconOn.png in Resources */,
 				0D0F8B9A1AE6A04600755A22 /* IDCardIcon.png in Resources */,
+				839C50441AFC8CBE000A8A1D /* star_highlight.png in Resources */,
 				0D0F8B851AE61BAA00755A22 /* statusBarBg.png in Resources */,
 				0D0F8B6D1AE61BAA00755A22 /* addressFrameImage.png in Resources */,
 				0DF081271AF8716F00437700 /* currentLocation.png in Resources */,
 				0D0F8B841AE61BAA00755A22 /* setting_tab_unactive@2x.png in Resources */,
 				0DEAD8EA1AF5DB0000202F01 /* Icon@2x.png in Resources */,
 				0DF081141AF73BC200437700 /* cluster.png in Resources */,
+				839C50461AFC8CC3000A8A1D /* star.png in Resources */,
 				0D0F8B7C1AE61BAA00755A22 /* navigationBarBg.png in Resources */,
 				0D0F8B741AE61BAA00755A22 /* delivery_tab_unactive@2x.png in Resources */,
 				0D0F8A661AE60B2C00755A22 /* Images.xcassets in Resources */,
@@ -1376,10 +1415,12 @@
 				0D07874C1AF4726F007607E9 /* MDPackageService.m in Sources */,
 				0D79BF041AF497800053EB11 /* MDPin.m in Sources */,
 				0D0F8AB21AE61B0C00755A22 /* MDUser.m in Sources */,
+				839C50421AFC8ADC000A8A1D /* MDStarRatingBar.m in Sources */,
 				0D0F8B401AE61B7000755A22 /* MDInputRequestViewController.m in Sources */,
 				0D0F8B351AE61B7000755A22 /* MDIndexView.m in Sources */,
 				0D0F8B2C1AE61B7000755A22 /* MDInput.m in Sources */,
 				0D0F8AAA1AE61B0C00755A22 /* MDCustomerDAO.m in Sources */,
+				839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */,
 				0D0F8B8F1AE696B400755A22 /* MDKindButton.m in Sources */,
 				0D0F8B2D1AE61B7000755A22 /* MDNoframeButton.m in Sources */,
 				0D0F8B491AE61B7000755A22 /* MDPreparePayViewController.m in Sources */,
@@ -1409,6 +1450,7 @@
 				0D0F8AB31AE61B0C00755A22 /* MDBigRed.m in Sources */,
 				0DEAD8D21AF5D27E00202F01 /* MDTranspotation.m in Sources */,
 				0D0F8B4E1AE61B7000755A22 /* MDSettingViewController.m in Sources */,
+				839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */,
 				0D0F8B431AE61B7000755A22 /* MDExpireViewController.m in Sources */,
 				0D0F8B4A1AE61B7000755A22 /* MDRecieveTimeViewController.m in Sources */,
 				0D0F8B331AE61B7000755A22 /* MDDeliveryKindButton.m in Sources */,

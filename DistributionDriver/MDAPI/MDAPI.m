@@ -314,4 +314,26 @@
           onError:error];
 }
 
+-(void) postReviewWithHash:(NSString *)hash
+                 packageId:(NSString *)package_id
+                      star:(NSString *)star
+                      text:(NSString *)text
+                OnComplete:(void (^)(MKNetworkOperation *))complete
+                   onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:star forKey:@"star"];
+    [dic setObject:text forKey:@"text"];
+    [dic setObject:package_id forKey:@"package_id"];
+    
+    
+    [self callApi:dic
+          withUrl:API_DRIVERS_REVIREW
+       withImages:@[]
+   withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
 @end
