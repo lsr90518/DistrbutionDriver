@@ -120,18 +120,6 @@
     [dic setValue:user.car          forKey:@"car"];
     [dic setValue:@"111"            forKeyPath:@"intro"];
     [dic setValue:@"ios"            forKey:@"client"];
-//    [dic setValue:user.imageData forKey:@"image"];
-//    [dic setValue:user.idImageData forKey:@"id_image"];
-    
-    int a = 0;
-    
-//    [self callApi:dic
-//          withUrl:API_DRIVERS_NEWPROFILE
-//       withImages:@[]
-//   withHttpMethod:@"POST"
-//       onComplete:complete
-//          onError:error];
-    
 
     MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_NEWPROFILE
                                                      params:dic
@@ -254,6 +242,24 @@
           onError:error];
 }
 
+
+-(void) getWaitingPackageWithHash:(NSString *)hash
+                         WithPref:(NSString *)pref
+                       OnComplete:(void (^)(MKNetworkOperation *))complete
+                          onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:pref forKey:@"search_pref"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    
+    [self callApi:dic
+          withUrl:API_GET_WAITING_PACKAGE
+       withImages:@[]
+   withHttpMethod:@"GET"
+       onComplete:complete
+          onError:error];
+}
+
 -(void) acceptPackageWithHash:(NSString *)hash
                     packageId:(NSString *)package_id
                    OnComplete:(void (^)(MKNetworkOperation *))complete
@@ -266,6 +272,42 @@
     
     [self callApi:dic
           withUrl:API_PACKAGE_ACCEPT
+       withImages:@[]
+   withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) receviePackageWithHash:(NSString *)hash
+                     packageId:(NSString *)package_id
+                    OnComplete:(void (^)(MKNetworkOperation *))complete
+                       onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:package_id forKey:@"package_id"];
+    
+    
+    [self callApi:dic
+          withUrl:API_PACKAGE_RECEIVE
+       withImages:@[]
+   withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) deliveryPackageWithHash:(NSString *)hash
+                      packageId:(NSString *)package_id
+                     OnComplete:(void (^)(MKNetworkOperation *))complete
+                        onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:package_id forKey:@"package_id"];
+    
+    
+    [self callApi:dic
+          withUrl:API_PACKAGE_DELIVERY
        withImages:@[]
    withHttpMethod:@"POST"
        onComplete:complete

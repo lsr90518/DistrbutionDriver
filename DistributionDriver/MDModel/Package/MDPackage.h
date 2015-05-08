@@ -37,6 +37,7 @@
 @property (strong, nonatomic) NSString *requestType;
 @property (strong, nonatomic) NSString *order;
 @property (strong, nonatomic) NSString *reward_amount;
+@property (strong, nonatomic) NSString *distance;
 
 -(MDPackage *)initWithData:(NSDictionary *)data;
 

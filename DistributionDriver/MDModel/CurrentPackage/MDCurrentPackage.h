@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString *review_limit;
 @property (strong, nonatomic) NSString *requestType;
 @property (strong, nonatomic) NSString *order;
+@property (strong, nonatomic) NSString *distance;
 
 +(MDCurrentPackage *)getInstance;
 

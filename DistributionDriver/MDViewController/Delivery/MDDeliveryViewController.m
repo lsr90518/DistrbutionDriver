@@ -48,7 +48,7 @@
     [self.view addSubview:_mapView];
     
     //currentLocation
-    UIButton *currentLocationButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 50, 69, 40, 40)];
+    UIButton *currentLocationButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 69, 40, 40)];
     [currentLocationButton setImage:[UIImage imageNamed:@"currentLocation"] forState:UIControlStateNormal];
     [currentLocationButton addTarget:self  action:@selector(moveToUserLocation) forControlEvents:UIControlEventTouchUpInside];
     
@@ -82,26 +82,57 @@
     _fromAnnotationsMapView = [[MKMapView alloc] initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
-    [SVProgressHUD show];
-    [[MDAPI sharedAPI]getWaitingPackageWithHash:[MDUser getInstance].userHash
-                                     OnComplete:^(MKNetworkOperation *completeOperation){
-                                         [[MDPackageService getInstance] initDataWithArray:[completeOperation responseJSON][@"Packages"]];
-                                         [self putPackageIntoMap];
-                                         [_mapView addAnnotations:annotations];
-                                         [_fromAnnotationsMapView addAnnotations:annotations];
-                                         [self updateVisibleAnnotations];
-                                         [SVProgressHUD dismiss];
-                                     }onError:^(MKNetworkOperation *operation, NSError *error) {
-                                         
-                                     }];
     isSelected = false;
 }
 
+-(void) getCurrentPref:(MKUserLocation *)userLocation{
+    [SVProgressHUD showWithStatus:@"東京都の荷物を探してる。"];
+    // 获取当前所在的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    //根据经纬度反向地理编译出地址信息
+    [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *array, NSError *error)
+     {
+         if (array.count > 0)
+         {
+             CLPlacemark *placemark = [array objectAtIndex:0];
+             
+             //获取城市
+             NSString *pref = placemark.administrativeArea;
+             [self loadDataByPref:pref location:userLocation];
+             [SVProgressHUD dismiss];
+         }
+     }];
+    
+}
+
+-(void) loadDataByPref:(NSString *)pref
+              location:(CLLocation *)location{
+    [SVProgressHUD show];
+    
+    [[MDAPI sharedAPI]getWaitingPackageWithHash:[MDUser getInstance].userHash
+                                       WithPref:pref
+                                     OnComplete:^(MKNetworkOperation *completeOperation){
+                                         //call api
+                                         [[MDPackageService getInstance] initDataWithArray:[completeOperation responseJSON][@"Packages"]
+                                                                               WithDistance:(CLLocation *)location];
+                                         
+                                         //put pin
+                                         [self putPackageIntoMap];
+                                         [_mapView addAnnotations:annotations];
+
+                                         [_fromAnnotationsMapView addAnnotations:annotations];
+                                         [self updateVisibleAnnotations];
+
+
+                                         [SVProgressHUD dismiss];
+                                     }onError:^(MKNetworkOperation *operation, NSError *error) {
+
+                                     }];
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated {
-    
     [self configMap];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -148,7 +179,6 @@
             }] mutableCopy];
             
             if (filteredAnnotationsInBucket.count > 0) {
-                int stop = 1;
                 MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredAnnotationsInBucket];
 //
                 [filteredAnnotationsInBucket removeObject:annotationForGrid];
@@ -169,12 +199,6 @@
                         annotation.coordinate = annotation.clusterAnnotation.coordinate;
                         annotation.coordinate = actualCoordinate;
                         [self.mapView removeAnnotation:annotation];
-//                        [UIView animateWithDuration:0.3 animations:^{
-//                            annotation.coordinate = annotation.clusterAnnotation.coordinate;
-//                        } completion:^(BOOL finished) {
-//                            annotation.coordinate = actualCoordinate;
-//                            [self.mapView removeAnnotation:annotation];
-//                        }];
                     }
                 }
             }
@@ -274,6 +298,9 @@
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
         [self.mapView setRegion:region animated:YES];
         isTrack = false;
+        [self getCurrentPref:userLocation];
+        //loadData
+        //
     }
     currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
 }
@@ -338,7 +365,7 @@
     [_mapView removeAnnotations:annotations];
     [_fromAnnotationsMapView removeAnnotations:annotations];
     [annotations removeAllObjects];
-    NSMutableArray *packageList = [MDPackageService getInstance].packageList;
+    NSMutableArray *packageList = [[MDPackageService getInstance] getPackageListByPackage:[MDCurrentPackage getInstance]];
     
     
     for (MDPackage *package in packageList) {
@@ -372,7 +399,6 @@
 //点击大头针
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
     
-    NSLog(@"クリックした");
     currentAnnotationView = view;
 
     MDPin *tmpView = (MDPin *)view.annotation;
@@ -387,7 +413,7 @@
             isCluster = YES;
             [self.mapView setRegion:region animated:YES];
         } else {
-            NSLog(@"普通点击");
+            
             if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"]){
                 isSelected = YES;
                 
@@ -429,11 +455,15 @@
     } else {
         NSSet *visitableAnnotations = [mapView annotationsInMapRect:[mapView visibleMapRect]];
         [visitableAnnotations enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            [mapView removeAnnotation:obj];
+            if(![obj isKindOfClass:[MKUserLocation class]]){
+                [mapView removeAnnotation:obj];
+            }
         }];
         
         [visitableAnnotations enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            [mapView addAnnotation:obj];
+            if(![obj isKindOfClass:[MKUserLocation class]]){
+                [mapView addAnnotation:obj];
+            }
         }];
         
         [self updateVisibleAnnotations];

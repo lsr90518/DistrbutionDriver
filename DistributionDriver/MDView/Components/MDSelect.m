@@ -79,7 +79,14 @@
         _showOptions[i] = [[NSMutableArray alloc]init];
         for(int j = 0;j<[options[i] count];j++) {
             [_options[i] addObject:options[i][j]];
-            [_showOptions[i] addObject:[NSString stringWithFormat:@"%@%@%@",startStr,options[i][j],lastStr]];
+            
+            if([options[i][j] isEqualToString:@"9999"] || [options[i][j] isEqualToString:@"0"]){
+                
+                [_showOptions[i] addObject:[NSString stringWithFormat:@"こだわらない"]];
+            } else {
+            
+                [_showOptions[i] addObject:[NSString stringWithFormat:@"%@%@%@",startStr,options[i][j],lastStr]];
+            }
         }
     }
 }

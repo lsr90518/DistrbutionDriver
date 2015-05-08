@@ -147,12 +147,25 @@
 
 -(void) initCellWithData:(NSDictionary *)data {
     
-    //show package_number
-    NSString *number = [NSString stringWithFormat:@"%@", data[@"package_number"]];
-    int length = number.length/2;
-    NSString *numberLeft = [number substringToIndex:length];
-    NSString *numberRight = [number substringFromIndex:length];
-    _statusLabel.text = [NSString stringWithFormat:@"番号: %@ - %@",numberLeft, numberRight];
+    //status
+    long status = [data[@"status"] integerValue];
+    NSString *driverReviewed = [NSString stringWithFormat:@"%@",data[@"review"][@"from_driver"][@"reviewed"]];
+    NSLog(@"driverReviewed %@", driverReviewed);
+    
+    if([driverReviewed isEqualToString:@"0"] && status == 3){
+        _statusLabel.text = [NSString stringWithFormat:@"評価をお願い致します。"];
+        _statusLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1];
+    } else if([driverReviewed isEqualToString:@"1"]){
+        _statusLabel.text = [NSString stringWithFormat:@"評価済み"];
+    
+    } else {
+        //show package_number
+        NSString *number = [NSString stringWithFormat:@"%@", data[@"package_number"]];
+        long length = number.length/2;
+        NSString *numberLeft = [number substringToIndex:length];
+        NSString *numberRight = [number substringFromIndex:length];
+        _statusLabel.text = [NSString stringWithFormat:@"番号: %@ - %@",numberLeft, numberRight];
+    }
     
     //add image
     NSString *imagePath = [NSString stringWithFormat:@"%@", data[@"image"]];
@@ -160,8 +173,7 @@
         [_cargoImageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
     }
     
-    //status
-    int status = [data[@"status"] integerValue];
+    
     switch (status) {
         case -1:
             _statusLeft.text = @"期限になってもマッチしなかったため取消";

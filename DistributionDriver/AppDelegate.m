@@ -101,6 +101,7 @@
     MDAPI *api = [[MDAPI alloc]init];
     MDCustomerDAO   *customerDAO = [[MDCustomerDAO alloc]init];
     MDCurrentPackage *currentPackage = [[MDCurrentPackage alloc]init];
+    [[MDCurrentPackage getInstance]initData];
     
     MDUser *customer = [customerDAO findCustomer];
     [customer initDataClear];

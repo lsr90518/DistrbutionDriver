@@ -22,7 +22,7 @@
 
 -(void) initData {
     self.requestType = @"0";
-    self.size = (self.size.length > 0) ? self.size : @"120";
+    self.size = (self.size.length > 0) ? self.size : @"9999";
     self.note = (self.note.length > 0) ? self.note : @"特になし";
     
     NSDate *now = [NSDate date];
@@ -58,7 +58,7 @@
     }
     
     
-    self.request_amount = (self.request_amount.length > 0) ? self.request_amount : @"1400";
+    self.request_amount = (self.request_amount.length > 0) ? self.request_amount : @"0";
     
     self.expire = (self.expire.length > 0) ? self.expire : @"3";
     
@@ -74,6 +74,9 @@
     }
     if(self.from_lng.length < 1){
         self.from_lng = @"";
+    }
+    if(self.distance.length < 1){
+        self.distance = @"9999";
     }
 }
 

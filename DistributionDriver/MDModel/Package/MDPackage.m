@@ -38,6 +38,7 @@
     _to_zip = data[@"to_zip"];
     _requestType = data[@"type"];
     _user_id = data[@"user_id"];
+    _distance = @"0";
 
     return self;
 }

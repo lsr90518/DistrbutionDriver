@@ -38,7 +38,6 @@
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
                                  OnComplete:^(MKNetworkOperation *complete){
                                      if([[complete responseJSON][@"code"] integerValue] == 0){
-                                         
                                          [_requestView initWithArray:[complete responseJSON][@"Packages"]];
                                      }
                                      [SVProgressHUD dismiss];
@@ -68,6 +67,7 @@
 }
 
 -(void) makeUpData:(NSDictionary *)data{
+    NSLog(@"kita");
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
     MDPackage *tmpPackage = [[MDPackage alloc]initWithData:data];
     rdvc.package = tmpPackage;

@@ -37,32 +37,9 @@
     [super loadView];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    //list
-    sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
-    sizePicker.buttonTitle.text = @"サイズ";
-    sizePicker.options = [[NSArray alloc]initWithObjects:@"60",@"80",@"100",@"120",@"140",@"160",@"180",@"200",@"220",@"240",@"260",@"280",@"相談", nil];
-    [sizePicker addTarget:self action:@selector(gotoSizeView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:sizePicker];
-    //request amount
-    //list
-    costPicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, sizePicker.frame.origin.y+60, self.view.frame.size.width-20, 50)];
-    costPicker.buttonTitle.text = @"依頼金額";
-    costPicker.selectLabel.text = @"2000円以上";
-    [costPicker addTarget:self action:@selector(gotoRequestAmount) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:costPicker];
-    //distance
+    _mapFilter = [[MDMapFilter alloc]initWithFrame:self.view.frame];
+    [self.view addSubview:_mapFilter];
     
-    distancePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, costPicker.frame.origin.y+60, self.view.frame.size.width-20, 50)];
-    distancePicker.buttonTitle.text = @"経路距離";
-    distancePicker.selectLabel.text = @"約40Km以内";
-    [self.view addSubview:distancePicker];
-    //delivery limit
-    //list
-    destinateTimePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, distancePicker.frame.origin.y+60, self.view.frame.size.width-20, 50)];
-    destinateTimePicker.buttonTitle.text = @"お届け期限";
-    [destinateTimePicker setUnactive];
-    [destinateTimePicker addTarget:self action:@selector(gotoDestinateView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:destinateTimePicker];
     [self initNavigationBar];
 }
 
@@ -94,20 +71,20 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    [self initViewData];
+//    [self initViewData];
 }
 
--(void) initViewData {
-    [[MDCurrentPackage getInstance] initData];
-    //size
-    sizePicker.selectLabel.text = [NSString stringWithFormat:@"%@cm以内",[MDCurrentPackage getInstance].size];
-    //price
-    costPicker.selectLabel.text = [NSString stringWithFormat:@"%@円",[MDCurrentPackage getInstance].request_amount];
-    
-    destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [[MDCurrentPackage getInstance].deliver_limit substringToIndex:13]];
-    
-    
-}
+//-(void) initViewData {
+//    [[MDCurrentPackage getInstance] initData];
+//    //size
+//    sizePicker.selectLabel.text = [NSString stringWithFormat:@"%@cm以内",[MDCurrentPackage getInstance].size];
+//    //price
+//    costPicker.selectLabel.text = [NSString stringWithFormat:@"%@円",[MDCurrentPackage getInstance].request_amount];
+//    
+//    destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [[MDCurrentPackage getInstance].deliver_limit substringToIndex:13]];
+//    
+//    
+//}
 
 -(void) gotoSizeView:(MDSelect *)button {
     MDSizeInputViewController *siv = [[MDSizeInputViewController alloc]init];

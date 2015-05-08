@@ -62,7 +62,10 @@
     return [[[UIDevice currentDevice] systemVersion] floatValue];
 }
 
-+(void)makeAlertWithTitle:(NSString *)title message:(NSString *)message done:(NSString *)done viewController:(UIViewController *)viewController{
++(void)makeAlertWithTitle:(NSString *)title
+                  message:(NSString *)message
+                     done:(NSString *)done
+           viewController:(UIViewController *)viewController{
     if([self getOSVersion] < 8.0){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
                                                             message:message

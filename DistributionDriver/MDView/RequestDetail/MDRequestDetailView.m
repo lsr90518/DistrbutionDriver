@@ -32,6 +32,8 @@
     UILabel *matchingProcessLabel;
     UILabel *distributionProcessLabel;
     UILabel *completeProcessLabel;
+    UIView *postButtonView;
+    UIButton *postButton;
     
     UIImageView *matchingImageView;
     UIImageView *distributionImageView;
@@ -49,89 +51,91 @@
         _scrollView = [[UIScrollView alloc]initWithFrame:frame];
         
         //process bar
-        UIImageView *process1 = [[UIImageView alloc]initWithFrame:CGRectMake(40, 27, 16, 16)];
-        [process1 setImage:[UIImage imageNamed:@"taskRound"]];
-        UIImageView *process2 = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width/2-8, 27, 16, 16)];
-        [process2 setImage:[UIImage imageNamed:@"taskRound"]];
-        UIImageView *process3 = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width-56, 27, 16, 16)];
-        [process3 setImage:[UIImage imageNamed:@"taskRound"]];
-        [_scrollView addSubview:process1];
-        [_scrollView addSubview:process2];
-        [_scrollView addSubview:process3];
-        
-        
-        UIView *processBar1 = [[UIView alloc]initWithFrame:CGRectMake(process1.frame.origin.x + process1.frame.size.width + 5,
-                                                                      34,
-                                                                      process2.frame.origin.x - process1.frame.origin.x - 10 - 16,
-                                                                      2)];
-        [processBar1 setBackgroundColor:[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1]];
-        [_scrollView addSubview:processBar1];
-        
-        
-        UIView *processBar2 = [[UIView alloc]initWithFrame:CGRectMake(process2.frame.origin.x + process2.frame.size.width + 5,
-                                                                      34,
-                                                                      process3.frame.origin.x - process2.frame.origin.x - 10 - 16,
-                                                                      2)];
-        [processBar2 setBackgroundColor:[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1]];
-        [_scrollView addSubview:processBar2];
-        
-        matchingImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
-        [matchingImageView setImage:[UIImage imageNamed:@"matchingProcess"]];
-        matchingImageView.center = process1.center;
-        [_scrollView addSubview:matchingImageView];
-        
-        distributionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
-        [distributionImageView setImage:[UIImage imageNamed:@"distributionProcess"]];
-        distributionImageView.center = process2.center;
-        [_scrollView addSubview:distributionImageView];
-        
-        completeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
-        [completeImageView setImage:[UIImage imageNamed:@"completeProcess"]];
-        completeImageView.center = process3.center;
-        [_scrollView addSubview:completeImageView];
-        
-        [matchingImageView setHidden:YES];
-        [completeImageView setHidden:YES];
-        [distributionImageView setHidden:YES];
-        
-        //process word
-        matchingProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(14, 63, 75, 12)];
-        matchingProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        matchingProcessLabel.text = @"マッチング中";
-        [matchingProcessLabel sizeToFit];
-        matchingProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-        
-        matchingProcessLabel.textAlignment = NSTextAlignmentCenter;
-        [_scrollView addSubview:matchingProcessLabel];
+//        UIImageView *process1 = [[UIImageView alloc]initWithFrame:CGRectMake(40, 27, 16, 16)];
+//        [process1 setImage:[UIImage imageNamed:@"taskRound"]];
+//        UIImageView *process2 = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width/2-8, 27, 16, 16)];
+//        [process2 setImage:[UIImage imageNamed:@"taskRound"]];
+//        UIImageView *process3 = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width-56, 27, 16, 16)];
+//        [process3 setImage:[UIImage imageNamed:@"taskRound"]];
+//        [_scrollView addSubview:process1];
+//        [_scrollView addSubview:process2];
+//        [_scrollView addSubview:process3];
+//        
+//        
+//        UIView *processBar1 = [[UIView alloc]initWithFrame:CGRectMake(process1.frame.origin.x + process1.frame.size.width + 5,
+//                                                                      34,
+//                                                                      process2.frame.origin.x - process1.frame.origin.x - 10 - 16,
+//                                                                      2)];
+//        [processBar1 setBackgroundColor:[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1]];
+//        [_scrollView addSubview:processBar1];
+//        
+//        
+//        UIView *processBar2 = [[UIView alloc]initWithFrame:CGRectMake(process2.frame.origin.x + process2.frame.size.width + 5,
+//                                                                      34,
+//                                                                      process3.frame.origin.x - process2.frame.origin.x - 10 - 16,
+//                                                                      2)];
+//        [processBar2 setBackgroundColor:[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1]];
+//        [_scrollView addSubview:processBar2];
+//        
+//        matchingImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//        [matchingImageView setImage:[UIImage imageNamed:@"matchingProcess"]];
+//        matchingImageView.center = process1.center;
+//        [_scrollView addSubview:matchingImageView];
+//        
+//        distributionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//        [distributionImageView setImage:[UIImage imageNamed:@"distributionProcess"]];
+//        distributionImageView.center = process2.center;
+//        [_scrollView addSubview:distributionImageView];
+//        
+//        completeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+//        [completeImageView setImage:[UIImage imageNamed:@"completeProcess"]];
+//        completeImageView.center = process3.center;
+//        [_scrollView addSubview:completeImageView];
+//        
+//        [matchingImageView setHidden:YES];
+//        [completeImageView setHidden:YES];
+//        [distributionImageView setHidden:YES];
         
         //process word
-        distributionProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width/2 - 17, 63, 34, 12)];
-        distributionProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        distributionProcessLabel.text = @"預かり";
-        [distributionProcessLabel sizeToFit];
-        distributionProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-        distributionProcessLabel.textAlignment = NSTextAlignmentCenter;
-        [_scrollView addSubview:distributionProcessLabel];
+//        matchingProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(14, 63, 75, 12)];
+//        matchingProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
+//        matchingProcessLabel.text = @"マッチング中";
+//        [matchingProcessLabel sizeToFit];
+//        matchingProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+//        
+//        matchingProcessLabel.textAlignment = NSTextAlignmentCenter;
+//        [_scrollView addSubview:matchingProcessLabel];
+//        
+//        //process word
+//        distributionProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width/2 - 17, 63, 34, 12)];
+//        distributionProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
+//        distributionProcessLabel.text = @"預かり";
+//        [distributionProcessLabel sizeToFit];
+//        distributionProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+//        distributionProcessLabel.textAlignment = NSTextAlignmentCenter;
+//        [_scrollView addSubview:distributionProcessLabel];
+//        
+//        //process word
+//        completeProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width - 73, 63, 48, 12)];
+//        completeProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
+//        completeProcessLabel.text = @"配達完了";
+//        [completeProcessLabel sizeToFit];
+//        completeProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+//        completeProcessLabel.textAlignment = NSTextAlignmentCenter;
+//        [_scrollView addSubview:completeProcessLabel];
         
-        //process word
-        completeProcessLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width - 73, 63, 48, 12)];
-        completeProcessLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        completeProcessLabel.text = @"配達完了";
-        [completeProcessLabel sizeToFit];
-        completeProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-        completeProcessLabel.textAlignment = NSTextAlignmentCenter;
-        [_scrollView addSubview:completeProcessLabel];
+        
         
         
         //状態
-        statusButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 95, frame.size.width-20, 50)];
+        statusButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, frame.origin.y + 10, frame.size.width-20, 50)];
         statusButton.buttonTitle.text = @"連絡先";
         statusButton.selectLabel.text = @"09028280392";
-        [statusButton setUnactive];
+        [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:statusButton];
         
         //cameraButton
-        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 155,  frame.size.width-20, (frame.size.width-20)*0.6)];
+        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10,  frame.size.width-20, (frame.size.width-20)*0.6)];
         [cameraButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
         [cameraButton addTarget:self action:@selector(cameraButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:cameraButton];
@@ -207,6 +211,19 @@
         [_scrollView setContentSize:CGSizeMake(frame.size.width, requestTerm.frame.origin.y + requestTerm.frame.size.height + 10)];
         [self addSubview:_scrollView];
         
+        //
+        //受けるボタン
+        postButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height - 70, frame.size.width, 70)];
+        [postButtonView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1]];
+        postButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, postButtonView.frame.size.width-20, 50)];
+        [postButton setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1]];
+        [postButton setTitle:@"受ける" forState:UIControlStateNormal];
+        postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:18];
+        [postButton addTarget:self action:@selector(recieveButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+        postButton.layer.cornerRadius = 2.5;
+        [postButtonView addSubview:postButton];
+        
+//        [self addSubview:postButtonView];
         
     }
     return self;
@@ -215,28 +232,14 @@
 -(void) setStatus:(int)status {
     switch (status) {
         case 0:
-            matchingProcessLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:0 blue:0 alpha:1];
-            distributionProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            completeProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            [matchingImageView setHidden:NO];
-            [distributionImageView setHidden:YES];
-            [completeImageView setHidden:YES];
+            [self addSubview:postButtonView];
+            [_scrollView setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - 70)];
             break;
         case 2:
-            matchingProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            distributionProcessLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0/255.0 alpha:1];
-            completeProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            [matchingImageView setHidden:YES];
-            [distributionImageView setHidden:NO];
-            [completeImageView setHidden:YES];
+
             break;
         case 3:
-            matchingProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            distributionProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-            completeProcessLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1];
-            [matchingImageView setHidden:YES];
-            [distributionImageView setHidden:YES];
-            [completeImageView setHidden:NO];
+
             break;
         default:
             break;
@@ -290,15 +293,26 @@
     }
 }
 
-//-(void) cameraButtonTouched {
-//    if([self.delegate respondsToSelector:@selector(cameraButtonTouched)]){
-//        [self.delegate cameraButtonTouched];
-//    }
-//}
+-(void) cameraButtonTouched {
+    if([self.delegate respondsToSelector:@selector(cameraButtonPushed)]){
+        [self.delegate cameraButtonPushed];
+    }
+}
+
+-(void) callUserPhone:(MDSelect *)phoneSelect{
+    if([self.delegate respondsToSelector:@selector(phoneButtonPushed:)]){
+        [self.delegate phoneButtonPushed:phoneSelect];
+    }
+}
 
 -(UIImageView*) getUploadedImage{
     return uploadedImage;
 }
 
+-(void) recieveButtonTouched{
+    if([self.delegate respondsToSelector:@selector(recieveButtonPushed)]){
+        [self.delegate recieveButtonPushed];
+    }
+}
 
 @end

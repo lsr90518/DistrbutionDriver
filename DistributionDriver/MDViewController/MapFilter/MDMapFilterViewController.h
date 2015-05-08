@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDMapFilter.h"
 
 @interface MDMapFilterViewController : UIViewController
+
+@property (strong, nonatomic) MDMapFilter *mapFilter;
 
 @end

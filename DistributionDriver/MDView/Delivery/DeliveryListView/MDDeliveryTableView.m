@@ -68,9 +68,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self sendData:[dataArray objectAtIndex:indexPath.row]];
+    NSLog(@"did select");
 }
 
 -(void) sendData:(NSDictionary *)data{
+    NSLog(@"did send");
     if([self.deliveryTableViewDelegate respondsToSelector:@selector(didSelectedRowWithData:)]){
         [self.deliveryTableViewDelegate didSelectedRowWithData:data];
     }

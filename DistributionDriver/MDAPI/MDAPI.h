@@ -22,6 +22,8 @@
 #define API_PACKAGE_IMAGE           @"packages/user/upload_image"
 #define API_GET_MY_PACKAGE          @"packages/driver/get_my_packages"
 #define API_PACKAGE_ACCEPT          @"packages/driver/accept"
+#define API_PACKAGE_RECEIVE         @"packages/driver/receive"
+#define API_PACKAGE_DELIVERY        @"packages/driver/complete"
 
 #define USER_DEVICE                 @"ios"
 
@@ -72,9 +74,24 @@
                        OnComplete:(void (^)(MKNetworkOperation *))complete
                           onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
+-(void) getWaitingPackageWithHash:(NSString *)hash
+                         WithPref:(NSString *)pref
+                       OnComplete:(void (^)(MKNetworkOperation *))complete
+                          onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
 -(void) acceptPackageWithHash:(NSString *)hash
                     packageId:(NSString *)package_id
                    OnComplete:(void (^)(MKNetworkOperation *))complete
                       onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) receviePackageWithHash:(NSString *)hash
+                     packageId:(NSString *)package_id
+                    OnComplete:(void (^)(MKNetworkOperation *))complete
+                       onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) deliveryPackageWithHash:(NSString *)hash
+                      packageId:(NSString *)package_id
+                     OnComplete:(void (^)(MKNetworkOperation *))complete
+                        onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

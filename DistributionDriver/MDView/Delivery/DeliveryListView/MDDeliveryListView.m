@@ -56,6 +56,7 @@
 }
 
 -(void) didSelectedRowWithData:(NSDictionary *)data {
+    NSLog(@"did send select data");
     if([self.delegate respondsToSelector:@selector(makeUpData:)]){
         [self.delegate makeUpData:data];
     }

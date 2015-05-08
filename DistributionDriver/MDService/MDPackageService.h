@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MDPackage.h"
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+#import "MDCurrentPackage.h"
 
 @interface MDPackageService : NSObject
 
@@ -17,5 +20,8 @@
 
 -(void) initData;
 -(void) initDataWithArray:(NSArray *)array;
+-(void) initDataWithArray:(NSArray *)array
+             WithDistance:(CLLocation *)location;
+-(NSMutableArray *)getPackageListByPackage:(MDCurrentPackage *)package;
 
 @end

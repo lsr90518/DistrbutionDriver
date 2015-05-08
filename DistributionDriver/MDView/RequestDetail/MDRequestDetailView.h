@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDPackage.h"
+#import "MDSelect.h"
 
 @protocol MDRequestDetailViewDelegate;
 
@@ -27,6 +28,8 @@
 @protocol MDRequestDetailViewDelegate <NSObject>
 
 @optional
--(void) cameraButtonTouched;
+-(void) cameraButtonPushed;
+-(void) recieveButtonPushed;
+-(void) phoneButtonPushed:(MDSelect*)select;
 
 @end

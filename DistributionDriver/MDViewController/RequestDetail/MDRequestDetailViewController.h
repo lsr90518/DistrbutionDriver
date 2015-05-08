@@ -10,7 +10,7 @@
 #import "MDRequestDetailView.h"
 #import "MDPackage.h"
 
-@interface MDRequestDetailViewController : UIViewController
+@interface MDRequestDetailViewController : UIViewController<MDRequestDetailViewDelegate>
 
 @property (strong, nonatomic) MDRequestDetailView   *requestDetailView;
 @property (strong, nonatomic) MDPackage             *package;
