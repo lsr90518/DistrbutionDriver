@@ -14,6 +14,7 @@
     MDSelect *nameButton;
     MDSelect *phoneButton;
     MDSelect *transportation;
+    MDSelect *introButton;
 }
 
 #pragma mark - View Life Cycle
@@ -52,7 +53,6 @@
         nameButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 70, frame.size.width-20, 50)];
         nameButton.buttonTitle.text = @"お名前";
         nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
-        [nameButton setUnactive];
         [nameButton addTarget:self action:@selector(nameButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:nameButton];
         
@@ -60,33 +60,30 @@
         phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 130, frame.size.width-20, 50)];
         phoneButton.buttonTitle.text = @"電話番号";
         phoneButton.selectLabel.text = [NSString stringWithFormat:@"%@", user.phoneNumber];
-        [phoneButton setUnactive];
         [phoneButton addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneButton];
         
+        introButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, phoneButton.frame.origin.y + phoneButton.frame.size.height + 10, frame.size.width - 20, 50)];
+        introButton.buttonTitle.text = @"自己紹介";
+        introButton.selectLabel.text = [NSString stringWithFormat:@"%@", user.intro];
+        [introButton addTarget:self action:@selector(introButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:introButton];
+        
+        
         //配達方法
-        transportation = [[MDSelect alloc]initWithFrame:CGRectMake(10, 190, frame.size.width - 20, 50)];
+        transportation = [[MDSelect alloc]initWithFrame:CGRectMake(10, introButton.frame.origin.y + introButton.frame.size.height + 10, frame.size.width - 20, 50)];
         transportation.buttonTitle.text = @"交通手段";
         [transportation addTarget:self action:@selector(gotoTansptationView) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:transportation];
         
         
         //pay button
-        MDSelect *payButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 250, frame.size.width-20, 50)];
+        MDSelect *payButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, transportation.frame.origin.y + transportation.frame.size.height + 10, frame.size.width-20, 50)];
         payButton.buttonTitle.text = @"振込口座";
         payButton.selectLabel.text = [NSString stringWithFormat:@"%@",user.creditNumber];
         [payButton setUnactive];
         [payButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:payButton];
-        
-        //name button
-        MDSelect *blockButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 310, frame.size.width-20, 50)];
-        blockButton.buttonTitle.text = @"ブロックドライバー";
-        [blockButton.buttonTitle sizeToFit];
-        blockButton.selectLabel.text = @"";
-        [blockButton setUnactive];
-        [blockButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollView addSubview:blockButton];
         
         //name button
         MDSelect *qaButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 370, frame.size.width-20, 50)];
@@ -216,6 +213,14 @@
         transportationStr = [NSString stringWithFormat:@"%@ %@",transportationStr, @"車"];
     }
     transportation.selectLabel.text = transportationStr;
+    
+    introButton.selectLabel.text = user.intro;
+}
+
+-(void) introButtonTouched{
+    if([self.delegate respondsToSelector:@selector(introButtonPushed)]){
+        [self.delegate introButtonPushed];
+    }
 }
 
 @end

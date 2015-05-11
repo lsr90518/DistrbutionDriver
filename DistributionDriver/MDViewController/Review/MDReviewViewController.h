@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDReviewView.h"
 #import "MDPackage.h"
+#import "MDReview.h"
 
 @interface MDReviewViewController : UIViewController<MDReviewDelegate>
 

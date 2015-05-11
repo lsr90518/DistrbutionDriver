@@ -14,6 +14,7 @@
 #import "MDDeliveryViewController.h"
 #import "MDProfileViewController.h"
 #import "MDTranspotationViewController.h"
+#import "MDIntroViewController.h"
 
 @interface MDSettingViewController ()
 
@@ -51,9 +52,8 @@
 }
 
 -(void) phoneNumberPushed {
-    MDPhoneViewController *phoneViewController = [[MDPhoneViewController alloc]init];
-    UINavigationController *signNavigationController = [[UINavigationController alloc]initWithRootViewController:phoneViewController];
-    [self presentViewController:signNavigationController animated:YES completion:nil];
+    MDPhoneNumberSettingViewController *phoneNumberSettingViewController = [[MDPhoneNumberSettingViewController alloc]init];
+    [self.navigationController pushViewController:phoneNumberSettingViewController animated:YES];
 }
 
 -(void) nameButtonPushed {
@@ -75,6 +75,11 @@
 -(void)gotoTansptationView{
     MDTranspotationViewController *tttvc = [[MDTranspotationViewController alloc]init];
     [self.navigationController pushViewController:tttvc animated:YES];
+}
+
+-(void) introButtonPushed{
+    MDIntroViewController *ivc = [[MDIntroViewController alloc]init];
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 @end

@@ -136,6 +136,7 @@
 }
 
 -(void)backButtonPushed {
+    [_inputView.input resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

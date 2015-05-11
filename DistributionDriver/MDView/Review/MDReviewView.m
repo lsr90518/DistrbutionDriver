@@ -17,6 +17,8 @@
     UIView          *commentView;
     UITextView      *commentTextView;
     UIButton        *postButton;
+    
+    BOOL isNotTyping;
 }
 
 -(id) initWithFrame:(CGRect)frame{
@@ -36,24 +38,25 @@
         [scrollView addSubview:descriptionWell];
         
         //review view
+        _rating = @"5";
         reviewView = [[MDStarRatingBar alloc]initWithFrame:CGRectMake(descriptionWell.frame.origin.x, descriptionWell.frame.origin.y + descriptionWell.frame.size.height + 10, descriptionWell.frame.size.width, 74)];
         reviewView.layer.cornerRadius = 1;
-        reviewView.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1].CGColor;
+        reviewView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
         reviewView.layer.borderWidth = 0.5;
-        [reviewView setRating:5];
-        _rating = @"5";
+        [reviewView setRating:[_rating integerValue]];
+        
         [scrollView addSubview:reviewView];
         
         
         commentView = [[UIView alloc]initWithFrame:CGRectMake(reviewView.frame.origin.x, reviewView.frame.origin.y + reviewView.frame.size.height + 10, reviewView.frame.size.width, 100)];
         commentView.layer.cornerRadius = 1;
         commentView.layer.borderWidth = 0.5;
-        commentView.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1].CGColor;
+        commentView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
         [scrollView addSubview:commentView];
         
         commentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, commentView.frame.size.width-20, commentView.frame.size.height - 20)];
         commentTextView.text = @"フリーコメント";
-        commentTextView.textColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1];
+        commentTextView.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
         commentTextView.delegate = self;
         [commentView addSubview:commentTextView];
         
@@ -71,17 +74,23 @@
     return self;
 }
 
+
 -(void)textViewDidBeginEditing:(UITextView *)textView{
-    textView.text = @"";
-    textView.textColor = [UIColor blackColor];
     
-    CGPoint textViewPoint = CGPointMake(0, textView.frame.origin.y);
+    if(isNotTyping){
+        textView.text = @"";
+        isNotTyping = NO;
+    }
+    
+    textView.textColor = [UIColor blackColor];
+    CGPoint textViewPoint = CGPointMake(0, textView.frame.origin.y + 100);
     [scrollView setContentOffset:textViewPoint animated:YES];
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
     if(textView.text.length < 1){
         textView.text = @"フリーコメント";
-        textView.textColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1];
+        textView.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+        isNotTyping = YES;
     }
     
     int scrollOffset = [scrollView contentOffset].y;
@@ -97,11 +106,34 @@
 }
 
 -(void) postButtonTouched{
+    [commentTextView resignFirstResponder];
+    
     _rating = [NSString stringWithFormat:@"%lu",reviewView.rating];
     _reviewText = ([commentTextView.text isEqualToString:@"フリーコメント"]) ? @"" : commentTextView.text;
-    if([self.delegate respondsToSelector:@selector(postButtonPushed:)]){
-        [self.delegate postButtonPushed:self];
+    if([self.delegate respondsToSelector:@selector(postButtonPushed)]){
+        [self.delegate postButtonPushed];
     }
+}
+
+-(void) initWithData:(MDReview *)review{
+    
+    NSString *reviewText = [NSString stringWithFormat:@"%@", review.text];
+    
+    if(![reviewText isEqualToString:@"<null>"]){
+        commentTextView.text = review.text;
+        commentTextView.textColor = [UIColor blackColor];
+        isNotTyping = NO;
+    } else {
+        isNotTyping = YES;
+    }
+    
+    NSString *reviewStar = [NSString stringWithFormat:@"%@", review.star];
+    if(![reviewStar isEqualToString:@"<null>"]){
+        [reviewView setRating:[review.star integerValue]];
+        
+    }
+    
+    
 }
 
 @end

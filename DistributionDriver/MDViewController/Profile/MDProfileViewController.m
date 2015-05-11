@@ -7,6 +7,8 @@
 //
 
 #import "MDProfileViewController.h"
+#import "MDDriverHistoryViewController.h"
+#import <SVProgressHUD.h>
 
 @interface MDProfileViewController ()
 
@@ -27,6 +29,7 @@
     [super loadView];
     _profileView = [[MDProfileView alloc]initWithFrame:self.view.frame];
     [self.view addSubview:_profileView];
+    _profileView.delegate = self;
     [self initNavigationBar];
 }
 
@@ -34,6 +37,31 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [SVProgressHUD show];
+    //get driver data
+    [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
+                                 OnComplete:^(MKNetworkOperation *complete) {
+                                 
+                                     [[MDMyPackageService getInstance] initDataWithArray:[complete responseJSON][@"Packages"]];
+                                     
+                                     [self setupDriver];
+                                     
+                                     [_profileView setDriverData:_driver];
+                                     [SVProgressHUD dismiss];
+                                 } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                        
+                                 }];
+}
+
+-(void) setupDriver {
+    _driver = [[MDDriver alloc]init];
+    [_driver initWithUser:[MDUser getInstance]];
+    
+    int average_star = [[MDMyPackageService getInstance] getAverageStar];
+    _driver.average_star = [NSString stringWithFormat:@"%d",average_star];
+    _driver.delivered_package = [NSString stringWithFormat:@"%lu", (unsigned long)[[MDMyPackageService getInstance].reviewList count]];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,9 +80,20 @@
     [_backButton addTarget:self action:@selector(backButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:_backButton];
     self.navigationItem.leftBarButtonItem = leftButton;
+    
 }
 -(void) backButtonTouched {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) historyButtonPushed{
+    MDDriverHistoryViewController * dhvc = [[MDDriverHistoryViewController alloc]init];
+    dhvc.reviews = [MDMyPackageService getInstance].reviewList;
+    [self.navigationController pushViewController:dhvc animated:YES];
+}
+
+-(void) editProfile{
+    
 }
 
 @end

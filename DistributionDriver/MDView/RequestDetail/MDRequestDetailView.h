@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MDPackage.h"
 #import "MDSelect.h"
+#import "MDClient.h"
 
 @protocol MDRequestDetailViewDelegate;
 
@@ -20,6 +21,7 @@
 
 -(void) setStatus:(int) status;
 -(void) makeupByData:(MDPackage *)data;
+-(void) setClientData:(MDClient *)client;
 -(UIImageView *) getUploadedImage;
 
 

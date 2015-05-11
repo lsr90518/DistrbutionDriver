@@ -6,16 +6,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DistributionDriver/MDView/MapFilter/MDMapFilter.m"
+            timestampString = "452706023.860624"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "-didSelectedRow::"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DistributionDriver/MDAPI/MDAPI.m"
-            timestampString = "452223034.77738"
+            timestampString = "452960097.913356"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-newProfileByUser:onComplete:onError:"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "-changeProfileByUser:onComplete:onError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

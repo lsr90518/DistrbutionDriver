@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MDProfileView.h"
+#import "MDUser.h"
+#import "MDAPI.h"
+#import "MDMyPackageService.h"
+#import "MDDriver.h"
 
-@interface MDProfileViewController : UIViewController
+@interface MDProfileViewController : UIViewController<MDProfileViewDelegate>
 
 @property (strong, nonatomic) MDProfileView *profileView;
+@property (strong, nonatomic) MDDriver      *driver;
 
 @end

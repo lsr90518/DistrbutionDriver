@@ -7,5 +7,5 @@ pod 'ActionSheetPicker'
 pod 'SDWebImage'
 pod 'SVProgressHUD'
 pod 'SSKeychain'
-
+pod 'MJRefresh'
 

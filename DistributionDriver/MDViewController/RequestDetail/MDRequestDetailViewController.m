@@ -25,9 +25,7 @@
     [self.view addSubview:_requestDetailView];
     
     _requestDetailView.delegate = self;
-    [_requestDetailView setStatus:[_package.status intValue]];
     
-    [_requestDetailView makeupByData:_package];
     
 }
 
@@ -77,6 +75,32 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self initNavigationBar];
+    
+    [_requestDetailView setStatus:[_package.status intValue]];
+    
+    if([_package.status intValue] != 0){
+        [self getUserData];
+    }
+    
+    [_requestDetailView makeupByData:_package];
+    
+}
+
+-(void) getUserData{
+    
+    //call api
+    
+    [[MDAPI sharedAPI] getUserDataWithHash:[MDUser getInstance].userHash
+                                    userId:_package.user_id
+                                  OnComplete:^(MKNetworkOperation *complete) {
+                                      //
+                                      _client = [[MDClient alloc]init];
+                                      [_client initWithData:[complete responseJSON][@"User"]];
+                                      [_requestDetailView setClientData:_client];
+                                      
+                                  } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                      
+                                  }];
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -171,7 +195,6 @@
     
     UIImageView *imageView = [[UIImageView alloc]init];
     [imageView setImage:[_requestDetailView getUploadedImage].image];
-    
     
     
     UIView *backgroundView = [[UIView alloc]initWithFrame:self.view.frame];

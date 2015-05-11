@@ -126,7 +126,8 @@
 
                                          [SVProgressHUD dismiss];
                                      }onError:^(MKNetworkOperation *operation, NSError *error) {
-
+                                         
+                                         NSLog(@"%@", [operation responseJSON]);
                                      }];
     
 }
@@ -352,7 +353,9 @@
             annoView.image = [UIImage imageNamed:@"pinTo"];
         }
     }
-    [annoView setNumber:[pin.containedAnnotations count]];
+    
+    [annoView setNumber:[pin.containedAnnotations count]+1];
+    
     
     return annoView;
 }

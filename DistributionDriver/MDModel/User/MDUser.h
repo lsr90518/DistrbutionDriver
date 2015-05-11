@@ -11,6 +11,7 @@
 
 @interface MDUser : NSObject
 
+@property (strong, nonatomic) NSString *user_id;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) NSString *password;
 @property (strong, nonatomic) NSString *creditNumber;

@@ -7,8 +7,10 @@
 //
 
 #import "MDRequestView.h"
+#import <MJRefresh.h>
 
-@implementation MDRequestView
+@implementation MDRequestView{
+}
 
 #pragma mark - View Life Cycle
 
@@ -29,6 +31,12 @@
                                                                                 frame.size.height-50)];
         
         //call api
+        
+        
+        //
+        [_requestTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(pulledView)];
+        _requestTableView.header.updatedTimeHidden = YES;
+        
         
         [self addSubview:_requestTableView];
         _requestTableView.requestTableViewDelegate = self;
@@ -88,6 +96,16 @@
 -(void) didSelectedRowWithData:(NSDictionary *)data {
     if([self.delegate respondsToSelector:@selector(makeUpData:)]){
         [self.delegate makeUpData:data];
+    }
+}
+
+-(void) endRefresh {
+    [_requestTableView.header endRefreshing];
+}
+
+-(void) pulledView {
+    if([self.delegate respondsToSelector:@selector(refreshData)]){
+        [self.delegate refreshData];
     }
 }
 

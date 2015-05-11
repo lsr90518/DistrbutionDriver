@@ -37,5 +37,6 @@
 -(void) gotoDeliveryView;
 -(void) profileImagePushed;
 -(void) gotoTansptationView;
+-(void) introButtonPushed;
 
 @end

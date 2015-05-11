@@ -12,6 +12,7 @@
 
 @interface MDCustomer : NSManagedObject
 
+@property (nonatomic, retain) NSString * userid;
 @property (nonatomic, retain) NSString * phonenumber;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * creditnumber;

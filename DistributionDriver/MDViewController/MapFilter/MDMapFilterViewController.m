@@ -74,17 +74,6 @@
 //    [self initViewData];
 }
 
-//-(void) initViewData {
-//    [[MDCurrentPackage getInstance] initData];
-//    //size
-//    sizePicker.selectLabel.text = [NSString stringWithFormat:@"%@cm以内",[MDCurrentPackage getInstance].size];
-//    //price
-//    costPicker.selectLabel.text = [NSString stringWithFormat:@"%@円",[MDCurrentPackage getInstance].request_amount];
-//    
-//    destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [[MDCurrentPackage getInstance].deliver_limit substringToIndex:13]];
-//    
-//    
-//}
 
 -(void) gotoSizeView:(MDSelect *)button {
     MDSizeInputViewController *siv = [[MDSizeInputViewController alloc]init];

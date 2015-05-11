@@ -25,7 +25,6 @@
     _from_pref = data[@"from_pref"];
     _from_zip = data[@"from_zip"];
     _image = data[@"image"];
-    _review = data[@"review"];
     _review_limit = data[@"review_limit"];
     _request_amount = data[@"request_amount"];
     _reward_amount = data[@"reward_amount"];
@@ -37,8 +36,15 @@
     _to_pref = data[@"to_pref"];
     _to_zip = data[@"to_zip"];
     _requestType = data[@"type"];
-    _user_id = data[@"user_id"];
     _distance = @"0";
+    
+    _driverReview = [[MDReview alloc]init];
+    [_driverReview initWithData:data[@"review"][@"from_driver"]];
+    
+    _userReview = [[MDReview alloc]init];
+    [_userReview initWithData:data[@"review"][@"from_user"]];
+    
+    _user_id = data[@"user_id"];
 
     return self;
 }

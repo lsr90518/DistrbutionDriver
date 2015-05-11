@@ -11,6 +11,7 @@
 #import "MDUser.h"
 #import "MDAPI.h"
 #import <SVProgressHUD.h>
+#import "MDUtil.h"
 
 @interface MDPhoneNumberSettingViewController () {
     UIButton *postButton;
@@ -39,6 +40,8 @@
     [postButton addTarget:self action:@selector(changePhoneNumber) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:postButton];
     
+    [self initNavigationBar];
+    
 }
 
 - (void)viewDidLoad {
@@ -66,13 +69,17 @@
 
 -(void) changePhoneNumber {
     //call api
-    [SVProgressHUD show];
+    [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeBlack];
     [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[MDUser getInstance].phoneNumber
                                             newPhoneNumber:_phoneInput.input.text OnComplete:^(MKNetworkOperation *completeOperation) {
                                                 if( [[completeOperation responseJSON][@"code"] integerValue] == 0){
+                                                    NSLog(@"%@", [completeOperation responseJSON]);
                                                     [SVProgressHUD dismiss];
                                                     
                                                     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                                                } else if([[completeOperation responseJSON][@"code"] integerValue] == -99){
+                                                
+                                                    [MDUtil makeAlertWithTitle:@"連続送信禁止" message:@"悪用防止のため連続での送信はお控えください。しばらくお待ちいただいてから再度お試しください。" done:@"OK" viewController:self];
                                                 }
                                             }onError:^(MKNetworkOperation *completeOperarion, NSError *error){
                                                 
@@ -85,13 +92,13 @@
                                                 alert.delegate = self;
                                                 [alert show];
                                                 
-                                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                                                //                                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                                             }];
     
 }
 
 -(void) backButtonTouched {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

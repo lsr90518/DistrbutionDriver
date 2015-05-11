@@ -38,6 +38,7 @@
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
                                  OnComplete:^(MKNetworkOperation *complete){
                                      if([[complete responseJSON][@"code"] integerValue] == 0){
+                                         
                                          [_requestView initWithArray:[complete responseJSON][@"Packages"]];
                                      }
                                      [SVProgressHUD dismiss];
@@ -72,11 +73,25 @@
 }
 
 -(void) makeUpData:(NSDictionary *)data{
-    NSLog(@"kita");
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
     MDPackage *tmpPackage = [[MDPackage alloc]initWithData:data];
     rdvc.package = tmpPackage;
     [self.navigationController pushViewController:rdvc animated:YES];
+}
+
+-(void) refreshData{
+    [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
+                                 OnComplete:^(MKNetworkOperation *complete){
+                                     if([[complete responseJSON][@"code"] integerValue] == 0){
+                                         
+                                         [_requestView initWithArray:[complete responseJSON][@"Packages"]];
+                                         [_requestView endRefresh];
+                                     }
+                                 }
+                                    onError:^(MKNetworkOperation *complete, NSError *error){
+                                        NSLog(@"error ------------------------ %@", error);
+                                        [SVProgressHUD dismiss];
+                                    }];
 }
 
 

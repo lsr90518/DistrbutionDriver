@@ -15,6 +15,7 @@
 #import "MDUser.h"
 #import "MDDevice.h"
 #import "MDCurrentPackage.h"
+#import "MDMyPackageService.h"
 
 @implementation AppDelegate
 
@@ -102,12 +103,12 @@
     MDCustomerDAO   *customerDAO = [[MDCustomerDAO alloc]init];
     MDCurrentPackage *currentPackage = [[MDCurrentPackage alloc]init];
     [[MDCurrentPackage getInstance]initData];
+    MDMyPackageService *myPackageService = [[MDMyPackageService alloc]init];
     
     MDUser *customer = [customerDAO findCustomer];
     [customer initDataClear];
     
     [self checkIOS7];
-    NSLog(@"%@",[MDDevice getInstance].iosVersion);
 }
 
 - (void)checkIOS7

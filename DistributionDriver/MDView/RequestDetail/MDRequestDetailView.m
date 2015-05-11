@@ -166,6 +166,7 @@
         sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, destinationAddressView.frame.origin.y + destinationAddressView.frame.size.height + 10, frame.size.width-20, 50)];
         sizePicker.buttonTitle.text = @"サイズ";
         sizePicker.selectLabel.text = @"120";
+        [sizePicker.rightArrow setHidden:YES];
         [_scrollView addSubview:sizePicker];
         
         
@@ -201,8 +202,8 @@
         
         //list
         requestTerm = [[MDSelect alloc]initWithFrame:CGRectMake(10, destinateTimePicker.frame.origin.y + destinateTimePicker.frame.size.height + 10, frame.size.width-20, 50)];
-        requestTerm.buttonTitle.text = @"依頼期限";
-        //        [requestTerm addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        requestTerm.buttonTitle.text = @"掲載期限";
+        
         [requestTerm setReadOnly];
         [_scrollView addSubview:requestTerm];
         
@@ -235,15 +236,21 @@
             [_scrollView setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - 70)];
             
             //状態のボタン
-            statusButton.buttonTitle.text = @"連絡先";
-            statusButton.selectLabel.text = @"09028280392";
+            statusButton.buttonTitle.text = @"";
+            statusButton.selectLabel.text = @"";
+            [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case 1:
+            
+            statusButton.buttonTitle.text = @"";
+            statusButton.selectLabel.text = @"";
             [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case 2:
             //ドライバーのプロフィール
             //状態のボタン
-            statusButton.buttonTitle.text = @"連絡先";
-            statusButton.selectLabel.text = @"09028280392";
+            statusButton.buttonTitle.text = @"";
+            statusButton.selectLabel.text = @"";
             [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case 3:
@@ -262,6 +269,7 @@
     uploadedImage = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 136, 136)];
     [uploadedImage sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
     
+    cameraButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [cameraButton sd_setImageWithURL:[NSURL URLWithString:package.image] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
     
     
@@ -272,7 +280,7 @@
     destinationAddressView.addressField.text = package.to_addr;
     
     //size
-    sizePicker.selectLabel.text = [NSString stringWithFormat:@"合計%@以内", package.size];
+    sizePicker.selectLabel.text = [NSString stringWithFormat:@"合計%@cm以内", package.size];
     
     //at_home_time
     //
@@ -289,7 +297,6 @@
     destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [deliver_limit substringToIndex:13]];
     
     //expire
-    NSLog(@"%@", package.expire);
     NSDate * now = [NSDate date];
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setLocale:[NSLocale systemLocale]];
@@ -302,6 +309,13 @@
     } else {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"%d時間以内",hour+1];
     }
+}
+
+-(void) setClientData:(MDClient *)client{
+    
+    statusButton.selectLabel.text = client.phone;
+    statusButton.buttonTitle.text = client.name;
+    [statusButton setActive];
 }
 
 -(void) cameraButtonTouched {

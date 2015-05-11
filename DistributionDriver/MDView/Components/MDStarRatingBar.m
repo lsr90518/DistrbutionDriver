@@ -16,6 +16,7 @@ const NSUInteger DEFAULT_STAR_COUNT = 5;
 
 -(void)setRating:(NSUInteger)rating
 {
+    _rating = rating;
     [self.stars enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
         [obj setImage:[UIImage imageNamed:@"star"] forState:UIControlStateNormal];

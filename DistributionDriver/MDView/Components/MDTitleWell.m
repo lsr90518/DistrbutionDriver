@@ -51,7 +51,6 @@
     subTitle.text = subtitle;
     
     
-    text = @"一所懸命一やっていただいてありがとうございました。";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:8];//调整行间距
@@ -63,7 +62,6 @@
     introTitle.text = title;
     subTitle.text = @"";
     
-    text = @"一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命一所懸命";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:8];//调整行间距

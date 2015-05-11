@@ -12,18 +12,21 @@
 #import "MDTitleWell.h"
 #import "MDUser.h"
 #import "MDUtil.h"
+#import "MDReview.h"
+#import "MDStarRatingBar.h"
+#import "MDReviewWell.h"
 
 @implementation MDProfileView{
     UIImageView *profileImageView;
     MDInput     *nameInput;
-    UIView      *previewView;//new compnent
     MDSelect    *phoneNumberButton;
     MDWell      *descriptionWell;
-    MDTitleWell      *introWell;//new component
-    MDInput     *countNumber;
-    MDTitleWell      *previewWell;//new component
+    MDTitleWell      *introWell;
+    MDSelect     *countNumber;
+    MDReviewWell      *previewWell;
     UIButton *blockButton;
     UIButton *policeButton;
+    MDStarRatingBar *reviewView;
     
 }
 
@@ -38,33 +41,35 @@
         
         //profile Image
         profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 110, 110)];
-        [profileImageView sd_setImageWithURL:[NSURL URLWithString:[MDUser getInstance].image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+        //        [profileImageView sd_setImageWithURL:[NSURL URLWithString:[MDUser getInstance].image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+        [profileImageView setImage:[UIImage imageNamed:@"cargo"]];
         [_scrollView addSubview:profileImageView];
         
         //name
         nameInput = [[MDInput alloc]initWithFrame:CGRectMake(profileImageView.frame.origin.x + profileImageView.frame.size.width + 10,
-                                                            profileImageView.frame.origin.y,
-                                                            frame.size.width - 10 - profileImageView.frame.origin.x - profileImageView.frame.size.width - 10,
-                                                            50)];
-        nameInput.title.text = [NSString stringWithFormat:@"%@ %@",[MDUser getInstance].lastname, [MDUser getInstance].firstname];;
-        [nameInput.title sizeToFit];
+                                                             profileImageView.frame.origin.y,
+                                                             frame.size.width - 10 - profileImageView.frame.origin.x - profileImageView.frame.size.width - 10,
+                                                             50)];
+        
         [nameInput.input setHidden:YES];
         [_scrollView addSubview:nameInput];
         
         //preview
-        previewView = [[UIView alloc]initWithFrame:CGRectMake(nameInput.frame.origin.x,
-                                                              nameInput.frame.size.height + nameInput.frame.origin.y + 10,
-                                                              nameInput.frame.size.width,
-                                                              nameInput.frame.size.height)];
-        previewView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
-        previewView.layer.borderWidth = 0.5;
-        [_scrollView addSubview:previewView];
+        reviewView = [[MDStarRatingBar alloc]initWithFrame:CGRectMake(nameInput.frame.origin.x,
+                                                                      nameInput.frame.size.height + nameInput.frame.origin.y + 10,
+                                                                      nameInput.frame.size.width,
+                                                                      nameInput.frame.size.height)];
+        reviewView.layer.cornerRadius = 2.5;
+        reviewView.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
+        reviewView.layer.borderWidth = 0.5;
+        [_scrollView addSubview:reviewView];
         
         //連絡先
         phoneNumberButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, profileImageView.frame.origin.y + profileImageView.frame.size.height + 10, frame.size.width - 20, 50)];
         phoneNumberButton.buttonTitle.text = @"連絡先";
         [phoneNumberButton.buttonTitle sizeToFit];
-        phoneNumberButton.selectLabel.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+        phoneNumberButton.selectLabel.text = @"";
+        [phoneNumberButton addTarget:self action:@selector(phoneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneNumberButton];
         
         //説明文
@@ -74,48 +79,65 @@
         
         //自己紹介
         introWell = [[MDTitleWell alloc]initWithFrame:CGRectMake(10, descriptionWell.frame.origin.y + descriptionWell.frame.size.height + 10, frame.size.width-20, 104)];
-        [introWell setDataWithTitle:@"ドライバー自己紹介" Text:[MDUser getInstance].intro];
+        introWell.layer.cornerRadius = 2.5;
+        
         [_scrollView addSubview:introWell];
         
         
         
         //荷物回数
-        countNumber = [[MDInput alloc]initWithFrame:CGRectMake(10, introWell.frame.origin.y + introWell.frame.size.height + 10, frame.size.width -20, 50)];
-        countNumber.title.text = @"今まで運んだ荷物";
-        [countNumber.title sizeToFit];
-        countNumber.input.text = [NSString stringWithFormat:@"%@回",[MDUser getInstance].deposit];
-        [countNumber.input setUserInteractionEnabled:NO];
+        countNumber = [[MDSelect alloc]initWithFrame:CGRectMake(10, introWell.frame.origin.y + introWell.frame.size.height + 10, frame.size.width -20, 50)];
+        countNumber.buttonTitle.text = @"今まで運んだ荷物";
+        [countNumber.buttonTitle sizeToFit];
+        [countNumber setActive];
+        [countNumber addTarget:self action:@selector(historyButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:countNumber];
         
-        //評価
-        previewWell = [[MDTitleWell alloc]initWithFrame:CGRectMake(10, countNumber.frame.origin.y + countNumber.frame.size.height - 1, frame.size.width - 20, 100)];
-        [previewWell setDataWithTitle:@"xy" subtitle:@"2015-05-02" text:@"一所懸命"];
-        [previewView setBackgroundColor:[UIColor whiteColor]];
-        [_scrollView addSubview:previewWell];
-        
-        //ブロック
-//        blockButton = [[UIButton alloc]initWithFrame:CGRectMake(10, previewWell.frame.origin.y + previewWell.frame.size.height+10, frame.size.width - 20, 50)];
-//        [blockButton setTitle:@"このドライバーをブロックする" forState:UIControlStateNormal];
-//        [blockButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//        blockButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:14];
-//        blockButton.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
-//        blockButton.layer.borderWidth = 0.5;
-//        blockButton.layer.cornerRadius = 1;
-//        [_scrollView addSubview:blockButton];
-//        
-//        //通報
-//        policeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, blockButton.frame.origin.y + blockButton.frame.size.height+10, frame.size.width - 20, 50)];
-//        [policeButton setTitle:@"このドライバーを通報する" forState:UIControlStateNormal];
-//        [policeButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//        policeButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:14];
-//        policeButton.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
-//        policeButton.layer.borderWidth = 0.5;
-//        policeButton.layer.cornerRadius = 1;
-//        [_scrollView addSubview:policeButton];
-        
-        [_scrollView setContentSize:CGSizeMake(frame.size.width, previewWell.frame.origin.y + previewWell.frame.size.height + 50)];
+        [_scrollView setContentSize:CGSizeMake(frame.size.width, countNumber.frame.origin.y + countNumber.frame.size.height + 50)];
     }
     return self;
+}
+
+-(void) setDriverData:(MDDriver *)driver{
+    
+    //photo
+    [profileImageView sd_setImageWithURL:[NSURL URLWithString:driver.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+    
+    //name
+    nameInput.title.text = driver.name;
+    [nameInput.title sizeToFit];
+    
+    //phone number
+    phoneNumberButton.selectLabel.text = driver.phoneNumber;
+    
+    //star
+    float averageStar = [driver.average_star floatValue];
+    [reviewView setRating:(int)averageStar];
+    
+    //intro
+    [introWell setDataWithTitle:@"ドライバー自己紹介" Text:driver.intro];
+    
+    //回数
+    countNumber.selectLabel.text = [NSString stringWithFormat:@"%@回",driver.delivered_package];
+    
+}
+
+-(void) phoneButtonTouched:(MDSelect *)button{
+    if([self.delegate respondsToSelector:@selector(phoneButtonPushed:)]){
+        [self.delegate phoneButtonPushed:button];
+    }
+}
+
+-(void) blockButtonTouched{
+    if([self.delegate respondsToSelector:@selector(blockButtonPushed)]){
+        [self.delegate blockButtonPushed];
+    }
+}
+
+-(void) historyButtonTouched{
+    if([self.delegate respondsToSelector:@selector(historyButtonPushed)]){
+        [self.delegate historyButtonPushed];
+    }
 }
 
 @end

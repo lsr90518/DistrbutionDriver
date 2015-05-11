@@ -40,7 +40,7 @@
         //size picker
         sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, frame.origin.y + 10, frame.size.width-20, 50)];
         sizePicker.buttonTitle.text = @"サイズ";
-        sizePicker.selectLabel.text = @"合計120cm以内";
+        sizePicker.selectLabel.text = @"こだわらない";
         sizePicker.delegate = self;
         NSMutableArray *sizePickerOptions = [[NSMutableArray alloc]init];
         NSMutableArray *sizePickerFirstOptions = [[NSMutableArray alloc]initWithObjects:@"9999",@"60",@"80",@"100",@"120",@"140",@"160",@"180",@"200",@"220",@"240",@"260", nil];
@@ -211,7 +211,7 @@
 
 -(NSString *) getInitStr {
     NSDate *now = [NSDate date];
-    NSDate *fiveHoursAfter = [now dateByAddingTimeInterval:5*60*60];
+    NSDate *oneHoursAfter = [now dateByAddingTimeInterval:1*60*60];
     NSCalendar *gregorianCalendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateFormatter *tmpFormatter = [[NSDateFormatter alloc]init];
     [tmpFormatter setCalendar:gregorianCalendar];
@@ -219,7 +219,7 @@
     [tmpFormatter setDateFormat:@"YYYY-MM-dd HH:mm:00"];
     
     NSString *showStr;
-    NSArray *tmpStr = [[tmpFormatter stringFromDate:fiveHoursAfter] componentsSeparatedByString:@" "];
+    NSArray *tmpStr = [[tmpFormatter stringFromDate:oneHoursAfter] componentsSeparatedByString:@" "];
     NSString *dateStr = tmpStr[0];
     NSArray *dateStrArray = [dateStr componentsSeparatedByString:@"-"];
     

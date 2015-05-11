@@ -15,16 +15,21 @@
 #define API_DRIVERS_NEWPROFILE      @"drivers/new_profile"
 #define API_DRIVERS_LOGIN           @"drivers/login"
 #define API_DRIVERS_REVIREW         @"drivers/post_review"
+#define API_DRIVERS_UPDATE_PROFILE  @"drivers/update_profile"
 #define API_USERS_LOGIN             @"users/login"
-#define API_USER_UPDATE_PHONE       @"users/request_phone_number_change"
+#define API_DRIVERS_UPDATE_PHONE       @"drivers/request_phone_number_change"
 #define API_GET_WAITING_PACKAGE     @"packages/driver/get_waiting_packages"
+#define API_DRIVERS_GET_USER_DATA   @"drivers/get_user_data"
 
+#define API_GET_PACKAGE_DATA        @"packages/get_package_data"
 #define API_PACKAGE_RESIGER         @"packages/user/register"
 #define API_PACKAGE_IMAGE           @"packages/user/upload_image"
 #define API_GET_MY_PACKAGE          @"packages/driver/get_my_packages"
 #define API_PACKAGE_ACCEPT          @"packages/driver/accept"
 #define API_PACKAGE_RECEIVE         @"packages/driver/receive"
 #define API_PACKAGE_DELIVERY        @"packages/driver/complete"
+
+#define API_USER_GET_DRIVER_DATA    @"users/get_driver_data"
 
 #define USER_DEVICE                 @"ios"
 
@@ -45,6 +50,11 @@
                    onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 -(void) newProfileByUser:(MDUser *)user
+              onComplete:(void (^)(MKNetworkOperation *))complete
+                 onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+
+-(void) changeProfileByUser:(MDUser *)user
               onComplete:(void (^)(MKNetworkOperation *))complete
                  onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
@@ -101,5 +111,19 @@
                       text:(NSString *)text
                 OnComplete:(void (^)(MKNetworkOperation *))complete
                    onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) getUserDataWithHash:(NSString *)hash
+                     userId:(NSString *)user_id
+                 OnComplete:(void (^)(MKNetworkOperation *))complete
+                    onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) getPackageByPakcageId:(NSString *)package_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) getDriverDataWithHash:(NSString *)hash
+                     driverId:(NSString *)driver_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

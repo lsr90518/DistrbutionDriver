@@ -118,7 +118,7 @@
     [dic setValue:user.bike         forKey:@"bike"];
     [dic setValue:user.motorBike    forKey:@"motorbike"];
     [dic setValue:user.car          forKey:@"car"];
-    [dic setValue:@"111"            forKeyPath:@"intro"];
+    [dic setValue:@""               forKeyPath:@"intro"];
     [dic setValue:@"ios"            forKey:@"client"];
 
     MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_NEWPROFILE
@@ -128,6 +128,29 @@
     
     [op addData:user.imageData forKey:@"image"];
     [op addData:user.idImageData forKey:@"id_image"];
+    
+    [op addCompletionHandler:complete errorHandler:error];
+    [_engine enqueueOperation:op];
+}
+
+-(void) changeProfileByUser:(MDUser *)user
+                 onComplete:(void (^)(MKNetworkOperation *))complete
+                    onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:user.phoneNumber  forKey:@"phone"];
+    [dic setValue:[NSString stringWithFormat:@"%@ %@",user.lastname,user.firstname] forKey:@"name"];
+    [dic setValue:user.walk         forKey:@"walk"];
+    [dic setValue:user.bike         forKey:@"bike"];
+    [dic setValue:user.motorBike    forKey:@"motorbike"];
+    [dic setValue:user.car          forKey:@"car"];
+    [dic setValue:user.intro        forKeyPath:@"intro"];
+    [dic setValue:user.userHash     forKey:@"hash"];
+    [dic setValue:@"ios"            forKey:@"client"];
+    
+    MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_UPDATE_PROFILE
+                                                     params:dic
+                                                 httpMethod:@"POST"
+                                                        ssl:YES];
     
     [op addCompletionHandler:complete errorHandler:error];
     [_engine enqueueOperation:op];
@@ -205,7 +228,7 @@
     [dic setObject:newPhoneNumber   forKey:@"new_phone"];
     
     [self callApi:dic
-          withUrl:API_USER_UPDATE_PHONE
+          withUrl:API_DRIVERS_UPDATE_PHONE
        withImages:@[]
    withHttpMethod:@"POST"
        onComplete:complete
@@ -323,15 +346,64 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     [dic setObject:hash forKey:@"hash"];
     [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:package_id forKey:@"package_id"];
     [dic setObject:star forKey:@"star"];
     [dic setObject:text forKey:@"text"];
-    [dic setObject:package_id forKey:@"package_id"];
     
     
     [self callApi:dic
           withUrl:API_DRIVERS_REVIREW
        withImages:@[]
    withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) getUserDataWithHash:(NSString *)hash
+                     userId:(NSString *)user_id
+                 OnComplete:(void (^)(MKNetworkOperation *))complete
+                    onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:user_id forKey:@"user_id"];
+    
+    
+    [self callApi:dic
+          withUrl:API_DRIVERS_GET_USER_DATA
+       withImages:@[]
+   withHttpMethod:@"GET"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) getPackageByPakcageId:(NSString *)package_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:package_id forKey:@"package_id"];
+    
+    [self callApi:dic
+          withUrl:API_GET_PACKAGE_DATA
+       withImages:@[]
+   withHttpMethod:@"GET"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) getDriverDataWithHash:(NSString *)hash
+                     driverId:(NSString *)driver_id
+                   OnComplete:(void (^)(MKNetworkOperation *))complete
+                      onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:driver_id forKey:@"driver_id"];
+    
+    [self callApi:dic
+          withUrl:API_USER_GET_DRIVER_DATA
+       withImages:@[]
+   withHttpMethod:@"GET"
        onComplete:complete
           onError:error];
 }

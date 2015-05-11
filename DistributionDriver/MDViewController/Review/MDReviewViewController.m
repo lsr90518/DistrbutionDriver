@@ -17,6 +17,7 @@
     _reviewView = [[MDReviewView alloc]initWithFrame:self.view.frame];
     [self.view addSubview:_reviewView];
     _reviewView.delegate = self;
+    [_reviewView initWithData:_package.driverReview];
     [self initNavigationBar];
 }
 
@@ -35,27 +36,27 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void) backToTop {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    });
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
--(void) postButtonPushed:(MDReviewView *)reviewView{
+-(void) postButtonPushed{
+//    [self backToTop];
     //call api
     [SVProgressHUD show];
-    [[MDAPI sharedAPI] postReviewWithHash:[MDUser getInstance].userHash
+    [[MDAPI sharedAPI]postReviewWithHash:[MDUser getInstance].userHash
                                 packageId:_package.package_id
-                                     star:reviewView.rating
-                                     text:reviewView.reviewText
-                               OnComplete:^(MKNetworkOperation *operation) {
-                                   [SVProgressHUD showSuccessWithStatus:@"評価完成!"];
-                                   
-                                   [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(backToTop) name:SVProgressHUDDidDisappearNotification object: nil];
-                               } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                     star:_reviewView.rating
+                                     text:_reviewView.reviewText
+                              OnComplete:^(MKNetworkOperation *completeOperation){
+                                  //call api
+                                  [SVProgressHUD showSuccessWithStatus:@"評価完了!"];
+                                  
+                                  [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(backToTop) name:SVProgressHUDDidDisappearNotification object: nil];
 
-                               }];
-    
+                              }onError:^(MKNetworkOperation *operation, NSError *error) {
+                                  NSLog(@"%@  error %@", [operation responseJSON], error);
+                              }];
 }
 
 @end

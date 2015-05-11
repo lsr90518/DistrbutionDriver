@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MDReview.h"
+#import "MDClient.h"
 
 @interface MDPackage : NSObject
 
@@ -32,7 +34,8 @@
 @property (strong, nonatomic) NSString *status;             //0:初期, 1:編集中, 2:発送した
 @property (strong, nonatomic) NSString *driver_id;
 @property (strong, nonatomic) NSString *package_number;
-@property (strong, nonatomic) NSString *review;
+@property (strong, nonatomic) MDReview *driverReview;
+@property (strong, nonatomic) MDReview *userReview;
 @property (strong, nonatomic) NSString *review_limit;
 @property (strong, nonatomic) NSString *requestType;
 @property (strong, nonatomic) NSString *order;

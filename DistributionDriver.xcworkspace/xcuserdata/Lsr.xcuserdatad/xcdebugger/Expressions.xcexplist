@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[MDReview initWithData:]:MDReview.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDProfileViewController loadView]:MDProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController loadView]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController reviewButtonPushed]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController viewWillAppear:]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__36-[MDMyPackageService getAverageStar]_block_invoke:MDMyPackageService.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[obj.star intValue]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDPackage initWithData:]:MDPackage.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[@&quot;User&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

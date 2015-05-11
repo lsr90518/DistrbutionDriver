@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDStarRatingBar.h"
-#import "MDPackage.h"
+#import "MDReview.h"
 
 @protocol MDReviewDelegate;
 
@@ -18,11 +18,13 @@
 @property (strong, nonatomic) NSString      *rating;
 @property (strong, nonatomic) NSString      *reviewText;
 
+-(void) initWithData:(MDReview *)review;
+
 @end
 
 @protocol MDReviewDelegate <NSObject>
 
 @optional
--(void) postButtonPushed:(MDReviewView*)reviewView;
+-(void) postButtonPushed;
 
 @end

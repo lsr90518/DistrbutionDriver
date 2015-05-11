@@ -57,6 +57,7 @@
 }
 
 -(void) setData:(NSDictionary *)data{
+    _user_id = data[@"id"];
     _phoneNumber = data[@"phone"];
     NSString *fullname = data[@"name"];
     _lastname = [fullname componentsSeparatedByString:@" "][0];

@@ -87,7 +87,6 @@
     [_packageList enumerateObjectsUsingBlock:^(MDPackage *obj, NSUInteger idx, BOOL *stop) {
         //
         int flag = 0;
-        NSLog(@"%@", [MDCurrentPackage getInstance]);
         if([obj.request_amount intValue] > [[MDCurrentPackage getInstance].request_amount intValue]){
             flag++;
         }
