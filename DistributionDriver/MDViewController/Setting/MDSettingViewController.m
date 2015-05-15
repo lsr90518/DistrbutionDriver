@@ -15,8 +15,10 @@
 #import "MDProfileViewController.h"
 #import "MDTranspotationViewController.h"
 #import "MDIntroViewController.h"
+#import "MDBankInfoSettingViewController.h"
 
-@interface MDSettingViewController ()
+@interface MDSettingViewController (){
+}
 
 @end
 
@@ -28,6 +30,7 @@
     _settingView = [[MDSettingView alloc]initWithFrame:self.view.frame];
     _settingView.delegate = self;
     [self.view addSubview:_settingView];
+
 }
 
 
@@ -80,6 +83,11 @@
 -(void) introButtonPushed{
     MDIntroViewController *ivc = [[MDIntroViewController alloc]init];
     [self.navigationController pushViewController:ivc animated:YES];
+}
+
+-(void) payButtonPushed{
+    MDBankInfoSettingViewController *bsvc = [[MDBankInfoSettingViewController alloc]init];
+    [self.navigationController pushViewController:bsvc animated:YES];
 }
 
 @end

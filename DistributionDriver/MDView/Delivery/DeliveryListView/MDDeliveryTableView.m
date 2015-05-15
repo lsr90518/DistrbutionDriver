@@ -19,7 +19,6 @@
         //delegate
         self.delegate = self;
         self.dataSource = self;
-        self.deliveryTableViewDelegate = self;
         self.separatorColor = [UIColor whiteColor];
     }
     
@@ -27,6 +26,7 @@
 }
 
 -(void) initWithArray:(NSArray *)array{
+    //ここ
     dataArray = [[NSMutableArray alloc]initWithArray:array];
     [self reloadData];
 }

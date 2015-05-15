@@ -3,7 +3,20 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MDReview initWithData:]:MDReview.m">
+         contextName = "-[MDPackage initWithData:]:MDPackage.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[@&quot;User&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDUser setData:]:MDUser.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[@&quot;deposit&quot;]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
@@ -32,15 +45,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
+         contextName = "-[MDReview initWithData:]:MDReview.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDPackage initWithData:]:MDPackage.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "data[@&quot;User&quot;]">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

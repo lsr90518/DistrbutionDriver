@@ -60,18 +60,25 @@
 }
 
 -(void) backButtonPushed{
-    [MDUser getInstance].lastname = _lastnameInput.input.text;
-    [MDUser getInstance].firstname = _firstnameInput.input.text;
     //call api
+    MDUser *tmpUser = [[MDUser alloc]init];
+    tmpUser = [MDUser getInstance];
+    
+    tmpUser.lastname = _lastnameInput.input.text;
+    tmpUser.firstname = _firstnameInput.input.text;
+    
     [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeClear];
-    [[MDAPI sharedAPI] changeProfileByUser:[MDUser getInstance]
+    [[MDAPI sharedAPI] changeProfileByUser:tmpUser
                                 onComplete:^(MKNetworkOperation *complete) {
-                                    if([[complete responseJSON][@"code"] intValue] == 1){
-                                        [SVProgressHUD dismiss];
+                                    [SVProgressHUD dismiss];
+                                    if([[complete responseJSON][@"code"] intValue] == 0){
+                                        [MDUser getInstance].lastname = _lastnameInput.input.text;
+                                        [MDUser getInstance].firstname = _firstnameInput.input.text;
                                         [self.navigationController popViewControllerAnimated:YES];
                                     }
                                 }onError:^(MKNetworkOperation *operation, NSError *error) {
-        
+                                    NSLog(@"%@", error);
+                                    [self.navigationController popViewControllerAnimated:YES];
                                 }];
 }
 

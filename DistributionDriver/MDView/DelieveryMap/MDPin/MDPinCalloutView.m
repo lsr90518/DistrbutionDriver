@@ -81,7 +81,7 @@
 -(void) setData:(MDPackage *)package{
     
     [_image sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
-    _sizeLabel.text = [NSString stringWithFormat:@"合計%@以内", package.size];
+    _sizeLabel.text = [NSString stringWithFormat:@"合計 %@cm 以内", package.size];
     _rewardLabel.text = [NSString stringWithFormat:@"報酬: %@円", package.reward_amount];
     _toAddrLabel.text = [NSString stringWithFormat:@"配達場所: %@", package.to_addr];
     

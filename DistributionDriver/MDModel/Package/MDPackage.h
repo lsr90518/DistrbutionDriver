@@ -41,7 +41,9 @@
 @property (strong, nonatomic) NSString *order;
 @property (strong, nonatomic) NSString *reward_amount;
 @property (strong, nonatomic) NSString *distance;
+@property (strong, nonatomic) NSString *created_time;
 
 -(MDPackage *)initWithData:(NSDictionary *)data;
 
+-(NSComparisonResult) compareByDate: (MDPackage *)otherData;
 @end

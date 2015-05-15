@@ -9,6 +9,8 @@
 #import "MDTranspotationViewController.h"
 #import "MDTranspotation.h"
 #import "MDUser.h"
+#import <SVProgressHUD.h>
+#import "MDAPI.h"
 
 @interface MDTranspotationViewController (){
     MDTranspotation *transpotationView;
@@ -47,7 +49,19 @@
 }
 
 -(void)backButtonPushed{
-    [self.navigationController popViewControllerAnimated:YES];
+    //call api
+    [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeClear];
+    [[MDAPI sharedAPI] changeProfileByUser:[MDUser getInstance]
+                                onComplete:^(MKNetworkOperation *complete) {
+                                    [SVProgressHUD dismiss];
+                                    if([[complete responseJSON][@"code"] intValue] == 0){
+                                        
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                    }
+                                }onError:^(MKNetworkOperation *operation, NSError *error) {
+                                    NSLog(@"%@", error);
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                }];
 }
 
 @end

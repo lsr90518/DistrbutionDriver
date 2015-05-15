@@ -9,6 +9,7 @@
 #import "MDDeliveryListViewController.h"
 #import "MDDeliveryViewController.h"
 #import "MDRequestDetailViewController.h"
+#import "MDPackageService.h"
 
 @implementation MDDeliveryListViewController
 
@@ -19,25 +20,11 @@
     [self.view addSubview:_listView];
     _listView.delegate = self;
     
-    
+    [self initNavigationBar];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    
-    //call api
-    [SVProgressHUD show];
-    [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
-                                 OnComplete:^(MKNetworkOperation *complete){
-                                     if([[complete responseJSON][@"code"] integerValue] == 0){
-                                         
-                                         [_listView initWithArray:[complete responseJSON][@"Packages"]];
-                                     }
-                                     [SVProgressHUD dismiss];
-                                 }
-                                    onError:^(MKNetworkOperation *complete, NSError *error){
-                                        NSLog(@"error ------------------------ %@", error);
-                                        [SVProgressHUD dismiss];
-                                    }];
+    [_listView initWithArray:[MDPackageService getInstance].packageList];
 }
 
 -(void) initNavigationBar {
@@ -51,24 +38,15 @@
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:_backButton];
     self.navigationItem.leftBarButtonItem = leftButton;
     
-    //right button
-//    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightButton setTitle:@"リスト" forState:UIControlStateNormal];
-//    rightButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-//    rightButton.frame = CGRectMake(0, 0, 25, 44);
-//    [rightButton addTarget:self action:@selector(gotoListView) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-//    self.navigationItem.rightBarButtonItem = rightBtn;
 }
 
 -(void)goBackToMap{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void) makeUpData:(NSDictionary *)data{
+-(void) makeUpData:(MDPackage *)data{
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
-    MDPackage *tmpPackage = [[MDPackage alloc]initWithData:data];
-    rdvc.package = tmpPackage;
+    rdvc.package = data;
     [self.navigationController pushViewController:rdvc animated:YES];
 }
 

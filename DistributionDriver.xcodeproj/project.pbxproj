@@ -136,6 +136,11 @@
 		0DAA27221AFF556000AFD83A /* MDHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA27211AFF556000AFD83A /* MDHistoryCell.m */; };
 		0DAA27251AFF8FB900AFD83A /* BothReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA27241AFF8FB900AFD83A /* BothReview.m */; };
 		0DAA272D1AFF9A5400AFD83A /* MDIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA272C1AFF9A5400AFD83A /* MDIntroViewController.m */; };
+		0DAA27341B00519000AFD83A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DAA27331B00519000AFD83A /* Crashlytics.framework */; };
+		0DAA27441B01CC8200AFD83A /* MDBankSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA27431B01CC8200AFD83A /* MDBankSettingView.m */; };
+		0DAA27481B01CCBF00AFD83A /* MDBankInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA27471B01CCBF00AFD83A /* MDBankInfo.m */; };
+		0DAA274B1B01DCF000AFD83A /* MDBankInfoSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA274A1B01DCF000AFD83A /* MDBankInfoSettingViewController.m */; };
+		0DAA274F1B025DB400AFD83A /* MDBankSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA274D1B025DB400AFD83A /* MDBankSearchViewController.m */; };
 		0DDDA64A1AEC80A700067016 /* MDProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDDA6491AEC80A700067016 /* MDProfileViewController.m */; };
 		0DDDA64E1AEC80CD00067016 /* MDProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DDDA64D1AEC80CD00067016 /* MDProfileView.m */; };
 		0DDDA6521AEC83BE00067016 /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DDDA6511AEC83BE00067016 /* profile.jpg */; };
@@ -386,6 +391,15 @@
 		0DAA27241AFF8FB900AFD83A /* BothReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BothReview.m; path = BothReview/BothReview.m; sourceTree = "<group>"; };
 		0DAA272B1AFF9A5400AFD83A /* MDIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDIntroViewController.h; path = Intro/MDIntroViewController.h; sourceTree = "<group>"; };
 		0DAA272C1AFF9A5400AFD83A /* MDIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDIntroViewController.m; path = Intro/MDIntroViewController.m; sourceTree = "<group>"; };
+		0DAA27331B00519000AFD83A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		0DAA27421B01CC8200AFD83A /* MDBankSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBankSettingView.h; path = BankSetting/MDBankSettingView.h; sourceTree = "<group>"; };
+		0DAA27431B01CC8200AFD83A /* MDBankSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBankSettingView.m; path = BankSetting/MDBankSettingView.m; sourceTree = "<group>"; };
+		0DAA27461B01CCBF00AFD83A /* MDBankInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBankInfo.h; sourceTree = "<group>"; };
+		0DAA27471B01CCBF00AFD83A /* MDBankInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDBankInfo.m; sourceTree = "<group>"; };
+		0DAA27491B01DCF000AFD83A /* MDBankInfoSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBankInfoSettingViewController.h; path = BankInfoSetting/MDBankInfoSettingViewController.h; sourceTree = "<group>"; };
+		0DAA274A1B01DCF000AFD83A /* MDBankInfoSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBankInfoSettingViewController.m; path = BankInfoSetting/MDBankInfoSettingViewController.m; sourceTree = "<group>"; };
+		0DAA274C1B025DB300AFD83A /* MDBankSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBankSearchViewController.h; path = BankInfoSetting/MDBankSearchViewController.h; sourceTree = "<group>"; };
+		0DAA274D1B025DB400AFD83A /* MDBankSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBankSearchViewController.m; path = BankInfoSetting/MDBankSearchViewController.m; sourceTree = "<group>"; };
 		0DDDA6481AEC80A700067016 /* MDProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProfileViewController.h; path = Profile/MDProfileViewController.h; sourceTree = "<group>"; };
 		0DDDA6491AEC80A700067016 /* MDProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDProfileViewController.m; path = Profile/MDProfileViewController.m; sourceTree = "<group>"; };
 		0DDDA64C1AEC80CD00067016 /* MDProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDProfileView.h; path = Profile/MDProfileView.h; sourceTree = "<group>"; };
@@ -441,6 +455,7 @@
 				0D0F8A501AE60B2C00755A22 /* CoreGraphics.framework in Frameworks */,
 				0D0F8A521AE60B2C00755A22 /* UIKit.framework in Frameworks */,
 				0D0F8A4E1AE60B2C00755A22 /* Foundation.framework in Frameworks */,
+				0DAA27341B00519000AFD83A /* Crashlytics.framework in Frameworks */,
 				EE1DEC397BB4F21CA430B1A2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,6 +486,7 @@
 		0D0F8A411AE60B2C00755A22 = {
 			isa = PBXGroup;
 			children = (
+				0DAA27331B00519000AFD83A /* Crashlytics.framework */,
 				0D0F8A531AE60B2C00755A22 /* DistributionDriver */,
 				0D0F8A721AE60B2C00755A22 /* DistributionDriverTests */,
 				0D0F8A4C1AE60B2C00755A22 /* Frameworks */,
@@ -653,6 +669,7 @@
 		0D0F8A951AE61B0C00755A22 /* MDModel */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA27451B01CCAA00AFD83A /* BankInfo */,
 				0DAA270E1AFF35B000AFD83A /* Driver */,
 				0DAA270D1AFF1C9000AFD83A /* Review */,
 				0DAA27061AFF1A0E00AFD83A /* Client */,
@@ -736,6 +753,7 @@
 		0D0F8ABB1AE61B7000755A22 /* MDView */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA273C1B01CBAB00AFD83A /* BankSetting */,
 				0DAA27261AFF8FC000AFD83A /* BothReview */,
 				839C503C1AFC7E7C000A8A1D /* Review */,
 				0D1500E31AFBAE16003686AA /* MapFilter */,
@@ -882,6 +900,7 @@
 		0D0F8AEE1AE61B7000755A22 /* MDViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA27381B01C83000AFD83A /* BankSetting */,
 				0DAA272A1AFF9A2E00AFD83A /* Intro */,
 				0DAA27191AFF549600AFD83A /* DriverHistory */,
 				839C50381AFC7E56000A8A1D /* Review */,
@@ -1198,6 +1217,35 @@
 			name = Intro;
 			sourceTree = "<group>";
 		};
+		0DAA27381B01C83000AFD83A /* BankSetting */ = {
+			isa = PBXGroup;
+			children = (
+				0DAA27491B01DCF000AFD83A /* MDBankInfoSettingViewController.h */,
+				0DAA274A1B01DCF000AFD83A /* MDBankInfoSettingViewController.m */,
+				0DAA274C1B025DB300AFD83A /* MDBankSearchViewController.h */,
+				0DAA274D1B025DB400AFD83A /* MDBankSearchViewController.m */,
+			);
+			name = BankSetting;
+			sourceTree = "<group>";
+		};
+		0DAA273C1B01CBAB00AFD83A /* BankSetting */ = {
+			isa = PBXGroup;
+			children = (
+				0DAA27421B01CC8200AFD83A /* MDBankSettingView.h */,
+				0DAA27431B01CC8200AFD83A /* MDBankSettingView.m */,
+			);
+			name = BankSetting;
+			sourceTree = "<group>";
+		};
+		0DAA27451B01CCAA00AFD83A /* BankInfo */ = {
+			isa = PBXGroup;
+			children = (
+				0DAA27461B01CCBF00AFD83A /* MDBankInfo.h */,
+				0DAA27471B01CCBF00AFD83A /* MDBankInfo.m */,
+			);
+			name = BankInfo;
+			sourceTree = "<group>";
+		};
 		0DDDA6471AEC808C00067016 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1307,6 +1355,7 @@
 				0D0F8A471AE60B2C00755A22 /* Frameworks */,
 				0D0F8A481AE60B2C00755A22 /* Resources */,
 				0FCAFE9599765982D326E999 /* Copy Pods Resources */,
+				0DAA27321B00512800AFD83A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1450,6 +1499,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0DAA27321B00512800AFD83A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run b3bf459fee27b33c2f19f338b31b00b8e4590f72 5b38d46271cdcd4b9c6ccd5255a0059b320a8597d5b790503d96f74edfa83a1b";
+		};
 		0FCAFE9599765982D326E999 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1496,9 +1558,11 @@
 				0D0F8B311AE61B7000755A22 /* MDCreateProfileView.m in Sources */,
 				0D0F8A641AE60B2C00755A22 /* ViewController.m in Sources */,
 				0DAA272D1AFF9A5400AFD83A /* MDIntroViewController.m in Sources */,
+				0DAA27441B01CC8200AFD83A /* MDBankSettingView.m in Sources */,
 				0DE785AC1AE7378500E56333 /* MDButtonAndDescriptionView.m in Sources */,
 				0D0F8AAE1AE61B0C00755A22 /* MDCurrentPackage.m in Sources */,
 				0D0F8AAF1AE61B0C00755A22 /* MDDevice.m in Sources */,
+				0DAA274B1B01DCF000AFD83A /* MDBankInfoSettingViewController.m in Sources */,
 				0D0F8AA91AE61B0C00755A22 /* MDAPI.m in Sources */,
 				0D0F8B3B1AE61B7000755A22 /* MDRequestDetailView.m in Sources */,
 				0D0F8AAB1AE61B0C00755A22 /* MDCustomer.m in Sources */,
@@ -1530,10 +1594,12 @@
 				0D0F8B351AE61B7000755A22 /* MDIndexView.m in Sources */,
 				0DAA27181AFF471800AFD83A /* MDReviewWell.m in Sources */,
 				0D0F8B2C1AE61B7000755A22 /* MDInput.m in Sources */,
+				0DAA274F1B025DB400AFD83A /* MDBankSearchViewController.m in Sources */,
 				0D0F8AAA1AE61B0C00755A22 /* MDCustomerDAO.m in Sources */,
 				839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */,
 				0D0F8B8F1AE696B400755A22 /* MDKindButton.m in Sources */,
 				0D0F8B2D1AE61B7000755A22 /* MDNoframeButton.m in Sources */,
+				0DAA27481B01CCBF00AFD83A /* MDBankInfo.m in Sources */,
 				0DAA27111AFF35C000AFD83A /* MDDriver.m in Sources */,
 				0D0F8B491AE61B7000755A22 /* MDPreparePayViewController.m in Sources */,
 				0D0F8B301AE61B7000755A22 /* MDTabButton.m in Sources */,
@@ -1698,6 +1764,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: SONGRAN LIU (367CEE3EZY)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DistributionDriver/DistributionDriver-Prefix.pch";
 				INFOPLIST_FILE = "DistributionDriver/DistributionDriver-Info.plist";
@@ -1715,6 +1785,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: SONGRAN LIU (367CEE3EZY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: SONGRAN LIU (367CEE3EZY)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DistributionDriver/DistributionDriver-Prefix.pch";
 				INFOPLIST_FILE = "DistributionDriver/DistributionDriver-Info.plist";

@@ -82,7 +82,7 @@
         payButton.buttonTitle.text = @"振込口座";
         payButton.selectLabel.text = [NSString stringWithFormat:@"%@",user.creditNumber];
         [payButton setUnactive];
-        [payButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
+        [payButton addTarget:self action:@selector(payButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:payButton];
         
         //name button
@@ -220,6 +220,12 @@
 -(void) introButtonTouched{
     if([self.delegate respondsToSelector:@selector(introButtonPushed)]){
         [self.delegate introButtonPushed];
+    }
+}
+
+-(void) payButtonTouched{
+    if([self.delegate respondsToSelector:@selector(payButtonPushed)]){
+        [self.delegate payButtonPushed];
     }
 }
 

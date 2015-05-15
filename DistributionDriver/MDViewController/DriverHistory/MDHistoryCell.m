@@ -33,7 +33,9 @@
 }
 
 -(void) initView {
-    previewWell = [[MDReviewWell alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 100)];
+    self.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
+
+    previewWell = [[MDReviewWell alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 100)];
     [previewWell setBackgroundColor:[UIColor whiteColor]];
     [self addSubview:previewWell];
 }

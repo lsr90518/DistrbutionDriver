@@ -96,7 +96,7 @@
             MKAnnotationView* customPinView = [[MKAnnotationView alloc]
                                                 initWithAnnotation:annotation reuseIdentifier:travellerAnnotationIdentifier];
             UIImage *image = [UIImage imageNamed:@"pinOn"];
-            customPinView.image = image;  //将图钉变成笑脸。
+            customPinView.image = image;  //
             return customPinView;
         }
         else

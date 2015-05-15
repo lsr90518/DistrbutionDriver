@@ -23,12 +23,12 @@
         
         
         //add title
-        self.buttonTitle = [[UILabel alloc]initWithFrame:CGRectMake(19, 18, 90, 14)];
+        self.buttonTitle = [[UILabel alloc]initWithFrame:CGRectMake(19, 16, 90, 18)];
         self.buttonTitle.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
         [self addSubview:self.buttonTitle];
         
         //add select
-        self.selectLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width-180, 19, 149, 13)];
+        self.selectLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width-180, 17, 149, 18)];
         self.selectLabel.textAlignment = NSTextAlignmentRight;
         self.selectLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:14];
         [self addSubview:self.selectLabel];

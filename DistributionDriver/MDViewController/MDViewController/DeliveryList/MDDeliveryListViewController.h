@@ -15,4 +15,6 @@
 
 @property (strong, nonatomic) MDDeliveryListView *listView;
 
+@property (strong, nonatomic) NSString                  *pref;
+
 @end

@@ -15,4 +15,6 @@
 @property (strong, nonatomic) UIColor  *themeColor;
 @property (strong, nonatomic) NSString *contentText;
 
+-(void) inputBolderContent:(NSString *)text index:(int)index;
+
 @end

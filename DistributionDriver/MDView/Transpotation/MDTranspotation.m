@@ -42,27 +42,28 @@
         [transpotationTitleView addSubview:transpotationSubtitleLabel];
         [self addSubview:transpotationTitleView];
         
+        float viewLength = transpotationTitleView.frame.size.width / 4;
         
         //button group
-        walkButton = [[MDKindButton alloc]initWithFrame:CGRectMake(10, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, 75, 75)];
+        walkButton = [[MDKindButton alloc]initWithFrame:CGRectMake(10, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength, viewLength)];
         [walkButton setIconImageByName:@"walkingIcon"];
         walkButton.buttonTitle.text = @"徒歩";
         [walkButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:walkButton];
         //button group
-        bikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(84, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, 76, 75)];
+        bikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(walkButton.frame.origin.x + walkButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength+1, viewLength)];
         [bikeButton setIconImageByName:@"bikeIcon"];
         bikeButton.buttonTitle.text = @"自転車";
         [bikeButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:bikeButton];
         //button group
-        motorbikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(159, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, 76, 75)];
+        motorbikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(bikeButton.frame.origin.x + bikeButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength + 1, viewLength)];
         [motorbikeButton setIconImageByName:@"motorbikeIcon"];
         motorbikeButton.buttonTitle.text = @"バイク";
         [motorbikeButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:motorbikeButton];
         //button group
-        trankButton = [[MDKindButton alloc]initWithFrame:CGRectMake(234, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, 76, 75)];
+        trankButton = [[MDKindButton alloc]initWithFrame:CGRectMake(motorbikeButton.frame.origin.x + motorbikeButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength + 1, viewLength)];
         [trankButton setIconImageByName:@"trankIcon"];
         trankButton.buttonTitle.text = @"自動車";
         [trankButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];

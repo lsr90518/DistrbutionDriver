@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MDDeliveryTableView.h"
 #import "MDDeliveryTableViewCell.h"
+#import "MDPackage.h"
 
 @protocol MDDeliveryListViewDelegate;
 
 @interface MDDeliveryListView : UIView<MDDeliveryTableViewDelegate>
 
-@property (strong, nonatomic) MDDeliveryTableView        *deliveryTableView;
-
+@property (strong, nonatomic) MDDeliveryTableView       *deliveryTableView;
 @property (nonatomic, assign) id<MDDeliveryListViewDelegate>   delegate;
 
 -(void) initWithArray:(NSArray *)array;
@@ -27,6 +27,6 @@
 @optional
 -(void) gotoDeliveryView;
 -(void) gotoSettingView;
--(void) makeUpData:(NSDictionary *)data;
+-(void) makeUpData:(MDPackage *)data;
 
 @end

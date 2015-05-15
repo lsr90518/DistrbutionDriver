@@ -30,7 +30,7 @@
 @optional
 -(void) gotoDeliveryView;
 -(void) gotoSettingView;
--(void) makeUpData:(NSDictionary *)data;
+-(void) makeUpData:(MDPackage *)data;
 -(void) refreshData;
 
 @end

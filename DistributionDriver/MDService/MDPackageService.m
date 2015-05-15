@@ -42,6 +42,13 @@
     }
 }
 
+-(void) initDataWithArray:(NSArray *)array SortByDate:(BOOL)sort{
+    [self initDataWithArray:array];
+    if(sort){
+        [_packageList sortedArrayUsingSelector:@selector(compareByDate:)];
+    }
+}
+
 -(void) initDataWithArray:(NSArray *)array
              WithDistance:(CLLocation *)location{
     if(_packageList == nil){
@@ -55,8 +62,15 @@
     for (int i = 0;i < array.count;i++) {
         NSString *image = [array objectAtIndex:i][@"image"];
         if(![image isEqual:[NSNull null]]){
+            NSLog(@"image : %@", image);
             MDPackage *tmpPackage = [[MDPackage alloc]initWithData:[array objectAtIndex:i]];
-            [tmpList addObject:tmpPackage];
+            //check
+            if([tmpPackage.status isEqualToString:@"0"] && ![self checkDate:tmpPackage.expire]){
+                tmpPackage.status = @"4";
+            } else {
+            
+                [_packageList addObject:tmpPackage];
+            }
         }
     }
     //sort
@@ -103,7 +117,7 @@
         NSDate *packageDate = [tmpFormatter dateFromString:obj.deliver_limit];
         
         NSTimeInterval time=[packageDate timeIntervalSinceDate:currentPackageDate];
-        if(time > 0){
+        if(time < 0){
             flag++;
         }
         if(flag == 4){
@@ -112,6 +126,20 @@
     }];
     
     return tmpPackageList;
+}
+
+-(BOOL) checkDate:(NSString *)dateStr {
+    NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];//实例化一个NSDateFormatter对象
+    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:00"];//设定时间格式,这里可以设置成自己需要的格式
+    NSDate *givenDate =[dateFormat dateFromString:dateStr];
+    
+    NSTimeInterval interval = [givenDate timeIntervalSinceNow];
+    
+    if(interval > 0){
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

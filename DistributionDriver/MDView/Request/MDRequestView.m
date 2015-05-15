@@ -93,7 +93,7 @@
     }
 }
 
--(void) didSelectedRowWithData:(NSDictionary *)data {
+-(void) didSelectedRowWithData:(MDPackage *)data {
     if([self.delegate respondsToSelector:@selector(makeUpData:)]){
         [self.delegate makeUpData:data];
     }

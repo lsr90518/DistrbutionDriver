@@ -19,6 +19,7 @@
 
 -(void) setKeyboardToolbar;     // initWithFrame内でsetされる
 -(void) disableKeyboardToolbar; // 必要ない場合はこれを呼ぶ
+-(void) setMark:(NSString *)mark;
 
 @end
 
@@ -29,5 +30,6 @@
 -(void) endInput:(MDInput *)input;
 -(void) buttonPushed:(MDInput *)view;
 -(void) returnKeyPushed:(MDInput *)input;
+-(void) textInputting:(MDInput *)input;
 
 @end

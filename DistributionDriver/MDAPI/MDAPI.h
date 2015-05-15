@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MKNetworkKit.h>
+#import "MDBankInfo.h"
 #import "MDUser.h"
 
 #define API_DRIVERS_CREATE          @"drivers/create"
@@ -28,6 +29,9 @@
 #define API_PACKAGE_ACCEPT          @"packages/driver/accept"
 #define API_PACKAGE_RECEIVE         @"packages/driver/receive"
 #define API_PACKAGE_DELIVERY        @"packages/driver/complete"
+
+#define API_SET_BANK_ACCOUNT        @"drivers/set_bank_account"
+#define API_REQUEST_WITHDRAW_DEPOSIT @"drivers/request_withdraw_deposit"
 
 #define API_USER_GET_DRIVER_DATA    @"users/get_driver_data"
 
@@ -125,5 +129,15 @@
                      driverId:(NSString *)driver_id
                    OnComplete:(void (^)(MKNetworkOperation *))complete
                       onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) setBankAccountWithHash:(NSString *)hash
+                      bankInfo:(MDBankInfo *)bankInfo
+                    OnComplete:(void (^)(MKNetworkOperation *))complete
+                       onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) requestWithDrawDepositWithHash:(NSString *)hash
+                                amount:(NSString *)amount
+                            OnComplete:(void (^)(MKNetworkOperation *))complete
+                               onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

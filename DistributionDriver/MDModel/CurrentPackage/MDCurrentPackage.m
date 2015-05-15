@@ -38,11 +38,11 @@
     //届け時刻
     if(self.deliver_limit == nil) {
         //4時間後
-        NSDate *fiveHoursAfter = [now dateByAddingTimeInterval:5*60*60];
+        NSDate *oneDayHoursAfter = [now dateByAddingTimeInterval:24*60*60];
         NSDateFormatter *tmpFormatter = [[NSDateFormatter alloc]init];
         [tmpFormatter setLocale:[NSLocale systemLocale]];
         [tmpFormatter setDateFormat:@"YYYY-MM-dd HH:mm:00"];
-        self.deliver_limit = [tmpFormatter stringFromDate:fiveHoursAfter];
+        self.deliver_limit = [tmpFormatter stringFromDate:oneDayHoursAfter];
         
     }
     

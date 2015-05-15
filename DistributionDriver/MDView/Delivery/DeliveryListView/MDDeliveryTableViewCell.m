@@ -9,6 +9,7 @@
 #import "MDDeliveryTableViewCell.h"
 #import "MDRequest.h"
 #import <UIImageView+WebCache.h>
+#import "MDPackage.h"
 
 @implementation MDDeliveryTableViewCell
 
@@ -112,16 +113,6 @@
     _statusLeft.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
     _statusLeft.text = @"期限になってもマッチしなかったため取消";
     
-    //status label 配送員未定
-    //    _statusLeft = [[UILabel alloc]initWithFrame:CGRectMake(78, 15, 61, 17)];
-    //    _statusLeft.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:10];
-    //    _statusLeft.textAlignment = NSTextAlignmentCenter;
-    //    _statusLeft.layer.cornerRadius = 2.5;
-    //    _statusLeft.layer.borderWidth = 0.5;
-    //    _statusLeft.layer.borderColor = [UIColor colorWithRed:226.0/255.0 green:0/255.0 blue:0/255.0 alpha:1].CGColor;
-    //    _statusLeft.textColor = [UIColor colorWithRed:226.0/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    //    _statusLeft.text = @"配送員未定";
-    
     
     [self addSubview:_statusLeft];
     
@@ -145,23 +136,23 @@
     [self addSubview:footer];
 }
 
--(void) initCellWithData:(NSDictionary *)data {
+-(void) initCellWithData:(MDPackage *)package {
     
     //show package_number
-    NSString *number = [NSString stringWithFormat:@"%@", data[@"package_number"]];
-    int length = number.length/2;
+    NSString *number = [NSString stringWithFormat:@"%@", package.package_number];
+    unsigned long length = number.length/2;
     NSString *numberLeft = [number substringToIndex:length];
     NSString *numberRight = [number substringFromIndex:length];
     _statusLabel.text = [NSString stringWithFormat:@"番号: %@ - %@",numberLeft, numberRight];
     
     //add image
-    NSString *imagePath = [NSString stringWithFormat:@"%@", data[@"image"]];
+    NSString *imagePath = [NSString stringWithFormat:@"%@", package.image];
     if (![imagePath isEqualToString:@"<null>"]) {
         [_cargoImageView sd_setImageWithURL:[NSURL URLWithString:imagePath] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
     }
     
     //status
-    int status = [data[@"status"] integerValue];
+    int status = [package.status intValue];
     switch (status) {
         case -1:
             _statusLeft.text = @"期限になってもマッチしなかったため取消";

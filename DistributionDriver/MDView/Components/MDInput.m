@@ -30,7 +30,7 @@
         
         
         //input
-        self.input = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width-150, 19, 130, 15)];
+        self.input = [[UITextField alloc]initWithFrame:CGRectMake(frame.size.width-170, 18, 150, 17)];
         self.input.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:14];
         self.input.textAlignment = NSTextAlignmentRight;
         self.input.delegate = self;
@@ -70,6 +70,16 @@
     _input.inputAccessoryView = nil;
 }
 
+-(void) setMark:(NSString *)mark{
+    [self.input setFrame:CGRectMake(self.input.frame.origin.x - 10, self.input.frame.origin.y, self.input.frame.size.width, self.input.frame.size.height)];
+    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.input.frame.origin.x + self.input.frame.size.width + 2, self.input.frame.origin.y, 14, 14)];
+    markLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:14];
+    markLabel.text = @"円";
+    markLabel.textColor = [UIColor blackColor];
+    [self addSubview:markLabel];
+}
+
+
 -(void) textFieldDidBeginEditing:(UITextField *)textField{
     if ([self.delegate respondsToSelector:@selector(inputPushed:)]){
         [self.delegate inputPushed:self];
@@ -84,6 +94,13 @@
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
     if([self.delegate respondsToSelector:@selector(returnKeyPushed:)]){
         [self.delegate returnKeyPushed:self];
+    }
+    return YES;
+}
+
+-(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if([self.delegate respondsToSelector:@selector(textInputting:)]){
+        [self.delegate textInputting:self];
     }
     return YES;
 }

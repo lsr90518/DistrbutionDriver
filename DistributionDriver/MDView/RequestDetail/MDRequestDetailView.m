@@ -228,6 +228,18 @@
     return self;
 }
 
+-(void) resizeSubviews{
+    //address
+    [requestAddressView setFrame:CGRectMake(10, cameraButton.frame.origin.y + cameraButton.frame.size.height + 10, self.frame.size.width-20, 100)];
+    [destinationAddressView setFrame:CGRectMake(10, requestAddressView.frame.origin.y + requestAddressView.frame.size.height + 10, self.frame.size.width-20, 100)];
+    [sizePicker setFrame:CGRectMake(10, destinationAddressView.frame.origin.y + destinationAddressView.frame.size.height + 10, self.frame.size.width-20, 50)];
+    [beCarefulPicker setFrame:CGRectMake(10, sizePicker.frame.origin.y + sizePicker.frame.size.height + 10, self.frame.size.width-20, 50)];
+    [costPicker setFrame:CGRectMake(10, beCarefulPicker.frame.origin.y + beCarefulPicker.frame.size.height + 10, self.frame.size.width-20, 50)];
+    [cusTodyTimePicker setFrame:CGRectMake(10, costPicker.frame.origin.y + costPicker.frame.size.height + 10, self.frame.size.width-20, 50)];
+    [destinateTimePicker setFrame:CGRectMake(10, cusTodyTimePicker.frame.origin.y + cusTodyTimePicker.frame.size.height + 10, self.frame.size.width-20, 50)];
+    [requestTerm setFrame:CGRectMake(10, destinateTimePicker.frame.origin.y + destinateTimePicker.frame.size.height + 10, self.frame.size.width-20, 50)];
+}
+
 -(void) setStatus:(int)status {
     switch (status) {
         case 0:
@@ -235,10 +247,10 @@
             //下のバー
             [_scrollView setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - 70)];
             
+            [statusButton setHidden:YES];
             //状態のボタン
-            statusButton.buttonTitle.text = @"";
-            statusButton.selectLabel.text = @"";
-            [statusButton addTarget:self action:@selector(callUserPhone:) forControlEvents:UIControlEventTouchUpInside];
+            [cameraButton setFrame:CGRectMake(statusButton.frame.origin.x, statusButton.frame.origin.y, cameraButton.frame.size.width, cameraButton.frame.size.height)];
+            [self resizeSubviews];
             break;
         case 1:
             
@@ -285,6 +297,19 @@
     //at_home_time
     //
     
+    if([package.at_home_time[0][0] isEqualToString:@"-1"]){
+        NSLog(@"at_home_time null");
+    } else {
+        NSString *at_home_hour = [NSString stringWithFormat:@"%@", package.at_home_time[0][1]];
+        NSString *at_home_time_str = @"";
+        if([at_home_hour isEqualToString:@"-1"]){
+            at_home_time_str = [NSString stringWithFormat:@"%@ いつでも", package.at_home_time[0][0]];
+        } else {
+            at_home_time_str = [NSString stringWithFormat:@"%@ %@時〜%@時", package.at_home_time[0][0], package.at_home_time[0][1], package.at_home_time[0][2]];
+        }
+        cusTodyTimePicker.selectLabel.text = at_home_time_str;
+    }
+    
     //note
     //    additionalServicePicker.selectLabel.text = [MDCurrentPackage getInstance].note;
     //取扱説明書
@@ -304,7 +329,7 @@
     NSDate *expireDate =[dateFormat dateFromString:package.expire];
     NSTimeInterval timeBetween = [expireDate timeIntervalSinceDate:now];
     int hour = timeBetween/60/60;
-    if (hour < 1) {
+    if (timeBetween < 1) {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"期限で取消された"];
     } else {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"%d時間以内",hour+1];

@@ -51,4 +51,24 @@
 
 }
 
+-(void) inputBolderContent:(NSString *)text index:(int)index{
+    NSString *fullText = _content.text;
+    
+    NSString *firstPart = [fullText substringToIndex:index];
+    NSString *secondPart = [fullText substringFromIndex:index];
+    
+    NSString *newString = [NSString stringWithFormat:@"%@%@%@", firstPart, text, secondPart];
+    
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:newString];
+    
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HiraKakuProN-W6" size:11] range:NSMakeRange(index, text.length)];
+    
+    CGFloat customLineHeight = 8;
+    NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragrahStyle setLineSpacing:customLineHeight];
+    [str addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0, str.length)];
+    _content.attributedText = str;
+    _content.numberOfLines = 5;
+}
+
 @end

@@ -38,5 +38,6 @@
 -(void) profileImagePushed;
 -(void) gotoTansptationView;
 -(void) introButtonPushed;
+-(void) payButtonPushed;
 
 @end

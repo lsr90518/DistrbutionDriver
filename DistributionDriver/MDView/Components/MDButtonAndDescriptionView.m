@@ -95,7 +95,6 @@
 
 -(void) setPicture:(UIImage *)picture{
     CGSize imagesize = picture.size;
-    NSLog(@"%f %f", imagesize.height,imagesize.width);
     CGSize buttonSize = self.iconButton.frame.size;
     //正方形
     if(imagesize.height == imagesize.width){

@@ -408,4 +408,44 @@
           onError:error];
 }
 
+-(void) setBankAccountWithHash:(NSString *)hash
+                      bankInfo:(MDBankInfo *)bankInfo
+                    OnComplete:(void (^)(MKNetworkOperation *))complete
+                       onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:bankInfo.bank_number forKey:@"bank_number"];
+    [dic setObject:bankInfo.branch_number forKey:@"branch_number"];
+    [dic setObject:bankInfo.type forKey:@"type"];
+    [dic setObject:bankInfo.account_number forKey:@"account_number"];
+    [dic setObject:bankInfo.name forKey:@"name"];
+    
+    
+    [self callApi:dic
+          withUrl:API_SET_BANK_ACCOUNT
+       withImages:@[]
+   withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
+-(void) requestWithDrawDepositWithHash:(NSString *)hash
+                                amount:(NSString *)amount
+                            OnComplete:(void (^)(MKNetworkOperation *))complete
+                               onError:(void (^)(MKNetworkOperation *, NSError *))error{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:hash forKey:@"hash"];
+    [dic setObject:USER_DEVICE forKey:@"client"];
+    [dic setObject:amount forKey:@"amount"];
+    
+    
+    [self callApi:dic
+          withUrl:API_REQUEST_WITHDRAW_DEPOSIT
+       withImages:@[]
+   withHttpMethod:@"POST"
+       onComplete:complete
+          onError:error];
+}
+
 @end

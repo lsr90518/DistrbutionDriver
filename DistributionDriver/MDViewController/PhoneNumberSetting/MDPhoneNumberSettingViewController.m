@@ -10,8 +10,8 @@
 #import "MDInput.h"
 #import "MDUser.h"
 #import "MDAPI.h"
-#import <SVProgressHUD.h>
 #import "MDUtil.h"
+#import <SVProgressHUD.h>
 
 @interface MDPhoneNumberSettingViewController () {
     UIButton *postButton;
@@ -28,7 +28,7 @@
     
     _phoneInput = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
     _phoneInput.title.text = @"電話番号";
-    _phoneInput.input.text = [MDUser getInstance].phoneNumber;
+    _phoneInput.input.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
     [_phoneInput.input setKeyboardType:UIKeyboardTypeNumberPad];
     [_phoneInput.title sizeToFit];
     [self.view addSubview:_phoneInput];
@@ -70,18 +70,20 @@
 -(void) changePhoneNumber {
     //call api
     [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeBlack];
-    [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[MDUser getInstance].phoneNumber
+    [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber]
                                             newPhoneNumber:_phoneInput.input.text OnComplete:^(MKNetworkOperation *completeOperation) {
+                                                
+                                                [SVProgressHUD dismiss];
                                                 if( [[completeOperation responseJSON][@"code"] integerValue] == 0){
                                                     NSLog(@"%@", [completeOperation responseJSON]);
-                                                    [SVProgressHUD dismiss];
                                                     
                                                     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                                                 } else if([[completeOperation responseJSON][@"code"] integerValue] == -99){
-                                                
+                                                    
                                                     [MDUtil makeAlertWithTitle:@"連続送信禁止" message:@"悪用防止のため連続での送信はお控えください。しばらくお待ちいただいてから再度お試しください。" done:@"OK" viewController:self];
                                                 }
                                             }onError:^(MKNetworkOperation *completeOperarion, NSError *error){
+                                                NSLog(@"%@", error);
                                                 
                                                 [SVProgressHUD dismiss];
                                                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"番号変更"

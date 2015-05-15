@@ -25,6 +25,7 @@
     MDPinCalloutView *infoWindow;
     MKAnnotationView *currentAnnotationView;
     MKCoordinateRegion currentUserRegion;
+    NSString *currentPref;
     BOOL isSelected;
     BOOL isMoved;
     BOOL isTrack;
@@ -86,7 +87,6 @@
 }
 
 -(void) getCurrentPref:(MKUserLocation *)userLocation{
-    [SVProgressHUD showWithStatus:@"東京都の荷物を探してる。"];
     // 获取当前所在的城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     //根据经纬度反向地理编译出地址信息
@@ -97,8 +97,8 @@
              CLPlacemark *placemark = [array objectAtIndex:0];
              
              //获取城市
-             NSString *pref = placemark.administrativeArea;
-             [self loadDataByPref:pref location:userLocation];
+             currentPref = placemark.administrativeArea;
+             [self loadDataByPref:currentPref location:userLocation.location];
              [SVProgressHUD dismiss];
          }
      }];
@@ -107,6 +107,7 @@
 
 -(void) loadDataByPref:(NSString *)pref
               location:(CLLocation *)location{
+    
     [SVProgressHUD show];
     
     [[MDAPI sharedAPI]getWaitingPackageWithHash:[MDUser getInstance].userHash
@@ -519,6 +520,7 @@
 
 -(void) gotoListView{
     MDDeliveryListViewController *dlvc = [[MDDeliveryListViewController alloc]init];
+    dlvc.pref = currentPref;
     [self.navigationController pushViewController:dlvc animated:YES];
 }
 

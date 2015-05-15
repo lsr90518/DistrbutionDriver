@@ -33,13 +33,17 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    _packageService = [[MDPackageService alloc]init];
     //call api
     [SVProgressHUD show];
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
                                  OnComplete:^(MKNetworkOperation *complete){
                                      if([[complete responseJSON][@"code"] integerValue] == 0){
                                          
-                                         [_requestView initWithArray:[complete responseJSON][@"Packages"]];
+                                         
+                                         [_packageService initDataWithArray:[complete responseJSON][@"Packages"] SortByDate:YES];
+                                         [_requestView initWithArray:_packageService.packageList];
                                      }
                                      [SVProgressHUD dismiss];
                                  }
@@ -72,10 +76,9 @@
     
 }
 
--(void) makeUpData:(NSDictionary *)data{
+-(void) makeUpData:(MDPackage *)data{
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
-    MDPackage *tmpPackage = [[MDPackage alloc]initWithData:data];
-    rdvc.package = tmpPackage;
+    rdvc.package = data;
     [self.navigationController pushViewController:rdvc animated:YES];
 }
 
@@ -84,7 +87,8 @@
                                  OnComplete:^(MKNetworkOperation *complete){
                                      if([[complete responseJSON][@"code"] integerValue] == 0){
                                          
-                                         [_requestView initWithArray:[complete responseJSON][@"Packages"]];
+                                         [_packageService initDataWithArray:[complete responseJSON][@"Packages"] SortByDate:YES];
+                                         [_requestView initWithArray:_packageService.packageList];
                                          [_requestView endRefresh];
                                      }
                                  }

@@ -26,7 +26,7 @@
         _deliveryTableView = [[MDDeliveryTableView alloc]initWithFrame:CGRectMake(frame.origin.x,
                                                                                 frame.origin.y,
                                                                                 frame.size.width,
-                                                                                frame.size.height-50)];
+                                                                                frame.size.height)];
         
         //call api
         
@@ -55,7 +55,7 @@
     }
 }
 
--(void) didSelectedRowWithData:(NSDictionary *)data {
+-(void) didSelectedRowWithData:(MDPackage *)data {
     NSLog(@"did send select data");
     if([self.delegate respondsToSelector:@selector(makeUpData:)]){
         [self.delegate makeUpData:data];

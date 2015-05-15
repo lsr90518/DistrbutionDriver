@@ -20,6 +20,7 @@
 
 -(void) initData;
 -(void) initDataWithArray:(NSArray *)array;
+-(void) initDataWithArray:(NSArray *)array SortByDate:(BOOL)sort;
 -(void) initDataWithArray:(NSArray *)array
              WithDistance:(CLLocation *)location;
 -(NSMutableArray *)getPackageListByPackage:(MDCurrentPackage *)package;

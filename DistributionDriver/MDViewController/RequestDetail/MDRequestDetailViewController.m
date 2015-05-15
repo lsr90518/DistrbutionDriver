@@ -173,7 +173,7 @@
                                           [MDUtil makeAlertWithTitle:@"不正番号" message:@"改めてログインしてください。" done:@"OK" viewController:self];
                                       } else {
                                           [SVProgressHUD showSuccessWithStatus:@"荷物を受けました。"];
-                                          [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(goBack) name:SVProgressHUDDidDisappearNotification object: nil];
+                                          [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(goRoot) name:SVProgressHUDDidDisappearNotification object: nil];
 
                                       }
                                       
@@ -184,6 +184,10 @@
 
 -(void) goBack{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) goRoot{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void) cameraButtonPushed {
