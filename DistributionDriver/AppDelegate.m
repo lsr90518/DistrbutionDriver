@@ -16,6 +16,7 @@
 #import "MDDevice.h"
 #import "MDCurrentPackage.h"
 #import "MDMyPackageService.h"
+#import "SRGVersionUpdater.h"
 #import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
@@ -85,6 +86,12 @@
     self.viewController = [[MDIndexViewController alloc] init];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    // force update check
+    SRGVersionUpdater *versionUpdater = [SRGVersionUpdater new];
+    versionUpdater.endPointUrl = [NSString stringWithFormat:@"http://%@/versions/ios_driver.json", API_HOST_NAME];
+    [versionUpdater executeVersionCheck];
+    
     return YES;
 }
 							
@@ -108,6 +115,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // force update check
+    SRGVersionUpdater *versionUpdater = [SRGVersionUpdater new];
+    versionUpdater.endPointUrl = [NSString stringWithFormat:@"http://%@/versions/ios_driver.json", API_HOST_NAME];
+    [versionUpdater executeVersionCheck];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
