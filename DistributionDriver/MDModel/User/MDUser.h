@@ -29,11 +29,16 @@
 @property (strong, nonatomic) NSString *bike;
 @property (strong, nonatomic) NSString *walk;
 @property (strong, nonatomic) NSString *intro;
+@property (strong, nonatomic) NSString *loginStatus;
 
 +(MDUser *)getInstance;
 
 -(void) initDataClear;
 -(void) setData:(NSDictionary *)data;
+
+-(void) setLogin;
+-(void) setLogout;
+-(BOOL) isLogin;
 
 //{
 //    "code": 0,

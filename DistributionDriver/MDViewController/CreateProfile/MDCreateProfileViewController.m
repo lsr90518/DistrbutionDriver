@@ -97,6 +97,7 @@
                                     onComplete:^(MKNetworkOperation *completeOperation) {
                                         NSLog(@"%@", [completeOperation responseJSON]);
                                         user.userHash = [completeOperation responseJSON][@"hash"];
+                                        [user setLogin];
                                         [SVProgressHUD dismiss];
                                         MDViewController *viewcontroller = [[MDViewController alloc]init];
                                         [self presentViewController:viewcontroller animated:YES completion:nil];

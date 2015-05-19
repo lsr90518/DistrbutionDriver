@@ -165,6 +165,7 @@
 		0DF0811B1AF73E5400437700 /* numberTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081191AF73E5400437700 /* numberTo.png */; };
 		0DF0811E1AF7402F00437700 /* MDClusterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0811D1AF7402F00437700 /* MDClusterView.m */; };
 		0DF081271AF8716F00437700 /* currentLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081261AF8716F00437700 /* currentLocation.png */; };
+		487E58A61B0B3C150033E2BC /* MDLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 487E58A51B0B3C150033E2BC /* MDLocalNotificationManager.m */; };
 		839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */; };
 		839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503E1AFC7E99000A8A1D /* MDReviewView.m */; };
 		839C50421AFC8ADC000A8A1D /* MDStarRatingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */; };
@@ -434,6 +435,8 @@
 		0DF0811C1AF7402F00437700 /* MDClusterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDClusterView.h; path = DelieveryMap/MDPin/MDClusterView.h; sourceTree = "<group>"; };
 		0DF0811D1AF7402F00437700 /* MDClusterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDClusterView.m; path = DelieveryMap/MDPin/MDClusterView.m; sourceTree = "<group>"; };
 		0DF081261AF8716F00437700 /* currentLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = currentLocation.png; sourceTree = "<group>"; };
+		487E58A41B0B3C150033E2BC /* MDLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLocalNotificationManager.h; sourceTree = "<group>"; };
+		487E58A51B0B3C150033E2BC /* MDLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDLocalNotificationManager.m; sourceTree = "<group>"; };
 		839C50391AFC7E74000A8A1D /* MDReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDReviewViewController.h; path = Review/MDReviewViewController.h; sourceTree = "<group>"; };
 		839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDReviewViewController.m; path = Review/MDReviewViewController.m; sourceTree = "<group>"; };
 		839C503D1AFC7E99000A8A1D /* MDReviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDReviewView.h; path = Review/MDReviewView.h; sourceTree = "<group>"; };
@@ -726,6 +729,8 @@
 				0D0F8AA61AE61B0C00755A22 /* MDBigRed.m */,
 				0D0F8AA71AE61B0C00755A22 /* MDUtil.h */,
 				0D0F8AA81AE61B0C00755A22 /* MDUtil.m */,
+				487E58A41B0B3C150033E2BC /* MDLocalNotificationManager.h */,
+				487E58A51B0B3C150033E2BC /* MDLocalNotificationManager.m */,
 			);
 			path = MDUtil;
 			sourceTree = "<group>";
@@ -1618,6 +1623,7 @@
 				0D0F8B4C1AE61B7000755A22 /* MDRequestAmountViewController.m in Sources */,
 				0D1500E91AFBAFC3003686AA /* MDPicker.m in Sources */,
 				0D0F8B321AE61B7000755A22 /* MDAddressInputTable.m in Sources */,
+				487E58A61B0B3C150033E2BC /* MDLocalNotificationManager.m in Sources */,
 				0D0F8B411AE61B7000755A22 /* MDDeliveryViewController.m in Sources */,
 				0D0F8B461AE61B7000755A22 /* MDNameSettingViewController.m in Sources */,
 				0D0F8B2E1AE61B7000755A22 /* MDSelect.m in Sources */,

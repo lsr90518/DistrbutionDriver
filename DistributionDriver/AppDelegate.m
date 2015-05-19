@@ -18,6 +18,7 @@
 #import "MDMyPackageService.h"
 #import "SRGVersionUpdater.h"
 #import <Crashlytics/Crashlytics.h>
+#import "MDLocalNotificationManager.h"
 
 @implementation AppDelegate
 
@@ -103,8 +104,9 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    // バックグラウンドに移行際に通知を設定する
+    MDLocalNotificationManager *notificationManager = [[MDLocalNotificationManager alloc] init];
+    [notificationManager scheduleLocalNotifications];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

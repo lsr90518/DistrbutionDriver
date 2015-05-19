@@ -17,4 +17,7 @@
 -(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
 +(void)makeAlertWithTitle:(NSString *)title message:(NSString *)message done:(NSString *)done viewController:(UIViewController *)viewController;
 
++(NSDate *)getLocalDateTimeFromString:(NSString *)datetime utc:(BOOL)utc;
++(NSString *)getLocalDateTimeStrFromString:(NSString *)datetime format:(NSString *)format;
+
 @end
