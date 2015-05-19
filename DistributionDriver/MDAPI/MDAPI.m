@@ -9,6 +9,7 @@
 #import "MDAPI.h"
 #import "MDUser.h"
 #import "MDCurrentPackage.h"
+#import "MDDevice.h"
 
 @implementation MDAPI {
     MKNetworkEngine *_engine;
@@ -120,6 +121,7 @@
     [dic setValue:user.car          forKey:@"car"];
     [dic setValue:@""               forKeyPath:@"intro"];
     [dic setValue:@"ios"            forKey:@"client"];
+    [dic setValue:[MDDevice getInstance].token forKey:@"device_token"];
 
     MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_NEWPROFILE
                                                      params:dic
@@ -146,6 +148,7 @@
     [dic setValue:user.intro        forKeyPath:@"intro"];
     [dic setValue:user.userHash     forKey:@"hash"];
     [dic setValue:@"ios"            forKey:@"client"];
+    [dic setValue:[MDDevice getInstance].token forKey:@"device_token"];
     
     MKNetworkOperation *op     = [_engine operationWithPath:API_DRIVERS_UPDATE_PROFILE
                                                      params:dic

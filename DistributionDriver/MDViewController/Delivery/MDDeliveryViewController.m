@@ -111,7 +111,7 @@
     [SVProgressHUD show];
     
     [[MDAPI sharedAPI]getWaitingPackageWithHash:[MDUser getInstance].userHash
-                                       WithPref:pref
+                                       WithPref:@"東京都"
                                      OnComplete:^(MKNetworkOperation *completeOperation){
                                          //call api
                                          [[MDPackageService getInstance] initDataWithArray:[completeOperation responseJSON][@"Packages"]

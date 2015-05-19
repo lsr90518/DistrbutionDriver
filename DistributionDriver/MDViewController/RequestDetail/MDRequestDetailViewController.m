@@ -90,10 +90,19 @@
     
     //call api
     
+    [SVProgressHUD showWithStatus:@"" maskType:SVProgressHUDMaskTypeClear];
+    
     [[MDAPI sharedAPI] getUserDataWithHash:[MDUser getInstance].userHash
                                     userId:_package.user_id
                                   OnComplete:^(MKNetworkOperation *complete) {
                                       //
+                                      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                          // time-consuming task
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              [SVProgressHUD dismiss];
+                                          });
+                                      });
+                                      
                                       _client = [[MDClient alloc]init];
                                       [_client initWithData:[complete responseJSON][@"User"]];
                                       [_requestDetailView setClientData:_client];
@@ -171,6 +180,8 @@
                                           [MDUtil makeAlertWithTitle:@"惜しい" message:@"他のドライバーに決まられた。" done:@"OK" viewController:self];
                                       } else if([[operation responseJSON][@"code"] intValue] == 2){
                                           [MDUtil makeAlertWithTitle:@"不正番号" message:@"改めてログインしてください。" done:@"OK" viewController:self];
+                                      } else if([[operation responseJSON][@"code"] intValue] == 4){
+                                          [MDUtil makeAlertWithTitle:@"評価による制限" message:@"過去の評価による制限で同時受領件数のため荷物が受けられません" done:@"OK" viewController:self];
                                       } else {
                                           [SVProgressHUD showSuccessWithStatus:@"荷物を受けました。"];
                                           [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(goRoot) name:SVProgressHUDDidDisappearNotification object: nil];

@@ -37,6 +37,25 @@
         NSLog(@"first time");
     }
     
+    
+    
+    //notification config
+    // プッシュ許可の確認を表示
+    if(NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
+        // iOS8以降
+        UIUserNotificationType types =  UIUserNotificationTypeBadge |
+        UIUserNotificationTypeSound |
+        UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [application registerUserNotificationSettings:mySettings];
+    }else{
+        // iOS8以前
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+    
+    
+    
+    
     //init navigationBar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     // NavigationBar Image
@@ -94,6 +113,29 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+// iOS8以降ここを通る
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:
+(UIUserNotificationSettings *)notificationSettings{
+    // これ呼ばないとデバイストークン取得できない
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // デバイストークン取得完了
+    
+    NSString *token = deviceToken.description;
+    token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [MDDevice getInstance].token = token;
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    // APNSへの登録失敗
 }
 
 -(void) configure {

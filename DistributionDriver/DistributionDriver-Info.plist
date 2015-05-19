@@ -17,7 +17,7 @@
 		<string>iTunesArtwork</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.modelor.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.modelor.truxDriver</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
