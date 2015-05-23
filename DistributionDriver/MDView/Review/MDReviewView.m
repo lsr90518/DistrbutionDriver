@@ -68,6 +68,7 @@
         postButton.layer.cornerRadius = 2.5;
         [postButton addTarget:self action:@selector(postButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [scrollView addSubview:postButton];
+        isNotTyping = YES;
         
     }
     

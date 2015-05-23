@@ -33,14 +33,10 @@
         self.layer.borderWidth = 0.5;
         self.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
         
-        //        [self setIconImage:[UIImage imageNamed:@"packageIcon"]];
-        
         
         [self addSubview:self.buttonTitle];
         
-        //        UIImage *iconImage = [UIImage imageNamed:@"packageIcon"];
-        //        UILabel
-        
+
         //title
         _status = @"Off";
     }

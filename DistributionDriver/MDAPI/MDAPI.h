@@ -21,6 +21,7 @@
 #define API_DRIVERS_UPDATE_PHONE       @"drivers/request_phone_number_change"
 #define API_GET_WAITING_PACKAGE     @"packages/driver/get_waiting_packages"
 #define API_DRIVERS_GET_USER_DATA   @"drivers/get_user_data"
+#define API_GET_NOTIFICATION        @"drivers/get_notifications"
 
 #define API_GET_PACKAGE_DATA        @"packages/get_package_data"
 #define API_PACKAGE_RESIGER         @"packages/user/register"
@@ -29,7 +30,7 @@
 #define API_PACKAGE_ACCEPT          @"packages/driver/accept"
 #define API_PACKAGE_RECEIVE         @"packages/driver/receive"
 #define API_PACKAGE_DELIVERY        @"packages/driver/complete"
-#define API_GET_NOTIFICATION        @"drivers/get_notifications"
+#define API_CANCEL_PACKAGE          @"packages/driver/cancel"
 
 #define API_SET_BANK_ACCOUNT        @"drivers/set_bank_account"
 #define API_REQUEST_WITHDRAW_DEPOSIT @"drivers/request_withdraw_deposit"
@@ -144,5 +145,10 @@
 -(void) getAllNotificationWithHash:(NSString *)hash
                         OnComplete:(void (^)(MKNetworkOperation *))complete
                            onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) cancelMyPackageWithHash:(NSString *)hash
+                      packageId:(NSString *)packageId
+                     OnComplete:(void (^)(MKNetworkOperation *))complete
+                        onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

@@ -12,6 +12,7 @@
 #import "MDUtil.h"
 #import "MDSelect.h"
 #import "MDReviewViewController.h"
+#import "MDSizeDescriptionViewController.h"
 
 @interface MDRequestDetailViewController ()
 
@@ -31,7 +32,7 @@
 
 -(void)initNavigationBar {
     NSString *number = [NSString stringWithFormat:@"%@",_package.package_number];
-    int length = number.length/2;
+    int length = (int)number.length/2;
     NSString *numberLeft = [number substringToIndex:length];
     NSString *numberRight = [number substringFromIndex:length];
     self.navigationItem.title = [NSString stringWithFormat:@"番号: %@ - %@",numberLeft, numberRight];
@@ -46,24 +47,6 @@
     
     //add right button item
     
-    UIButton *_postButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    if ([_package.status intValue] == 1) {
-        [_postButton setTitle:@"預かった" forState:UIControlStateNormal];
-        _postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        _postButton.frame = CGRectMake(0, 0, 50, 44);
-        [_postButton addTarget:self action:@selector(haveReceived) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:_postButton];
-        self.navigationItem.rightBarButtonItem = rightBarButton;
-        
-    } else if ([_package.status intValue] == 2) {
-        [_postButton setTitle:@"配達完了" forState:UIControlStateNormal];
-        _postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-        _postButton.frame = CGRectMake(0, 0, 50, 44);
-        [_postButton addTarget:self action:@selector(haveDelivered) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:_postButton];
-        self.navigationItem.rightBarButtonItem = rightBarButton;
-    }
 }
 
 - (void)viewDidLoad {
@@ -73,17 +56,29 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
     [self initNavigationBar];
     
-    [_requestDetailView setStatus:[_package.status intValue]];
-    
-    if([_package.status intValue] != 0){
+    if([_package.user_id isEqual:[NSNull null]]){
+        [_requestDetailView seeCancelPackage:_package];
+        self.navigationItem.title = @"キャンセルされた荷物";
+    } else {
+        
+        [_requestDetailView setStatus:[_package.status intValue]];
+        
         [self getUserData];
+        
+        [_requestDetailView makeupByData:_package];
+        
+        NSString *driverReviewed = [NSString stringWithFormat:@"%@", _package.driverReview.reviewed];
+        if([driverReviewed isEqualToString:@"1"]){
+            [_requestDetailView setDriverReviewContent:_package.driverReview];
+        }
+        
+        NSString *userReviewed = [NSString stringWithFormat:@"%@", _package.userReview.reviewed];
+        if([userReviewed isEqualToString:@"1"]){
+            [_requestDetailView setReviewContent:_package.driverReview];
+        }
     }
-    
-    [_requestDetailView makeupByData:_package];
-    
 }
 
 -(void) getUserData{
@@ -238,20 +233,88 @@
     }];
 }
 
--(void) phoneButtonPushed:(MDSelect*)select{
-    NSString *phoneNum = select.selectLabel.text;// 电话号码
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phoneNum]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    [webView loadRequest:request];
-    [self.view addSubview:webView];
-}
-
 -(void) reviewButtonPushed{
     MDReviewViewController *rvc = [[MDReviewViewController alloc]init];
     rvc.package = _package;
     [self.navigationController pushViewController:rvc animated:YES];
     
 }
+
+-(void) sizeDescriptionButtonPushed{
+    MDSizeDescriptionViewController *sdvc = [[MDSizeDescriptionViewController alloc]init];
+    [self.navigationController pushViewController:sdvc animated:YES];
+}
+
+-(void)matchButtonPushed:(MDSelect *)button{
+    [self callNumber:button];
+}
+
+-(void) cancelButtonPushed{
+    
+    UIAlertView *view = [[UIAlertView alloc]initWithTitle:@"依頼のキャンセル"    //标题
+                                                  message:@"依頼をキャンセルすると自動的に星1がつきますが、よろしいでしょうか。"   //显示内容
+                                                 delegate:self          //委托，可以点击事件进行处理
+                                        cancelButtonTitle:@"取消"
+                                        otherButtonTitles:@"依頼をキャンセル",nil];
+     [view show];
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            break;
+        case 1:
+            [self cancelPackage];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void) cancelPackage{
+    [SVProgressHUD show];
+    //call api
+    [[MDAPI sharedAPI] cancelMyPackageWithHash:[MDUser getInstance].userHash
+                                     packageId:_package.package_id
+                                    OnComplete:^(MKNetworkOperation *complete) {
+                                        //
+                                        [SVProgressHUD dismiss];
+                                        NSLog(@"%@", [complete responseJSON]);
+                                        if([[complete responseJSON][@"code"] intValue] == 0){
+                                            [self backButtonPushed];
+                                        }
+                                    } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                        //
+                                    }];
+}
+
+-(void) addressButtonPushed:(MDAddressButton *)button{
+    // URL encode the spaces
+    NSString *addressText =  [button.addressField.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    //apple map
+    NSString* urlText = [NSString stringWithFormat:@"http://maps.apple.com/maps?q=%@",addressText];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlText]];
+}
+
+-(void) callNumber:(MDSelect *)button{
+    UIWebView*callWebview =[[UIWebView alloc] init];
+    NSURL *telURL =[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", button.selectLabel.text]];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+    //记得添加到view上
+    [self.view addSubview:callWebview];
+}
+
+-(void) takeButtonPushed:(UIButton *)button{
+    if(button.tag == 1){
+        [self haveReceived];
+    } else if(button.tag == 2){
+        [self haveDelivered];
+    } else if(button.tag == 3){
+        [self reviewButtonPushed];
+    }
+}
+
 
 @end

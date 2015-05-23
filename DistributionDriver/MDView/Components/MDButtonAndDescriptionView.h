@@ -26,6 +26,8 @@
 
 -(void) setPicture:(UIImage *)picture;
 
+-(BOOL) isHasPicture;
+
 @end
 
 @protocol MDButtonAndDescriptionViewDelegate <NSObject>

@@ -152,18 +152,27 @@
     NSString *driverReviewed = ([data.driverReview.star isEqual:[NSNull null]]) ? @"" : @"1";
     NSString *userReviewed = ([data.userReview.star isEqual:[NSNull null]]) ? @"" : @"1";
     
-    if([driverReviewed isEqualToString:@"0"] && status == 3){
+    if([userReviewed isEqualToString:@"0"] && status == 3){
         _statusLabel.text = [NSString stringWithFormat:@"評価をお願い致します。"];
         _statusLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1];
-    } else if([driverReviewed isEqualToString:@"1"]){
-        if([userReviewed isEqualToString:@"1"]){
+    } else if([userReviewed isEqualToString:@"1"] && status == 3){
+        //        _statusLabel.text = [NSString stringWithFormat:@"評価済み"];
+        //        _statusLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1];
+        
+        if([driverReviewed isEqualToString:@"1"]){
             _statusLabel.text = [NSString stringWithFormat:@"両方評価済み"];
             _statusLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1];
         } else {
             _statusLabel.text = [NSString stringWithFormat:@"評価済み"];
             _statusLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1];
         }
+        
+    } else if( [data.user_id isEqual:[NSNull null]]){
+        _statusLabel.text = @"キャンセルにつき自動評価";
+        _statusLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+        [_statusLabel sizeToFit];
     } else {
+        //判断是否没取消
         //show package_number
         NSString *number = [NSString stringWithFormat:@"%@", data.package_number];
         long length = number.length/2;

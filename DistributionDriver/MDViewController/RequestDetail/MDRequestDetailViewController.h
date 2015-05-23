@@ -11,9 +11,10 @@
 #import "MDPackage.h"
 #import "MDClient.h"
 
-@interface MDRequestDetailViewController : UIViewController<MDRequestDetailViewDelegate>
+@interface MDRequestDetailViewController : UIViewController<MDRequestDetailViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) MDRequestDetailView   *requestDetailView;
+@property (strong, nonatomic) NSMutableDictionary          *data;
 @property (strong, nonatomic) MDPackage             *package;
 @property (strong, nonatomic) MDClient              *client;
 

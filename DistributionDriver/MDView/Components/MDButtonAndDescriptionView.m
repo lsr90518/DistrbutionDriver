@@ -9,7 +9,9 @@
 #import "MDButtonAndDescriptionView.h"
 #import "MDUtil.h"
 
-@implementation MDButtonAndDescriptionView
+@implementation MDButtonAndDescriptionView{
+    BOOL isHasPickture;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,6 +30,7 @@
         _descriptionView = [[UIView alloc]initWithFrame:CGRectMake(_iconButton.frame.origin.x + _iconButton.frame.size.width - 1, _iconButton.frame.origin.y, frame.size.width - 99, _iconButton.frame.size.height)];
         [_descriptionView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1]];
         [self addSubview:_descriptionView];
+        isHasPickture = NO;
         
     }
     return self;
@@ -67,6 +70,7 @@
     [_iconImageView setImage:icon];
     _iconImageView.center = _iconButton.center;
     [_iconButton addSubview:_iconImageView];
+    isHasPickture = YES;
     
 }
 
@@ -113,6 +117,8 @@
         
     }
     
+    isHasPickture = YES;
+    
     
     
 
@@ -125,6 +131,10 @@
     if ([self.delegate respondsToSelector:@selector(buttonPushed:)]) {
         [self.delegate buttonPushed:self];
     }
+}
+
+-(BOOL) isHasPicture{
+    return isHasPickture;
 }
 
 @end

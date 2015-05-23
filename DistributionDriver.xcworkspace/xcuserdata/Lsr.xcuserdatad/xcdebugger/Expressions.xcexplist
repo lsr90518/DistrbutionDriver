@@ -3,12 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MDTranspotationViewController backButtonPushed]:MDTranspotationViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[MDUser getInstance]">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
       </ContextState>
       <ContextState
          contextName = "-[MDNotificationTable tableView:heightForRowAtIndexPath:]:MDNotificationTable.m">
@@ -17,13 +15,16 @@
          contextName = "__39-[MDIndexViewController viewDidAppear:]_block_invoke:MDIndexViewController.m">
       </ContextState>
       <ContextState
-         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDRequestDetailViewController loadView]:MDRequestDetailViewController.m">
+         contextName = "-[MDPackageService initDataWithArray:WithDistance:]:MDPackageService.m">
       </ContextState>
       <ContextState
          contextName = "__49-[MDTranspotationViewController backButtonPushed]_block_invoke:MDTranspotationViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDNotificationTableCell setDataWithModel:]:MDNotificationTableCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController viewWillAppear:]:MDRequestDetailViewController.m">
       </ContextState>
       <ContextState
          contextName = "__36-[MDMyPackageService getAverageStar]_block_invoke:MDMyPackageService.m">
@@ -34,13 +35,36 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDRequestDetailViewController viewWillAppear:]:MDRequestDetailViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
-      </ContextState>
-      <ContextState
          contextName = "__34-[MDLoginViewController postData:]_block_invoke:MDLoginViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDTranspotationViewController backButtonPushed]:MDTranspotationViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[MDUser getInstance]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController reviewButtonPushed]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDReview initWithData:]:MDReview.m">
+      </ContextState>
+      <ContextState
+         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDProfileViewController loadView]:MDProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController loadView]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDTranspotation toggleButton:]:MDTranspotation.m">
       </ContextState>
       <ContextState
          contextName = "-[MDUser setData:]:MDUser.m">
@@ -51,30 +75,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDProfileViewController loadView]:MDProfileViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
-      </ContextState>
-      <ContextState
          contextName = "-[MDPackage initWithData:]:MDPackage.m">
          <PersistentStrings>
             <PersistentString
                value = "data[@&quot;User&quot;]">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[MDRequestDetailViewController reviewButtonPushed]:MDRequestDetailViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDReview initWithData:]:MDReview.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDTranspotation toggleButton:]:MDTranspotation.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

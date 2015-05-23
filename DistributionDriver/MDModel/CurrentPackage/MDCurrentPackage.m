@@ -16,6 +16,7 @@
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
         sharedInstance = [[MDCurrentPackage alloc] init];
+        [sharedInstance initData];
     });
     return sharedInstance;
 }

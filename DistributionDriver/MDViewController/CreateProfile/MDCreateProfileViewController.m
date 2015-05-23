@@ -74,6 +74,7 @@
 }
 
 -(void) postData:(MDCreateProfileView *)createProfileView {
+    
     if (![createProfileView.passwordInput.input.text isEqualToString:[NSString stringWithFormat:@"%@",createProfileView.repeatInput.input.text]]) {
         
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"パスワード"

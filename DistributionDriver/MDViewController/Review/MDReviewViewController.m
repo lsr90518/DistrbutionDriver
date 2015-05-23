@@ -17,7 +17,7 @@
     _reviewView = [[MDReviewView alloc]initWithFrame:self.view.frame];
     [self.view addSubview:_reviewView];
     _reviewView.delegate = self;
-    [_reviewView initWithData:_package.driverReview];
+//    [_reviewView initWithData:_package.driverReview];
     [self initNavigationBar];
 }
 

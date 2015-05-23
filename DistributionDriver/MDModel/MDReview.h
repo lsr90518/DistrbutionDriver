@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *user_name;
 @property (strong, nonatomic) NSString *star;
 @property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) NSString *reviewed;
 
 -(void) initWithData:(NSDictionary*)data;
 

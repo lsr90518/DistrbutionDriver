@@ -44,4 +44,9 @@
     [self.starLabel setUserInteractionEnabled:NO];
 }
 
+-(void) setNoArrow{
+    [self.starLabel setUserInteractionEnabled:NO];
+    [self.starLabel setFrame:CGRectMake(self.frame.size.width - 140, 9, 130, 32)];
+}
+
 @end

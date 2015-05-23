@@ -12,6 +12,7 @@
 #import "MDAPI.h"
 #import "MDUtil.h"
 #import <SVProgressHUD.h>
+#import "MDPhoneViewController.h"
 
 @interface MDPhoneNumberSettingViewController () {
     UIButton *postButton;
@@ -69,34 +70,9 @@
 
 -(void) changePhoneNumber {
     //call api
-    [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeBlack];
-    [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber]
-                                            newPhoneNumber:_phoneInput.input.text OnComplete:^(MKNetworkOperation *completeOperation) {
-                                                
-                                                [SVProgressHUD dismiss];
-                                                if( [[completeOperation responseJSON][@"code"] integerValue] == 0){
-                                                    NSLog(@"%@", [completeOperation responseJSON]);
-                                                    
-                                                    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-                                                } else if([[completeOperation responseJSON][@"code"] integerValue] == -99){
-                                                    
-                                                    [MDUtil makeAlertWithTitle:@"連続送信禁止" message:@"悪用防止のため連続での送信はお控えください。しばらくお待ちいただいてから再度お試しください。" done:@"OK" viewController:self];
-                                                }
-                                            }onError:^(MKNetworkOperation *completeOperarion, NSError *error){
-                                                NSLog(@"%@", error);
-                                                
-                                                [SVProgressHUD dismiss];
-                                                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"番号変更"
-                                                                                                message:@"この番号は変更できません。"
-                                                                                               delegate:self
-                                                                                      cancelButtonTitle:nil
-                                                                                      otherButtonTitles:@"OK", nil];
-                                                alert.delegate = self;
-                                                [alert show];
-                                                
-                                                //                                                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-                                            }];
     
+    MDPhoneViewController *pvc = [[MDPhoneViewController alloc]init];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 -(void) backButtonTouched {

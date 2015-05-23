@@ -129,19 +129,19 @@
         [walkButton setIconImageByName:@"walkingIcon"];
         walkButton.buttonTitle.text = @"徒歩";
         [walkButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:walkButton];
+        [_scrollView addSubview:walkButton];
         //button group
         bikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(walkButton.frame.origin.x + walkButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength+1, viewLength)];
         [bikeButton setIconImageByName:@"bikeIcon"];
         bikeButton.buttonTitle.text = @"自転車";
         [bikeButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:bikeButton];
+        [_scrollView addSubview:bikeButton];
         //button group
         motorbikeButton = [[MDKindButton alloc]initWithFrame:CGRectMake(bikeButton.frame.origin.x + bikeButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength + 1, viewLength)];
         [motorbikeButton setIconImageByName:@"motorbikeIcon"];
         motorbikeButton.buttonTitle.text = @"バイク";
         [motorbikeButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:motorbikeButton];
+        [_scrollView addSubview:motorbikeButton];
         //button group
         trankButton = [[MDKindButton alloc]initWithFrame:CGRectMake(motorbikeButton.frame.origin.x + motorbikeButton.frame.size.width - 1, transpotationTitleView.frame.origin.y + transpotationTitleView.frame.size.height-2, viewLength + 1, viewLength)];
         [trankButton setIconImageByName:@"trankIcon"];
@@ -194,8 +194,10 @@
 }
 
 -(void) postData {
+
     if([self.delegate respondsToSelector:@selector(postData:)]){
         [self.delegate postData:self];
+
     }
 }
 
@@ -237,7 +239,7 @@
         
         for (UIView *view in [_scrollView subviews]) {
             if([view isKindOfClass:[MDInput class]]){
-                MDInput *tmpView = view;
+                MDInput *tmpView = (MDInput *)view;
                 if(isFind){
                     [tmpView.input becomeFirstResponder];
                     break;
@@ -270,6 +272,5 @@
         [_scrollView setContentOffset:point animated:YES];
     }
 }
-
 
 @end

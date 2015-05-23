@@ -16,6 +16,7 @@
     _name = ([data[@"name"] isEqual:[NSNull null]]) ? @"" : data[@"name"];
     _star = ([data[@"star"] isEqual:[NSNull null]]) ? @"" : data[@"star"];
     _text = ([data[@"text"] isEqual:[NSNull null]]) ? @"" : data[@"text"];
+    _reviewed = ([data[@"reviewed"] isEqual:[NSNull null]]) ? @"" : data[@"reviewed"];
 }
 
 @end

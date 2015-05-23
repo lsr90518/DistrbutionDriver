@@ -286,7 +286,6 @@
     
     // Start heading updates.
     if ([CLLocationManager headingAvailable]) {
-        NSLog(@"available");
         self.locationManager.headingFilter = 5;
         [self.locationManager startUpdatingHeading];
     }
@@ -504,7 +503,7 @@
     self.navigationItem.title = @"配送の依頼";
     //add right button item
     UIButton *_backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_backButton setTitle:@"絞込" forState:UIControlStateNormal];
+    [_backButton setTitle:@"表示" forState:UIControlStateNormal];
     _backButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
     _backButton.frame = CGRectMake(0, 0, 25, 44);
     [_backButton addTarget:self action:@selector(gotoFilterView) forControlEvents:UIControlEventTouchUpInside];

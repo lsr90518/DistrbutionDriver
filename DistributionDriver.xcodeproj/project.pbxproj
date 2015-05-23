@@ -133,6 +133,8 @@
 		0D31362D1B10EC170072A488 /* MDReviewHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31362B1B10EC170072A488 /* MDReviewHistoryCell.m */; };
 		0D3136311B10EC800072A488 /* MDNotifacation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136301B10EC800072A488 /* MDNotifacation.m */; };
 		0D3136341B10ECA20072A488 /* MDNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136331B10ECA20072A488 /* MDNotificationService.m */; };
+		0D3136371B10FE470072A488 /* MDAddressButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136361B10FE470072A488 /* MDAddressButton.m */; };
+		0D31363A1B1102160072A488 /* MDSizeDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136391B1102160072A488 /* MDSizeDescriptionViewController.m */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -400,6 +402,10 @@
 		0D3136301B10EC800072A488 /* MDNotifacation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDNotifacation.m; sourceTree = "<group>"; };
 		0D3136321B10ECA20072A488 /* MDNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDNotificationService.h; sourceTree = "<group>"; };
 		0D3136331B10ECA20072A488 /* MDNotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDNotificationService.m; sourceTree = "<group>"; };
+		0D3136351B10FE470072A488 /* MDAddressButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDAddressButton.h; sourceTree = "<group>"; };
+		0D3136361B10FE470072A488 /* MDAddressButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAddressButton.m; sourceTree = "<group>"; };
+		0D3136381B1102160072A488 /* MDSizeDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDSizeDescriptionViewController.h; sourceTree = "<group>"; };
+		0D3136391B1102160072A488 /* MDSizeDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSizeDescriptionViewController.m; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -824,6 +830,8 @@
 		0D0F8ABC1AE61B7000755A22 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136351B10FE470072A488 /* MDAddressButton.h */,
+				0D3136361B10FE470072A488 /* MDAddressButton.m */,
 				0D31361A1B10EAB60072A488 /* MDSelectRatingWell.h */,
 				0D31361B1B10EAB60072A488 /* MDSelectRatingWell.m */,
 				0D31361C1B10EAB60072A488 /* MDSelectRating.h */,
@@ -951,6 +959,7 @@
 		0D0F8AEE1AE61B7000755A22 /* MDViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0D31363B1B11021A0072A488 /* SizeDescriptionViewController */,
 				0D3136271B10EC040072A488 /* ReviewHistory */,
 				0D3136201B10EBED0072A488 /* NotificationTable */,
 				0D3136141B10B3520072A488 /* Judgment */,
@@ -1229,6 +1238,15 @@
 				0D3136301B10EC800072A488 /* MDNotifacation.m */,
 			);
 			name = Notification;
+			sourceTree = "<group>";
+		};
+		0D31363B1B11021A0072A488 /* SizeDescriptionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0D3136381B1102160072A488 /* MDSizeDescriptionViewController.h */,
+				0D3136391B1102160072A488 /* MDSizeDescriptionViewController.m */,
+			);
+			name = SizeDescriptionViewController;
 			sourceTree = "<group>";
 		};
 		0D79BF011AF497250053EB11 /* MDPin */ = {
@@ -1673,6 +1691,7 @@
 				0D0F8B3A1AE61B7000755A22 /* MDRequestView.m in Sources */,
 				0DDDA64A1AEC80A700067016 /* MDProfileViewController.m in Sources */,
 				0D0F8B291AE61B7000755A22 /* MDLoginViewController.m in Sources */,
+				0D31363A1B1102160072A488 /* MDSizeDescriptionViewController.m in Sources */,
 				0D0F8B341AE61B7000755A22 /* MDDeliveryView.m in Sources */,
 				0D1500DE1AFB909E003686AA /* MDDeliveryTableViewCell.m in Sources */,
 				0D0F8AB41AE61B0C00755A22 /* MDUtil.m in Sources */,
@@ -1740,6 +1759,7 @@
 				0D0F8B4A1AE61B7000755A22 /* MDRecieveTimeViewController.m in Sources */,
 				0D0F8B331AE61B7000755A22 /* MDDeliveryKindButton.m in Sources */,
 				0D0F8B391AE61B7000755A22 /* MDRequestTableViewCell.m in Sources */,
+				0D3136371B10FE470072A488 /* MDAddressButton.m in Sources */,
 				0D0F8A5A1AE60B2C00755A22 /* main.m in Sources */,
 				0DEAD8CA1AF5AFF500202F01 /* MDAddressTable.m in Sources */,
 				0D0F8B3F1AE61B7000755A22 /* MDInputDestinationViewController.m in Sources */,

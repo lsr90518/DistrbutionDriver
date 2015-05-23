@@ -114,9 +114,11 @@
         if([obj.request_amount intValue] > [[MDCurrentPackage getInstance].request_amount intValue]){
             flag++;
         }
+
         if([obj.size intValue] < [[MDCurrentPackage getInstance].size intValue]){
             flag++;
         }
+
         if([obj.distance intValue] < [[MDCurrentPackage getInstance].distance intValue]){
             flag++;
         }
@@ -173,7 +175,6 @@
     __block MDPackage *returnPakcage;
     [_packageList enumerateObjectsUsingBlock:^(MDPackage *obj, NSUInteger idx, BOOL *stop) {
         //
-        NSLog(@"%@ vs %@",obj.package_id, packageId);
         if([obj.package_id isEqualToString:packageId]){
             returnPakcage = obj;
         }

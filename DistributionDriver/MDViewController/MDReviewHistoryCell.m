@@ -80,7 +80,7 @@
 }
 
 -(void) setDataWithPackage:(MDPackage *)package{
-    [_starLabel setRating:[package.driverReview.star intValue]];
+    [_starLabel setRating:[package.userReview.star intValue]];
     [_cargoImageView sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
 }
 
