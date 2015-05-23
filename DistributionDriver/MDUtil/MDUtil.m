@@ -20,19 +20,23 @@
     return sharedInstance;
 }
 
--(NSString *)internationalPhoneNumber:(NSString *)phoneNumber {
-    if ( ![[phoneNumber substringToIndex:3] isEqualToString:@"+81"] ) {
-        NSString *tmpNumber = [NSString stringWithFormat:@"+81%@",[phoneNumber substringFromIndex:1]];
-        phoneNumber = tmpNumber;
++(NSString *)internationalPhoneNumber:(NSString *)phoneNumber {
+    if(phoneNumber.length > 9){
+        if ( ![[phoneNumber substringToIndex:3] isEqualToString:@"+81"] ) {
+            NSString *tmpNumber = [NSString stringWithFormat:@"+81%@",[phoneNumber substringFromIndex:1]];
+            phoneNumber = tmpNumber;
+        }
     }
     
     return phoneNumber;
 }
 
--(NSString *)japanesePhoneNumber:(NSString *)phoneNumber {
-    if ( [[phoneNumber substringToIndex:3] isEqualToString:@"+81"] ) {
-        NSString *tmpNumber = [NSString stringWithFormat:@"0%@",[phoneNumber substringFromIndex:3]];
-        phoneNumber = tmpNumber;
++(NSString *)japanesePhoneNumber:(NSString *)phoneNumber {
+    if(phoneNumber.length > 9){
+        if ( [[phoneNumber substringToIndex:3] isEqualToString:@"+81"] ) {
+            NSString *tmpNumber = [NSString stringWithFormat:@"0%@",[phoneNumber substringFromIndex:3]];
+            phoneNumber = tmpNumber;
+        }
     }
     
     return phoneNumber;
@@ -97,6 +101,19 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: format];
     return [dateFormatter stringFromDate:[self getLocalDateTimeFromString:datetime utc:YES]];
+}
+
++(NSString *)getUTCDateTimeStr:(NSString *)datetime{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    // 文字列からNSDateオブジェクトを生成
+    NSDate *fromFormatDate = [dateFormatter dateFromString: datetime];
+    NSDate *utcDate = [fromFormatDate initWithTimeInterval:(-3600*9) sinceDate:fromFormatDate];
+    return [dateFormatter stringFromDate:utcDate];
+}
+
++(NSDate *) getUTCDate {
+    return [NSDate dateWithTimeIntervalSinceNow:(60*60*9)];
 }
 
 @end

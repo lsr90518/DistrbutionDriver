@@ -153,20 +153,8 @@
 }
 
 -(void) configure {
-    //core data
     //open api
-    
-    MDSQLManager *sqlManager = [[MDSQLManager alloc]init];
-    [sqlManager initCoreData];
     MDAPI *api = [[MDAPI alloc]init];
-    MDCustomerDAO   *customerDAO = [[MDCustomerDAO alloc]init];
-    MDCurrentPackage *currentPackage = [[MDCurrentPackage alloc]init];
-    [[MDCurrentPackage getInstance]initData];
-    MDMyPackageService *myPackageService = [[MDMyPackageService alloc]init];
-    
-    MDUser *customer = [customerDAO findCustomer];
-    [customer initDataClear];
-    
     [self checkIOS7];
 }
 

@@ -322,18 +322,19 @@
     destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [deliver_limit substringToIndex:13]];
     
     //expire
-    NSDate * now = [NSDate date];
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setLocale:[NSLocale systemLocale]];
     [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:00"];
     NSDate *expireDate =[dateFormat dateFromString:package.expire];
-    NSTimeInterval timeBetween = [expireDate timeIntervalSinceDate:now];
+    
+    NSTimeInterval timeBetween = [expireDate timeIntervalSinceNow];
     int hour = timeBetween/60/60;
-    if (timeBetween < 1) {
+    if (timeBetween < 0) {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"期限で取消された"];
     } else {
         requestTerm.selectLabel.text = [NSString stringWithFormat:@"%d時間以内",hour+1];
     }
+
 }
 
 -(void) setClientData:(MDClient *)client{

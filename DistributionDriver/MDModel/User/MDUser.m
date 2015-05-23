@@ -57,19 +57,19 @@
 }
 
 -(void) setData:(NSDictionary *)data{
-    _user_id = data[@"id"];
-    _phoneNumber = data[@"phone"];
-    NSString *fullname = data[@"name"];
+    _user_id = [data[@"id"] integerValue];
+    _phoneNumber = (data[@"phone"] == nil) ? @"" : data[@"phone"];
+    NSString *fullname = (data[@"name"] == nil) ? @"" : data[@"name"];
     _lastname = [fullname componentsSeparatedByString:@" "][0];
     _firstname = [fullname componentsSeparatedByString:@" "][1];
-    _intro = data[@"intro"];
-    _walk = data[@"walk"];
-    _bike = data[@"bike"];
-    _motorBike = data[@"motorbike"];
-    _car = data[@"car"];
-    _image = data[@"image"];
-    _status = data[@"status"];
-    _deposit = data[@"deposit"];
+    _intro = (data[@"intro"] == nil) ? @"" : data[@"intro"];
+    _walk = (data[@"walk"] == nil) ? @"0" : data[@"walk"];
+    _bike = (data[@"bike"] == nil) ? @"0" : data[@"bike"];
+    _motorBike = (data[@"motorBike"] == nil) ? @"0" : data[@"motorBike"];
+    _car = (data[@"car"] == nil) ? @"0" : data[@"car"];
+    _image = (data[@"image"] == nil) ? @"" : data[@"image"];
+    _status = (data[@"status"] == nil) ? @"" : data[@"status"];
+    _deposit = (data[@"deposit"] == nil) ? @"0" : data[@"deposit"];
     _loginStatus = @"";
 }
 
@@ -83,6 +83,13 @@
 
 -(BOOL) isLogin {
     return ([self.loginStatus isEqualToString:@"YES"]) ? YES : NO;
+}
+
+-(void) initDataWithConsignor:(MDConsignor *)consignor{
+    _user_id = [consignor.userid integerValue];
+    _password = consignor.password;
+    _phoneNumber = consignor.phonenumber;
+    
 }
 
 @end

@@ -14,12 +14,10 @@
 
 
 -(void) initWithData:(NSDictionary*)data{
-    _driver_id = data[@"id"];
     _name = data[@"name"];
     _intro = data[@"intro"];
     _delivered_package = data[@"delivered_package"];
     _average_star = data[@"average_star"];
-    _phoneNumber = [[MDUtil getInstance] japanesePhoneNumber:data[@"phone"]];
     _image = data[@"image"];
     _reviews = [[NSMutableArray alloc]init];
     NSArray *reviewData = data[@"Reviews"];
@@ -35,7 +33,7 @@
     _driver_id = user.user_id;
     _name = [NSString stringWithFormat:@"%@ %@",user.lastname, user.firstname];
     _intro = user.intro;
-    _phoneNumber = [[MDUtil getInstance]japanesePhoneNumber:user.phoneNumber];
+    _phoneNumber = [MDUtil japanesePhoneNumber:user.phoneNumber];
     _image = user.image;
 }
 

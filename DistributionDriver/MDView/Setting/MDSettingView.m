@@ -197,7 +197,7 @@
 
 -(void) setViewData:(MDUser *)user{
     nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
-    phoneButton.selectLabel.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+    phoneButton.selectLabel.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
     
     NSString *transportationStr = @"";
     if([user.walk isEqualToString:@"1"]){

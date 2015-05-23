@@ -40,6 +40,9 @@ PODS:
   - MKNetworkKit (0.87):
     - Reachability (~> 3.1.0)
   - Reachability (3.1.1)
+  - Realm (0.92.3):
+    - Realm/Headers (= 0.92.3)
+  - Realm/Headers (0.92.3)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
@@ -53,6 +56,7 @@ DEPENDENCIES:
   - ActionSheetPicker
   - MJRefresh
   - MKNetworkKit
+  - Realm
   - SDWebImage
   - SRGVersionUpdater (= 0.0.2)
   - SSKeychain
@@ -65,9 +69,10 @@ SPEC CHECKSUMS:
   MJRefresh: 2eaa3fd8f67fbb86497840fb0167446f7eb61dc7
   MKNetworkKit: 60ad3c83b62183e40ba75ce772c9427c25b520de
   Reachability: dd9aa4fb6667b9f787690a74f53cb7634ce99893
+  Realm: bf604805d5e897850da488260f93889f510924b3
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SRGVersionUpdater: b0458b34c5575e5f41ca998b931807996a98fd2c
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.36.1

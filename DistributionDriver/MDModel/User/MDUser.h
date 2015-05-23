@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "MDConsignor.h"
 
 @interface MDUser : NSObject
 
-@property (strong, nonatomic) NSString *user_id;
+@property (nonatomic) NSInteger user_id;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) NSString *password;
 @property (strong, nonatomic) NSString *creditNumber;
@@ -39,6 +40,8 @@
 -(void) setLogin;
 -(void) setLogout;
 -(BOOL) isLogin;
+
+-(void) initDataWithConsignor:(MDConsignor *)consignor;
 
 //{
 //    "code": 0,

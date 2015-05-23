@@ -101,7 +101,7 @@
         float x = imagesize.height / buttonSize.height;
         imagesize.height = imagesize.height*x;
         imagesize.width = imagesize.width*x;
-        picture = [[MDUtil getInstance] imageWithImage:picture scaledToSize:imagesize];
+        picture = [MDUtil imageWithImage:picture scaledToSize:imagesize];
         
         imagesize = picture.size;
     } else if(imagesize.width > imagesize.height) {
@@ -109,7 +109,7 @@
         float x = buttonSize.width/imagesize.width;
         imagesize.height = imagesize.height * x;
         imagesize.width = imagesize.width * x;
-        picture = [[MDUtil getInstance] imageWithImage:picture scaledToSize:imagesize];
+        picture = [MDUtil imageWithImage:picture scaledToSize:imagesize];
         
     }
     

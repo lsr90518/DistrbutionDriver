@@ -74,7 +74,7 @@
         [_phoneButton setBackgroundColor:[UIColor whiteColor]];
         _phoneButton.title.text = @"携帯番号";
         [_phoneButton.title sizeToFit];
-        _phoneButton.input.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+        _phoneButton.input.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
 //        [_phoneButton setReadOnly];
         _phoneButton.delegate = self;
         [_phoneButton setUserInteractionEnabled:NO];

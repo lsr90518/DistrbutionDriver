@@ -121,6 +121,10 @@
 		0D1500E21AFB90C1003686AA /* MDDeliveryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1500E11AFB90C1003686AA /* MDDeliveryListViewController.m */; };
 		0D1500E61AFBAE7A003686AA /* MDMapFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1500E51AFBAE7A003686AA /* MDMapFilter.m */; };
 		0D1500E91AFBAFC3003686AA /* MDPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1500E81AFBAFC3003686AA /* MDPicker.m */; };
+		0D3136101B1002BA0072A488 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D31360F1B1002BA0072A488 /* Fabric.framework */; };
+		0D3136131B1005540072A488 /* MDConsignor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136121B1005540072A488 /* MDConsignor.m */; };
+		0D3136171B10B3A50072A488 /* MDJudgmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136161B10B3A50072A488 /* MDJudgmentViewController.m */; };
+		0D3136191B10B4730072A488 /* judgementIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D3136181B10B4730072A488 /* judgementIcon.png */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -366,6 +370,12 @@
 		0D1500E51AFBAE7A003686AA /* MDMapFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDMapFilter.m; path = MapFilter/MDMapFilter.m; sourceTree = "<group>"; };
 		0D1500E71AFBAFC3003686AA /* MDPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPicker.h; sourceTree = "<group>"; };
 		0D1500E81AFBAFC3003686AA /* MDPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPicker.m; sourceTree = "<group>"; };
+		0D31360F1B1002BA0072A488 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		0D3136111B1005540072A488 /* MDConsignor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDConsignor.h; sourceTree = "<group>"; };
+		0D3136121B1005540072A488 /* MDConsignor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDConsignor.m; sourceTree = "<group>"; };
+		0D3136151B10B3A50072A488 /* MDJudgmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDJudgmentViewController.h; path = Judgment/MDJudgmentViewController.h; sourceTree = "<group>"; };
+		0D3136161B10B3A50072A488 /* MDJudgmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDJudgmentViewController.m; path = Judgment/MDJudgmentViewController.m; sourceTree = "<group>"; };
+		0D3136181B10B4730072A488 /* judgementIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = judgementIcon.png; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -454,6 +464,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D3136101B1002BA0072A488 /* Fabric.framework in Frameworks */,
 				0D07874E1AF47ABC007607E9 /* MapKit.framework in Frameworks */,
 				0D0F8A501AE60B2C00755A22 /* CoreGraphics.framework in Frameworks */,
 				0D0F8A521AE60B2C00755A22 /* UIKit.framework in Frameworks */,
@@ -489,7 +500,6 @@
 		0D0F8A411AE60B2C00755A22 = {
 			isa = PBXGroup;
 			children = (
-				0DAA27331B00519000AFD83A /* Crashlytics.framework */,
 				0D0F8A531AE60B2C00755A22 /* DistributionDriver */,
 				0D0F8A721AE60B2C00755A22 /* DistributionDriverTests */,
 				0D0F8A4C1AE60B2C00755A22 /* Frameworks */,
@@ -510,6 +520,8 @@
 		0D0F8A4C1AE60B2C00755A22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DAA27331B00519000AFD83A /* Crashlytics.framework */,
+				0D31360F1B1002BA0072A488 /* Fabric.framework */,
 				0D07874D1AF47ABC007607E9 /* MapKit.framework */,
 				0D0F8A4D1AE60B2C00755A22 /* Foundation.framework */,
 				0D0F8A4F1AE60B2C00755A22 /* CoreGraphics.framework */,
@@ -574,6 +586,7 @@
 		0D0F8A821AE61A5700755A22 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136181B10B4730072A488 /* judgementIcon.png */,
 				0DAA26CD1AFCFC6000AFD83A /* cargo.png */,
 				839C50451AFC8CC3000A8A1D /* star.png */,
 				839C50431AFC8CBE000A8A1D /* star_highlight.png */,
@@ -642,6 +655,8 @@
 		0D0F8A8A1AE61B0C00755A22 /* MDDAO */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136111B1005540072A488 /* MDConsignor.h */,
+				0D3136121B1005540072A488 /* MDConsignor.m */,
 				0D0F8A8B1AE61B0C00755A22 /* CustomerDAO */,
 				0D0F8A8E1AE61B0C00755A22 /* MDCustomer.h */,
 				0D0F8A8F1AE61B0C00755A22 /* MDCustomer.m */,
@@ -905,6 +920,7 @@
 		0D0F8AEE1AE61B7000755A22 /* MDViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136141B10B3520072A488 /* Judgment */,
 				0DAA27381B01C83000AFD83A /* BankSetting */,
 				0DAA272A1AFF9A2E00AFD83A /* Intro */,
 				0DAA27191AFF549600AFD83A /* DriverHistory */,
@@ -1140,6 +1156,15 @@
 				0D1500E51AFBAE7A003686AA /* MDMapFilter.m */,
 			);
 			name = MapFilter;
+			sourceTree = "<group>";
+		};
+		0D3136141B10B3520072A488 /* Judgment */ = {
+			isa = PBXGroup;
+			children = (
+				0D3136151B10B3A50072A488 /* MDJudgmentViewController.h */,
+				0D3136161B10B3A50072A488 /* MDJudgmentViewController.m */,
+			);
+			name = Judgment;
 			sourceTree = "<group>";
 		};
 		0D79BF011AF497250053EB11 /* MDPin */ = {
@@ -1480,6 +1505,7 @@
 				0DEAD8E41AF5DA5F00202F01 /* Icon.png in Resources */,
 				0D0F8B951AE6983E00755A22 /* motorbikeIconOff.png in Resources */,
 				0D07873F1AF45D58007607E9 /* walkingIconOn.png in Resources */,
+				0D3136191B10B4730072A488 /* judgementIcon.png in Resources */,
 				0D0F8B711AE61BAA00755A22 /* completeProcess.png in Resources */,
 				0D0F8B7A1AE61BAA00755A22 /* movingIconActive.png in Resources */,
 				0D0F8B871AE61BAA00755A22 /* whiteCamera.png in Resources */,
@@ -1557,6 +1583,7 @@
 				0DAA27221AFF556000AFD83A /* MDHistoryCell.m in Sources */,
 				0DAA271F1AFF54EE00AFD83A /* MDDriverHistoryViewController.m in Sources */,
 				0D0F8B3C1AE61B7000755A22 /* MDSettingView.m in Sources */,
+				0D3136171B10B3A50072A488 /* MDJudgmentViewController.m in Sources */,
 				0D0F8B3E1AE61B7000755A22 /* MDCreateProfileViewController.m in Sources */,
 				0D0F8B441AE61B7000755A22 /* MDIndexViewController.m in Sources */,
 				0D0F8B4D1AE61B7000755A22 /* MDRequestDetailViewController.m in Sources */,
@@ -1595,6 +1622,7 @@
 				0DAA27091AFF1C1200AFD83A /* MDClient.m in Sources */,
 				0D0F8AB21AE61B0C00755A22 /* MDUser.m in Sources */,
 				839C50421AFC8ADC000A8A1D /* MDStarRatingBar.m in Sources */,
+				0D3136131B1005540072A488 /* MDConsignor.m in Sources */,
 				0D0F8B401AE61B7000755A22 /* MDInputRequestViewController.m in Sources */,
 				0D0F8B351AE61B7000755A22 /* MDIndexView.m in Sources */,
 				0DAA27181AFF471800AFD83A /* MDReviewWell.m in Sources */,

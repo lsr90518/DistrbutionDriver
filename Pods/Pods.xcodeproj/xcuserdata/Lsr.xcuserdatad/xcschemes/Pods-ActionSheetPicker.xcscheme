@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0640"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CCCB2962F6B691B3B2420A80"
+               BlueprintIdentifier = "3013B4E5883E3BCBD0D52777"
                BuildableName = "libPods-ActionSheetPicker.a"
                BlueprintName = "Pods-ActionSheetPicker"
                ReferencedContainer = "container:Pods.xcodeproj">

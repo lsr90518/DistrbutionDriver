@@ -8,6 +8,8 @@
 
 #import "MDIndexViewController.h"
 #import "MDViewController.h"
+#import "MDUtil.h"
+#import "MDDeliveryViewController.h"
 
 @interface MDIndexViewController ()
 
@@ -18,12 +20,10 @@
 - (void) loadView {
     [super loadView];
     
-    _indexView = [[MDIndexView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    _indexView.delegate = self;
-    [self.view addSubview:_indexView];
+    UIImageView *backGroundView = [[UIImageView alloc]initWithFrame:self.view.frame];
+    [backGroundView setImage:[UIImage imageNamed:@"firstBG"]];
+    [self.view addSubview:backGroundView];
 }
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,6 +33,57 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    MDUser *user = [MDUser getInstance];
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *newconsiger = [MDConsignor allObjectsInRealm:realm];
+    if([newconsiger count] == 0){
+        
+        user.phoneNumber = @"";
+        user.password = @"";
+        [self initIndexView];
+        
+    } else {
+        
+        for(MDConsignor *tmp in newconsiger){
+            MDUser *user = [MDUser getInstance];
+            [user initDataWithConsignor:tmp];
+        }
+        
+        //call login api
+        [[MDAPI sharedAPI]loginWithPhone:[MDUser getInstance].phoneNumber
+                                password:[MDUser getInstance].password
+                              onComplete:^(MKNetworkOperation *complete) {
+                                  if([[complete responseJSON][@"code"] intValue] == 0){
+                                      
+                                      
+                                      MDUser *user = [MDUser getInstance];
+                                      user.userHash = [complete responseJSON][@"hash"];
+                                      [user setData:[complete responseJSON][@"data"]];
+                                      
+                                      [[MDUser getInstance] setLogin];
+                                      
+                                      [self gotoDelivery];
+                                  } else {
+                                      [self initIndexView];
+                                  }
+                                  
+                              }onError:^(MKNetworkOperation *operation, NSError *error) {
+                                  //
+                                  NSLog(@"error %@", error);
+                              }];
+    }
+
+}
+
+-(void) initIndexView{
+    _indexView = [[MDIndexView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    _indexView.delegate = self;
+    [self.view addSubview:_indexView];
 }
 
 #pragma indexDelegate
@@ -48,7 +99,11 @@
     [self presentViewController:loginNavigationController animated:YES completion:nil];
 }
 
-
+-(void)gotoDelivery{
+    MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
+    UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];
+    [self presentViewController:deliveryNavigationController animated:YES completion:nil];
+}
 
 
 @end

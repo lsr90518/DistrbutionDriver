@@ -17,7 +17,7 @@
     MDCustomer *newcustomer = (MDCustomer *)[NSEntityDescription insertNewObjectForEntityForName:@"MDCustomer" inManagedObjectContext:sqlManager.managedObjectContext];
     
 //    newcustomer = customer;
-    [newcustomer setUserid:customer.user_id];
+//    [newcustomer setUserid:customer.user_id];
     [newcustomer setPhonenumber:customer.phoneNumber];
     [newcustomer setPassword:customer.password];
     [newcustomer setCreditnumber:customer.creditNumber];

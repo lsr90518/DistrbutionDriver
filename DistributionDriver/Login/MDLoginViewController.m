@@ -11,6 +11,7 @@
 #import "MDAPI.h"
 #import <SVProgressHUD.h>
 #import "MDUtil.h"
+#import "MDJudgmentViewController.h"
 #import "MDDeliveryViewController.h"
 
 @interface MDLoginViewController ()
@@ -55,47 +56,93 @@
 
 -(void)postData:(MDLoginView *)loginView {
     
-    MDUtil *util = [[MDUtil alloc]init];
-    NSString *phoneNumber = [util internationalPhoneNumber:loginView.phoneInput.input.text];
-    NSString *password = loginView.passwordInput.input.text;
-    
-    [SVProgressHUD show];
-    [[MDAPI sharedAPI] loginWithPhone:phoneNumber
-                             password:password
-                                onComplete:^(MKNetworkOperation *completeOperation) {
-                                    [SVProgressHUD dismiss];
-                                    if([[completeOperation responseJSON][@"code"] integerValue] == 0){
-                                        MDUser *user = [MDUser getInstance];
-                                        user.userHash = [completeOperation responseJSON][@"hash"];
-                                        [user setData:[completeOperation responseJSON][@"data"]];
-                                        [user setLogin];
-                                        
-//                                        MDViewController *viewController = [[MDViewController alloc]init];
-//                                        [self presentViewController:viewController animated:YES completion:nil];
-                                        
-                                        MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
-                                        UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];
-                                        [self presentViewController:deliveryNavigationController animated:YES completion:nil];
-                                        
-                                    } else if([[completeOperation responseJSON][@"code"] integerValue] == 2){
-                                        NSLog(@"%@", [completeOperation responseJSON][@"code"]);
-                                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"不正番号"
-                                                                                        message:@"パスワードは正しくありません。"
-                                                                                        delegate:self
-                                                                                        cancelButtonTitle:nil
-                                                                                        otherButtonTitles:@"OK", nil];
-                                        alert.delegate = self;
-                                        [alert show];
-                                    }
+    if(loginView.phoneInput.input.text.length > 3 && loginView.passwordInput.input.text > 0){
+        
+        NSString *phoneNumber = [MDUtil internationalPhoneNumber:loginView.phoneInput.input.text];
+        NSString *password = loginView.passwordInput.input.text;
+        
+        [SVProgressHUD show];
+        [[MDAPI sharedAPI] loginWithPhone:phoneNumber
+                                 password:password
+                               onComplete:^(MKNetworkOperation *completeOperation) {
+                                   [SVProgressHUD dismiss];
+                                   if([[completeOperation responseJSON][@"code"] integerValue] == 0){
+                                       
+                                       NSString *status = [completeOperation responseJSON][@"data"][@"status"];
+                                       if([status isEqualToString:@"-1"]){
+                                           
+                                           [MDUtil makeAlertWithTitle:@"審査で拒否" message:@"審査で拒否されました。" done:@"OK" viewController:self];
+                                       } else if([status isEqualToString:@"-2"]){
+                                           
+                                           [MDUtil makeAlertWithTitle:@"途中で解雇" message:@"解雇されました。" done:@"OK" viewController:self];
+                                       } else if([status isEqualToString:@"0"]){
+                                           
+                                           [MDUtil makeAlertWithTitle:@"審査中" message:@"審査中で、お待ちください。" done:@"OK" viewController:self];
+                                           
+                                       } else {
+                                           MDUser *user = [MDUser getInstance];
+                                           user.password = password;
+                                           user.userHash = [completeOperation responseJSON][@"hash"];
+                                           [user setData:[completeOperation responseJSON][@"data"]];
+                                           
+                                           [[MDUser getInstance] setLogin];
+                                           //send token
+                                           [self sendToken];
+                                           
+                                           [self saveUserToDB];
+                                           
+                                           MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
+                                           UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];
+                                           [[MDUser getInstance] setLogin];
+                                           [self presentViewController:deliveryNavigationController animated:YES completion:nil];
+                                           
+                                       }
+                                       
+                                   } else if([[completeOperation responseJSON][@"code"] integerValue] == 2){
                                     
-                                } onError:^(MKNetworkOperation *completeOperarion, NSError *error){
-                                    NSLog(@"error --------------  %@", error);
-                                    [SVProgressHUD dismiss];
-                                }];
-    
+                                       [MDUtil makeAlertWithTitle:@"不正番号" message:@"パスワードは正しくありません。" done:@"OK" viewController:self];
+                                   }
+                                   
+                               } onError:^(MKNetworkOperation *completeOperarion, NSError *error){
+                                   NSLog(@"error --------------  %@", error);
+                                   [SVProgressHUD dismiss];
+                               }];
+    } else {
+        [MDUtil makeAlertWithTitle:@"不正番号" message:@"入力した番号が正しくありません。" done:@"OK" viewController:self];
+    }
 }
 -(void) backButtonTouched {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void) sendToken{
+    [[MDAPI sharedAPI] changeProfileByUser:[MDUser getInstance]
+                                onComplete:^(MKNetworkOperation *complete) {
+                                    //
+                                } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                    //token error
+                                }];
+}
+
+-(void) saveUserToDB {
+    [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    MDConsignor *consignor = [[MDConsignor alloc]init];
+    consignor.userid = [NSString stringWithFormat:@"%lu",(unsigned long)[MDUser getInstance].user_id];
+    consignor.password = [MDUser getInstance].password;
+    consignor.phonenumber = [MDUtil internationalPhoneNumber:[MDUser getInstance].phoneNumber];
+    
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:consignor];
+    [realm commitWriteTransaction];
+}
+
+-(void) goJudgment{
+    MDJudgmentViewController *jvc = [[MDJudgmentViewController alloc]init];
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:jvc animated:YES completion:nil];
 }
 
 @end

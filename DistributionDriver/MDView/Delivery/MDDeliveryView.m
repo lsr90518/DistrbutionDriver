@@ -104,7 +104,7 @@
         sizePicker = [[MDSelect alloc]initWithFrame:CGRectMake(10, 210, frame.size.width-20, 50)];
         sizePicker.buttonTitle.text = @"サイズ";
         sizePicker.selectLabel.text = @"120";
-        sizePicker.options = [[NSArray alloc]initWithObjects:@"60",@"80",@"100",@"120",@"140",@"160", nil];
+        sizePicker.options = [[NSMutableArray alloc]initWithObjects:@"60",@"80",@"100",@"120",@"140",@"160", nil];
         [sizePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:sizePicker];
         
@@ -151,7 +151,7 @@
         //list
         requestTerm = [[MDSelect alloc]initWithFrame:CGRectMake(10, 510, frame.size.width-20, 50)];
         requestTerm.buttonTitle.text = @"依頼期限";
-        requestTerm.options = [[NSArray alloc]initWithObjects:@"3",@"6",@"9",@"12",@"15",@"18",@"21",@"24", nil];
+        requestTerm.options = [[NSMutableArray alloc]initWithObjects:@"3",@"6",@"9",@"12",@"15",@"18",@"21",@"24", nil];
         [requestTerm addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:requestTerm];
         

@@ -11,7 +11,7 @@
 
 @interface MDDriver : NSObject
 
-@property (strong, nonatomic) NSString      *driver_id;
+@property (nonatomic) NSInteger             driver_id;
 @property (strong, nonatomic) NSString      *name;
 @property (strong, nonatomic) NSString      *phoneNumber;
 @property (strong, nonatomic) NSString      *image;

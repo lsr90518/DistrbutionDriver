@@ -9,3 +9,4 @@ pod 'SVProgressHUD'
 pod 'SSKeychain'
 pod 'MJRefresh'
 pod 'SRGVersionUpdater', "0.0.2"
+pod 'Realm'

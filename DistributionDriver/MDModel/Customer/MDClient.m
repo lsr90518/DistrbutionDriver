@@ -17,7 +17,7 @@
     _name = data[@"name"];
     _delivered_package = data[@"delivered_package"];
     _average_star = data[@"average_star"];
-    _phone = [[MDUtil getInstance]japanesePhoneNumber:data[@"phone"]];
+    _phone = [MDUtil japanesePhoneNumber:data[@"phone"]];
     _reviews = [[NSMutableArray alloc]init];
     NSArray *reviewData = data[@"Reviews"];
     

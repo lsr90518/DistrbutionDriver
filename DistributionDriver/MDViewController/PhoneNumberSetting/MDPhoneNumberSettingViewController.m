@@ -28,7 +28,7 @@
     
     _phoneInput = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
     _phoneInput.title.text = @"電話番号";
-    _phoneInput.input.text = [[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+    _phoneInput.input.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
     [_phoneInput.input setKeyboardType:UIKeyboardTypeNumberPad];
     [_phoneInput.title sizeToFit];
     [self.view addSubview:_phoneInput];
@@ -70,7 +70,7 @@
 -(void) changePhoneNumber {
     //call api
     [SVProgressHUD showWithStatus:@"保存" maskType:SVProgressHUDMaskTypeBlack];
-    [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[[MDUtil getInstance] japanesePhoneNumber:[MDUser getInstance].phoneNumber]
+    [[MDAPI sharedAPI] updatePhoneNumberWithOldPhoneNumber:[MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber]
                                             newPhoneNumber:_phoneInput.input.text OnComplete:^(MKNetworkOperation *completeOperation) {
                                                 
                                                 [SVProgressHUD dismiss];
