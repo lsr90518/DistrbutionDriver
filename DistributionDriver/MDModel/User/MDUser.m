@@ -70,6 +70,19 @@
     _image = data[@"image"];
     _status = data[@"status"];
     _deposit = data[@"deposit"];
+    _loginStatus = @"";
+}
+
+-(void) setLogin {
+    self.loginStatus = @"YES";
+}
+
+-(void) setLogout {
+    self.loginStatus = @"NO";
+}
+
+-(BOOL) isLogin {
+    return ([self.loginStatus isEqualToString:@"YES"]) ? YES : NO;
 }
 
 @end

@@ -68,7 +68,7 @@
                                         MDUser *user = [MDUser getInstance];
                                         user.userHash = [completeOperation responseJSON][@"hash"];
                                         [user setData:[completeOperation responseJSON][@"data"]];
-                                        
+                                        [user setLogin];
                                         
 //                                        MDViewController *viewController = [[MDViewController alloc]init];
 //                                        [self presentViewController:viewController animated:YES completion:nil];
