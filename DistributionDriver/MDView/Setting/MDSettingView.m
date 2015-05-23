@@ -8,13 +8,18 @@
 
 #import "MDSettingView.h"
 #import "MDUser.h"
+#import "MDSelectRating.h"
 #import "MDUtil.h"
 
 @implementation MDSettingView{
+    
+    MDSelect *notificationButton;
+    MDSelectRating *averageButton;
     MDSelect *nameButton;
     MDSelect *phoneButton;
     MDSelect *transportation;
     MDSelect *introButton;
+    UIButton *logoutButton;
 }
 
 #pragma mark - View Life Cycle
@@ -43,23 +48,33 @@
         [self addSubview:_scrollView];
         
         //profile image
-        MDSelect *profileImage = [[MDSelect alloc]initWithFrame:CGRectMake(10, 10, frame.size.width-20, 50)];
-        profileImage.buttonTitle.text = @"プロフィール表示";
-        [profileImage.buttonTitle sizeToFit];
-        [profileImage addTarget:self action:@selector(profileImageTouched) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollView addSubview:profileImage];
+//        MDSelect *profileImage = [[MDSelect alloc]initWithFrame:CGRectMake(10, 10, frame.size.width-20, 50)];
+//        profileImage.buttonTitle.text = @"プロフィール表示";
+//        [profileImage.buttonTitle sizeToFit];
+//        [profileImage addTarget:self action:@selector(profileImageTouched) forControlEvents:UIControlEventTouchUpInside];
+//        [_scrollView addSubview:profileImage];
+
+        notificationButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 10, frame.size.width - 20, 50)];
+        notificationButton.buttonTitle.text = @"通知";
+        [notificationButton addTarget:self action:@selector(notificationButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:notificationButton];
+        
+        averageButton = [[MDSelectRating alloc]initWithFrame:CGRectMake(10, notificationButton.frame.origin.y + notificationButton.frame.size.height + 10, frame.size.width - 20, 50)];
+        averageButton.buttonTitle.text = @"平均評価";
+        [averageButton.starLabel setRating:5];
+        [averageButton setReadOnly];
+        [averageButton addTarget:self action:@selector(averageButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:averageButton];
         
         //name button
-        nameButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 70, frame.size.width-20, 50)];
+        nameButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, averageButton.frame.origin.y + averageButton.frame.size.height + 10, frame.size.width-20, 50)];
         nameButton.buttonTitle.text = @"お名前";
-        nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
         [nameButton addTarget:self action:@selector(nameButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:nameButton];
         
         //phone button
-        phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 130, frame.size.width-20, 50)];
+        phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, nameButton.frame.origin.y + nameButton.frame.size.height + 10, frame.size.width-20, 50)];
         phoneButton.buttonTitle.text = @"電話番号";
-        phoneButton.selectLabel.text = [NSString stringWithFormat:@"%@", user.phoneNumber];
         [phoneButton addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneButton];
         
@@ -86,7 +101,7 @@
         [_scrollView addSubview:payButton];
         
         //name button
-        MDSelect *qaButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 370, frame.size.width-20, 50)];
+        MDSelect *qaButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, payButton.frame.origin.y + payButton.frame.size.height + 10, frame.size.width-20, 50)];
         qaButton.buttonTitle.text = @"よくある質問";
         qaButton.selectLabel.text = @"";
         [qaButton setUnactive];
@@ -94,7 +109,7 @@
         [_scrollView addSubview:qaButton];
         
         //name button
-        MDSelect *privateButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 430, frame.size.width-20, 50)];
+        MDSelect *privateButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, qaButton.frame.origin.y + qaButton.frame.size.height + 10, frame.size.width-20, 50)];
         privateButton.buttonTitle.text = @"プライバシーポリシー";
         [privateButton.buttonTitle sizeToFit];
         privateButton.selectLabel.text = @"";
@@ -103,12 +118,22 @@
         [_scrollView addSubview:privateButton];
         
         //name button
-        MDSelect *protocolButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 490, frame.size.width-20, 50)];
+        MDSelect *protocolButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, privateButton.frame.origin.y + privateButton.frame.size.height + 10, frame.size.width-20, 50)];
         protocolButton.buttonTitle.text = @"利用契約";
         protocolButton.selectLabel.text = @"";
         [protocolButton setUnactive];
         [protocolButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:protocolButton];
+        
+        //button
+        logoutButton = [[UIButton alloc]initWithFrame:CGRectMake(10, protocolButton.frame.origin.y + protocolButton.frame.size.height + 23, frame.size.width-20, 50)];
+        [logoutButton setBackgroundColor:[UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1]];
+        [logoutButton setTitle:@"ログアウト" forState:UIControlStateNormal];
+        logoutButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:18];
+        logoutButton.layer.cornerRadius = 2.5;
+        [logoutButton addTarget:self action:@selector(logoutButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:logoutButton];
+        [_scrollView setContentSize:CGSizeMake(frame.size.width, logoutButton.frame.origin.y + logoutButton.frame.size.height + 10)];
         
         //tabbar
         _tabbar = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)];
@@ -177,6 +202,18 @@
     }
 }
 
+-(void) notificationButtonTouched {
+    if([self.delegate respondsToSelector:@selector(notificationButtonPushed)]){
+        [self.delegate notificationButtonPushed];
+    }
+}
+
+-(void) averageButtonTouched{
+    if([self.delegate respondsToSelector:@selector(averageButtonPushed)]){
+        [self.delegate averageButtonPushed];
+    }
+}
+
 -(void) gotoRequestView{
     if([self.delegate respondsToSelector:@selector(gotoRequestView)]) {
         [self.delegate gotoRequestView];
@@ -195,9 +232,16 @@
     }
 }
 
+-(void) logoutButtonTouched{
+    if([self.delegate respondsToSelector:@selector(logoutButtonPushed)]){
+        [self.delegate logoutButtonPushed];
+    }
+}
+
 -(void) setViewData:(MDUser *)user{
     nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
     phoneButton.selectLabel.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
+    notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", 0];
     
     NSString *transportationStr = @"";
     if([user.walk isEqualToString:@"1"]){
@@ -215,6 +259,15 @@
     transportation.selectLabel.text = transportationStr;
     
     introButton.selectLabel.text = user.intro;
+}
+
+-(void) setRating:(int)star{
+    [averageButton.starLabel setRating:star];
+}
+
+-(void)setNotificationCount:(int)count{
+    
+    notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", count];
 }
 
 -(void) introButtonTouched{

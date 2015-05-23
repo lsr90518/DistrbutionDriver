@@ -29,6 +29,7 @@
 #define API_PACKAGE_ACCEPT          @"packages/driver/accept"
 #define API_PACKAGE_RECEIVE         @"packages/driver/receive"
 #define API_PACKAGE_DELIVERY        @"packages/driver/complete"
+#define API_GET_NOTIFICATION        @"drivers/get_notifications"
 
 #define API_SET_BANK_ACCOUNT        @"drivers/set_bank_account"
 #define API_REQUEST_WITHDRAW_DEPOSIT @"drivers/request_withdraw_deposit"
@@ -139,5 +140,9 @@
                                 amount:(NSString *)amount
                             OnComplete:(void (^)(MKNetworkOperation *))complete
                                onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
+-(void) getAllNotificationWithHash:(NSString *)hash
+                        OnComplete:(void (^)(MKNetworkOperation *))complete
+                           onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
 @end

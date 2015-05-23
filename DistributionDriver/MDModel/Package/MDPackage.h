@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MDReview.h"
 #import "MDClient.h"
+#import "MDUtil.h"
 
 @interface MDPackage : NSObject
 

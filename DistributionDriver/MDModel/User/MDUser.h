@@ -42,6 +42,7 @@
 -(BOOL) isLogin;
 
 -(void) initDataWithConsignor:(MDConsignor *)consignor;
+-(void) clearData;
 
 //{
 //    "code": 0,

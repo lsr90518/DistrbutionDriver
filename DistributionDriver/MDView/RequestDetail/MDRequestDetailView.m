@@ -295,19 +295,19 @@
     sizePicker.selectLabel.text = [NSString stringWithFormat:@"合計%@cm以内", package.size];
     
     //at_home_time
-    //
-    
     if([package.at_home_time[0][0] isEqualToString:@"-1"]){
         NSLog(@"at_home_time null");
     } else {
         NSString *at_home_hour = [NSString stringWithFormat:@"%@", package.at_home_time[0][1]];
         NSString *at_home_time_str = @"";
         if([at_home_hour isEqualToString:@"-1"]){
-            at_home_time_str = [NSString stringWithFormat:@"%@ いつでも", package.at_home_time[0][0]];
+            at_home_time_str = [NSString stringWithFormat:@"%@ いつでも", [MDUtil getOutputDateStr:package.at_home_time[0][0]]];
         } else {
-            at_home_time_str = [NSString stringWithFormat:@"%@ %@時〜%@時", package.at_home_time[0][0], package.at_home_time[0][1], package.at_home_time[0][2]];
+            
+            at_home_time_str = [NSString stringWithFormat:@"%@ %@時〜%@時",  [MDUtil getOutputDateStr:package.at_home_time[0][0]], package.at_home_time[0][1], package.at_home_time[0][2]];
         }
         cusTodyTimePicker.selectLabel.text = at_home_time_str;
+        [cusTodyTimePicker.selectLabel sizeToFit];
     }
     
     //note
@@ -319,7 +319,10 @@
     //at home time;
     
     NSString *deliver_limit = [NSString stringWithFormat:@"%@",package.deliver_limit];
-    destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@時", [deliver_limit substringToIndex:13]];
+    
+    destinateTimePicker.selectLabel.text = [NSString stringWithFormat:@"%@ %d時",
+                                            [MDUtil getOutputDateStr:[deliver_limit substringToIndex:10]],
+                                            [[deliver_limit substringWithRange:NSMakeRange(11, 2)] intValue]];
     
     //expire
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];

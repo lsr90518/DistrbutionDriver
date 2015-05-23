@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MDSettingView.h"
+#import "MDUser.h"
+#import "MDIndexViewController.h"
 
 @interface MDSettingViewController : UIViewController<MDSettingViewDelegate>
 

@@ -34,7 +34,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    _packageService = [[MDPackageService alloc]init];
+    _packageService = [[MDMyPackageService alloc]init];
     //call api
     [SVProgressHUD show];
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash

@@ -13,10 +13,11 @@
 #import "MDPackageService.h"
 #import "MDUser.h"
 #import <SVProgressHUD.h>
+#import "MDMyPackageService.h"
 
 @interface MDRequestViewController : UIViewController<MDRequestViewDelegate>
 
 @property (strong, nonatomic) MDRequestView *requestView;
-@property (strong, nonatomic) MDPackageService  *packageService;
+@property (strong, nonatomic) MDMyPackageService  *packageService;
 
 @end

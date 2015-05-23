@@ -15,6 +15,9 @@
 #import "MDProfileViewController.h"
 #import "MDTranspotationViewController.h"
 #import "MDIntroViewController.h"
+#import "MDNotificationTable.h"
+#import "MDReviewHistoryViewController.h"
+#import "MDNotificationService.h"
 #import "MDBankInfoSettingViewController.h"
 
 @interface MDSettingViewController (){
@@ -46,6 +49,8 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [_settingView setViewData:[MDUser getInstance]];
+    int count = (int)[[MDNotificationService getInstance].notificationList count];
+    [_settingView setNotificationCount:count];
 }
 
 #pragma delegate methods
@@ -88,6 +93,44 @@
 -(void) payButtonPushed{
     MDBankInfoSettingViewController *bsvc = [[MDBankInfoSettingViewController alloc]init];
     [self.navigationController pushViewController:bsvc animated:YES];
+}
+
+-(void) logoutButtonPushed{
+    [SVProgressHUD showSuccessWithStatus:@"ログアウト中..."];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *newconsiger = [MDConsignor allObjectsInRealm:realm];
+    MDConsignor *consignor = [[MDConsignor alloc]init];
+    
+    for(MDConsignor *tmp in newconsiger){
+        consignor.userid = tmp.userid;
+        consignor.phonenumber = tmp.phonenumber;
+    }
+    consignor.password = @"";
+    
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:consignor];
+    [realm commitWriteTransaction];
+    
+    [[MDUser getInstance] clearData];
+    
+    [SVProgressHUD dismiss];
+    MDIndexViewController *ivc = [[MDIndexViewController alloc]init];
+    [self presentViewController:ivc animated:NO completion:nil];
+    
+}
+
+-(void) notificationButtonPushed {
+    MDNotificationTable *nt = [[MDNotificationTable alloc]init];
+    
+    nt.notificationList = [MDNotificationService getInstance].notificationList;
+    [self.navigationController pushViewController:nt animated:YES];
+}
+
+-(void) averageButtonPushed{
+    MDReviewHistoryViewController *rhvc = [[MDReviewHistoryViewController alloc]init];
+    rhvc.completePakcageList = [MDMyPackageService getInstance].completePackageList;
+    [self.navigationController pushViewController:rhvc animated:YES];
 }
 
 @end

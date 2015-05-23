@@ -23,21 +23,37 @@
 -(void) initData{
     if(_packageList == nil){
         _packageList = [[NSMutableArray alloc]init];
+        _completePackageList = [[NSMutableArray alloc]init];
+        _reviewList = [[NSMutableArray alloc]init];
     }
 }
 
 -(void) initDataWithArray:(NSArray *)array{
+    //重写 status
+    //check 期限
     if(_packageList == nil){
         _packageList = [[NSMutableArray alloc]init];
+        _completePackageList = [[NSMutableArray alloc]init];
+        _reviewList  = [[NSMutableArray alloc]init];
     } else {
         [_packageList removeAllObjects];
+        [_completePackageList removeAllObjects];
+        [_reviewList removeAllObjects];
     }
     
     for (int i = 0;i < array.count;i++) {
         NSString *image = [array objectAtIndex:i][@"image"];
-        if(![image isEqual:[NSNull null]]){
+        if(![image isEqual:@""]){
             MDPackage *tmpPackage = [[MDPackage alloc]initWithData:[array objectAtIndex:i]];
+            //check
+            
             [_packageList addObject:tmpPackage];
+            
+            NSString *star = [NSString stringWithFormat:@"%@", tmpPackage.userReview.star];
+            if(![star isEqualToString:@""]){
+                [_reviewList addObject:tmpPackage.userReview];
+                [_completePackageList addObject:tmpPackage];
+            }
         }
     }
 }
@@ -48,6 +64,7 @@
         [_packageList sortedArrayUsingSelector:@selector(compareByDate:)];
     }
 }
+
 
 -(void) initDataWithArray:(NSArray *)array
              WithDistance:(CLLocation *)location{
@@ -62,15 +79,8 @@
     for (int i = 0;i < array.count;i++) {
         NSString *image = [array objectAtIndex:i][@"image"];
         if(![image isEqual:[NSNull null]]){
-            NSLog(@"image : %@", image);
             MDPackage *tmpPackage = [[MDPackage alloc]initWithData:[array objectAtIndex:i]];
-            //check
-            if([tmpPackage.status isEqualToString:@"0"] && ![self checkDate:tmpPackage.expire]){
-                tmpPackage.status = @"4";
-            } else {
-            
-                [_packageList addObject:tmpPackage];
-            }
+            [tmpList addObject:tmpPackage];
         }
     }
     //sort
@@ -117,7 +127,7 @@
         NSDate *packageDate = [tmpFormatter dateFromString:obj.deliver_limit];
         
         NSTimeInterval time=[packageDate timeIntervalSinceDate:currentPackageDate];
-        if(time < 0){
+        if(time > 0){
             flag++;
         }
         if(flag == 4){
@@ -140,6 +150,36 @@
     } else {
         return NO;
     }
+}
+
+-(int)getAverageStar{
+    __block int allStar = 0;
+    int average = 5;
+    
+    if([_reviewList count] > 0){
+        [_reviewList enumerateObjectsUsingBlock:^(MDReview *obj, NSUInteger idx, BOOL *stop) {
+            allStar = allStar + [obj.star intValue];
+        }];
+        
+        average = (int)(allStar / [_reviewList count]);
+        
+        return average;
+    } else {
+        return 0;
+    }
+}
+
+-(MDPackage *)getPackageByPackageId:(NSString *)packageId{
+    __block MDPackage *returnPakcage;
+    [_packageList enumerateObjectsUsingBlock:^(MDPackage *obj, NSUInteger idx, BOOL *stop) {
+        //
+        NSLog(@"%@ vs %@",obj.package_id, packageId);
+        if([obj.package_id isEqualToString:packageId]){
+            returnPakcage = obj;
+        }
+    }];
+    
+    return returnPakcage;
 }
 
 @end

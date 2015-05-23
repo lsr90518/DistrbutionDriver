@@ -116,4 +116,19 @@
     return [NSDate dateWithTimeIntervalSinceNow:(60*60*9)];
 }
 
++(NSString *)getOutputDateStr:(NSString *)dateStr{
+    
+    
+    int year = [[dateStr componentsSeparatedByString:@"-"][0] intValue];
+    int month = [[dateStr componentsSeparatedByString:@"-"][1] intValue];
+    int day = [[dateStr componentsSeparatedByString:@"-"][2] intValue];
+    
+    NSString *newDateStr = [NSString stringWithFormat:@"%d年%d月%d日",
+                            year,
+                            month,
+                            day];
+    
+    return newDateStr;
+}
+
 @end

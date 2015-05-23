@@ -65,7 +65,7 @@
     _intro = (data[@"intro"] == nil) ? @"" : data[@"intro"];
     _walk = (data[@"walk"] == nil) ? @"0" : data[@"walk"];
     _bike = (data[@"bike"] == nil) ? @"0" : data[@"bike"];
-    _motorBike = (data[@"motorBike"] == nil) ? @"0" : data[@"motorBike"];
+    _motorBike = (data[@"motorbike"] == nil) ? @"0" : data[@"motorbike"];
     _car = (data[@"car"] == nil) ? @"0" : data[@"car"];
     _image = (data[@"image"] == nil) ? @"" : data[@"image"];
     _status = (data[@"status"] == nil) ? @"" : data[@"status"];
@@ -90,6 +90,18 @@
     _password = consignor.password;
     _phoneNumber = consignor.phonenumber;
     
+}
+
+-(void) clearData{
+    _user_id = 0;
+    _password = @"";
+    _phoneNumber = @"";
+    _checknumber = @"";
+    _lastname = @"";
+    _firstname = @"";
+    _loginStatus = @"";
+    _userHash = @"";
+    _image = @"";
 }
 
 @end

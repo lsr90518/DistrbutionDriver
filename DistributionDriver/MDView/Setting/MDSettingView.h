@@ -21,12 +21,16 @@
 @property (nonatomic, assign) id<MDSettingViewDelegate> delegate;
 
 -(void) setViewData:(MDUser *)user;
+-(void) setRating:(int)star;
+-(void) setNotificationCount:(int)count;
 
 @end
 
 @protocol MDSettingViewDelegate <NSObject>
 
 @optional
+-(void) notificationButtonPushed;
+-(void) averageButtonPushed;
 -(void) nameButtonPushed;
 -(void) phoneNumberPushed;
 -(void) blockDriverPushed;
@@ -36,6 +40,7 @@
 -(void) gotoRequestView;
 -(void) gotoDeliveryView;
 -(void) profileImagePushed;
+-(void) logoutButtonPushed;
 -(void) gotoTansptationView;
 -(void) introButtonPushed;
 -(void) payButtonPushed;

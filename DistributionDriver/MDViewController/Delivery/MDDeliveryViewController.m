@@ -18,6 +18,8 @@
 #import "MDPinCallout.h"
 #import "MDClusterView.h"
 #import "MDDeliveryListViewController.h"
+#import "MDNotificationService.h"
+#import "MDMyPackageService.h"
 
 
 @interface MDDeliveryViewController () {
@@ -30,6 +32,10 @@
     BOOL isMoved;
     BOOL isTrack;
     BOOL isCluster;
+    
+    MDPackageService *packageService;
+    MDMyPackageService *myPackageService;
+    MDNotificationService *notificationService;
 }
 
 @end
@@ -73,6 +79,9 @@
     }
     [self.view addSubview:_tabbar];
     [self.view addSubview:currentLocationButton];
+    
+    //update lastest data
+    [self updateMyPackageData];
 }
 
 
@@ -569,6 +578,28 @@
         default:
             break;
     }
+}
+
+-(void) updateMyPackageData {
+    [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
+                                 OnComplete:^(MKNetworkOperation *complete) {
+                                     //
+                                     myPackageService = [MDMyPackageService getInstance];
+                                     [myPackageService initDataWithArray:[complete responseJSON][@"Packages"]];
+                                     
+                                 } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                     //
+                                 }];
+    
+    [[MDAPI sharedAPI] getAllNotificationWithHash:[MDUser getInstance].userHash
+                                       OnComplete:^(MKNetworkOperation *complete) {
+                                           if([[complete responseJSON][@"code"] intValue] == 0){
+                                               notificationService = [MDNotificationService getInstance];
+                                               [notificationService initWithDataArray:[complete responseJSON][@"Notifications"]];
+                                           }
+                                       } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                           
+                                       }];
 }
 
 @end
