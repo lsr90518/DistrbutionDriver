@@ -146,6 +146,11 @@
                         OnComplete:(void (^)(MKNetworkOperation *))complete
                            onError:(void (^)(MKNetworkOperation *, NSError *))error;
 
+-(void) getNotificationWithHash:(NSString *)hash
+                         lastId:(NSString *)lastId
+                     OnComplete:(void (^)(MKNetworkOperation *))complete
+                        onError:(void (^)(MKNetworkOperation *, NSError *))error;
+
 -(void) cancelMyPackageWithHash:(NSString *)hash
                       packageId:(NSString *)packageId
                      OnComplete:(void (^)(MKNetworkOperation *))complete

@@ -9,6 +9,7 @@
 #import "MDCreateProfileViewController.h"
 #import "MDUser.h"
 #import "MDViewController.h"
+#import "MDUtil.h"
 #import "MDAPI.h"
 #import <SVProgressHUD.h>
 
@@ -75,7 +76,18 @@
 
 -(void) postData:(MDCreateProfileView *)createProfileView {
     
-    if (![createProfileView.passwordInput.input.text isEqualToString:[NSString stringWithFormat:@"%@",createProfileView.repeatInput.input.text]]) {
+    if(createProfileView.personButtonAndDescription.isHasPicture == NO || createProfileView.idCardButtonAndDescription.isHasPicture == NO){
+        
+        [MDUtil makeAlertWithTitle:@"写真がない" message:@"審査のため、写真が入ります。" done:@"ok" viewController:self];
+    } else if(![createProfileView isAllInput]){
+        
+        [MDUtil makeAlertWithTitle:@"未入力項目" message:@"項目を全部入力してください" done:@"ok" viewController:self];
+        
+    } else if(createProfileView.passwordInput.input.text.length < 6){
+        
+        [MDUtil makeAlertWithTitle:@"パスワード" message:@"パスワードは6桁以上に設定してください" done:@"ok" viewController:self];
+        
+    } else if (![createProfileView.passwordInput.input.text isEqualToString:[NSString stringWithFormat:@"%@",createProfileView.repeatInput.input.text]]) {
         
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"パスワード"
                                                         message:@"パスワードをもう一回確認してください。"

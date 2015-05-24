@@ -82,6 +82,10 @@
 -(void) setDataWithPackage:(MDPackage *)package{
     [_starLabel setRating:[package.userReview.star intValue]];
     [_cargoImageView sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+    if([package.user_id isEqual:[NSNull null]]){
+        _statusLabel.text = @"キャンセルにつき自動評価";
+        [_statusLabel sizeToFit];
+    }
 }
 
 @end

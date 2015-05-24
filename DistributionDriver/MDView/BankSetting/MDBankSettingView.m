@@ -194,7 +194,13 @@
 }
 
 -(void) setViewData:(MDBankInfo *)bankInfo{
+    _bankNumberInput.input.text = bankInfo.bank_number;
+    _branchNumberInput.input.text = bankInfo.branch_number;
     
+    _typeSelect.selectLabel.text = ([[bankInfo getType] isEqualToString:@"0"]) ? @"選択してください": [bankInfo getType];
+
+    _accountNumberInput.input.text = bankInfo.account_number;
+    _nameInput.input.text = bankInfo.name;
 }
 
 -(void) setMoney:(NSString *)money{

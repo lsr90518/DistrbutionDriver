@@ -89,11 +89,9 @@
 
 #pragma indexDelegate
 -(void)signTouched {
-//    MDPhoneViewController *phoneViewController = [[MDPhoneViewController alloc]init];
-//    UINavigationController *signNavigationController = [[UINavigationController alloc]initWithRootViewController:phoneViewController];
-//    [self presentViewController:signNavigationController animated:YES completion:nil];
-    MDCreateProfileViewController *cpvc = [[MDCreateProfileViewController alloc]init];
-    [self presentViewController:cpvc animated:YES completion:nil];
+    MDPhoneViewController *phoneViewController = [[MDPhoneViewController alloc]init];
+    UINavigationController *signNavigationController = [[UINavigationController alloc]initWithRootViewController:phoneViewController];
+    [self presentViewController:signNavigationController animated:YES completion:nil];
 }
 
 -(void)loginTouched {

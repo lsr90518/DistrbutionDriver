@@ -30,6 +30,20 @@
     }
 }
 
+-(NSString *)getType{
+    NSString *returnType;
+    if([_type isEqualToString:@"1"]){
+        returnType = @"普通";
+    } else if([_type isEqualToString:@"2"]){
+        returnType = @"当座";
+    } else if([_type isEqualToString:@"4"]){
+        returnType = @"貯蓄";
+    } else {
+        returnType = @"0";
+    }
+    return returnType;
+}
+
 @end
 
 //bank_number

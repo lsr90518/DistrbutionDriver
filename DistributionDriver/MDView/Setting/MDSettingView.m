@@ -267,7 +267,11 @@
 
 -(void)setNotificationCount:(int)count{
     
-    notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", count];
+    if(count == 0){
+        notificationButton.selectLabel.text = @"新着通知はありません";
+    } else {
+        notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", count];
+    }
 }
 
 -(void) introButtonTouched{

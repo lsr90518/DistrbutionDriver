@@ -8,6 +8,7 @@
 
 #import "MDBankInfoSettingViewController.h"
 #import "MDBankSearchViewController.h"
+#import "MDRealmBankInfo.h"
 
 @interface MDBankInfoSettingViewController (){
     
@@ -34,7 +35,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    bankInfo = [[MDBankInfo alloc]init];
     [bankSettingView setMoney:[MDUser getInstance].deposit];
+    [self loadBankInfo];
+    
+    [bankSettingView setViewData:bankInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,7 +69,6 @@
     if([viewData.status intValue] == 0){
         [MDUtil makeAlertWithTitle:@"未完成" message:@"残る項目を入力してください。" done:@"OK" viewController:self];
     } else {
-        bankInfo = [[MDBankInfo alloc]init];
         bankInfo.bank_number = viewData.bankNumberInput.input.text;
         bankInfo.branch_number = viewData.branchNumberInput.input.text;
         bankInfo.account_number = viewData.accountNumberInput.input.text;
@@ -89,6 +94,7 @@
                                                        break;
                                                     case 0:
                                                        //call api
+                                                       [self saveBankInfo];
                                                        [self requestWithdrawDeposit:viewData.moneyInput.input.text];
                                                        break;
                                                    default:
@@ -153,6 +159,36 @@
 -(void) bankNumberSearchButtonPushed {
     MDBankSearchViewController *bsvc = [[MDBankSearchViewController alloc]init];
     [self presentViewController:bsvc animated:YES completion:nil];
+}
+
+-(void) saveBankInfo{
+    [[NSFileManager defaultManager] removeItemAtPath:[RLMRealm defaultRealmPath] error:nil];
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    MDRealmBankInfo *rBankInfo = [[MDRealmBankInfo alloc]init];
+    rBankInfo.account_number = bankInfo.account_number;
+    rBankInfo.branch_number = bankInfo.branch_number;
+    rBankInfo.bank_number = bankInfo.bank_number;
+    rBankInfo.name = bankInfo.name;
+    rBankInfo.type = [bankInfo getType];
+    
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:rBankInfo];
+    [realm commitWriteTransaction];
+}
+-(void) loadBankInfo{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *oldBankInfo = [MDRealmBankInfo allObjectsInRealm:realm];
+    
+    for(MDRealmBankInfo *tmp in oldBankInfo){
+        bankInfo.account_number = tmp.account_number;
+        bankInfo.branch_number = tmp.branch_number;
+        bankInfo.bank_number = tmp.bank_number;
+        bankInfo.name = tmp.name;
+        [bankInfo setType:tmp.type];
+    }
 }
 
 

@@ -13,6 +13,7 @@
 #import "MDSelect.h"
 #import "MDReviewViewController.h"
 #import "MDSizeDescriptionViewController.h"
+#import "MDUserLocationService.h"
 
 @interface MDRequestDetailViewController ()
 
@@ -76,7 +77,7 @@
         
         NSString *userReviewed = [NSString stringWithFormat:@"%@", _package.userReview.reviewed];
         if([userReviewed isEqualToString:@"1"]){
-            [_requestDetailView setReviewContent:_package.driverReview];
+            [_requestDetailView setReviewContent:_package.userReview];
         }
     }
 }
@@ -164,12 +165,12 @@
 }
 
 -(void) reciveOrder {
-    //call api
+    
+    //check region
     [SVProgressHUD show];
     [[MDAPI sharedAPI] acceptPackageWithHash:[MDUser getInstance].userHash
                                    packageId:_package.package_id
                                   OnComplete:^(MKNetworkOperation *operation) {
-                                      NSLog(@"%@", [operation responseJSON]);
                                       
                                       if([[operation responseJSON][@"code"] intValue] == 3){
                                           [MDUtil makeAlertWithTitle:@"惜しい" message:@"他のドライバーに決まられた。" done:@"OK" viewController:self];
@@ -180,12 +181,56 @@
                                       } else {
                                           [SVProgressHUD showSuccessWithStatus:@"荷物を受けました。"];
                                           [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(goRoot) name:SVProgressHUDDidDisappearNotification object: nil];
-
+                                          
                                       }
                                       
                                   } onError:^(MKNetworkOperation *operation, NSError *error) {
-    
+                                      
                                   }];
+    [SVProgressHUD dismiss];
+    
+//    // 获取当前所在的城市名
+//    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//    //根据经纬度反向地理编译出地址信息
+//    [geocoder reverseGeocodeLocation:[MDUserLocationService getInstance].userLocation.location completionHandler:^(NSArray *array, NSError *error)
+//     {
+//         if (array.count > 0)
+//         {
+//             CLPlacemark *placemark = [array objectAtIndex:0];
+//             
+//             //获取城市
+//             NSString *currentPref = placemark.administrativeArea;
+//             
+//             if([currentPref isEqualToString:@"東京都"]){
+//                 //call api
+//
+//                 [[MDAPI sharedAPI] acceptPackageWithHash:[MDUser getInstance].userHash
+//                                                packageId:_package.package_id
+//                                               OnComplete:^(MKNetworkOperation *operation) {
+//                                                   
+//                                                   if([[operation responseJSON][@"code"] intValue] == 3){
+//                                                       [MDUtil makeAlertWithTitle:@"惜しい" message:@"他のドライバーに決まられた。" done:@"OK" viewController:self];
+//                                                   } else if([[operation responseJSON][@"code"] intValue] == 2){
+//                                                       [MDUtil makeAlertWithTitle:@"不正番号" message:@"改めてログインしてください。" done:@"OK" viewController:self];
+//                                                   } else if([[operation responseJSON][@"code"] intValue] == 4){
+//                                                       [MDUtil makeAlertWithTitle:@"評価による制限" message:@"過去の評価による制限で同時受領件数のため荷物が受けられません" done:@"OK" viewController:self];
+//                                                   } else {
+//                                                       [SVProgressHUD showSuccessWithStatus:@"荷物を受けました。"];
+//                                                       [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(goRoot) name:SVProgressHUDDidDisappearNotification object: nil];
+//                                                       
+//                                                   }
+//                                                   
+//                                               } onError:^(MKNetworkOperation *operation, NSError *error) {
+//                                                   
+//                                               }];
+//                 [SVProgressHUD dismiss];
+//             } else {
+//                 [MDUtil makeAlertWithTitle:@"地域制限" message:@"申し訳ございません。現在は、預かり先、お届け先ともに東京都23区のみのテストリリースとなっております。ご指定のエリアは、開放されるまで今しばらくお待ちください。" done:@"OK" viewController:self];
+//             }
+//
+//             
+//         }
+//     }];
 }
 
 -(void) goBack{

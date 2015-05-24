@@ -18,6 +18,7 @@
 #import "MDNotificationTable.h"
 #import "MDReviewHistoryViewController.h"
 #import "MDNotificationService.h"
+#import "MDRealmNotificationRecord.h"
 #import "MDBankInfoSettingViewController.h"
 
 @interface MDSettingViewController (){
@@ -33,6 +34,7 @@
     _settingView = [[MDSettingView alloc]initWithFrame:self.view.frame];
     _settingView.delegate = self;
     [self.view addSubview:_settingView];
+    
 
 }
 
@@ -49,8 +51,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [_settingView setViewData:[MDUser getInstance]];
-    int count = (int)[[MDNotificationService getInstance].notificationList count];
-    [_settingView setNotificationCount:count];
+    [self updateData];
 }
 
 #pragma delegate methods
@@ -131,6 +132,78 @@
     MDReviewHistoryViewController *rhvc = [[MDReviewHistoryViewController alloc]init];
     rhvc.completePakcageList = [MDMyPackageService getInstance].completePackageList;
     [self.navigationController pushViewController:rhvc animated:YES];
+}
+
+-(void) updateData{
+    //call api
+    [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
+                                 OnComplete:^(MKNetworkOperation *complete){
+                                     if([[complete responseJSON][@"code"] integerValue] == 0){
+                                         [[MDMyPackageService getInstance] initDataWithArray:[complete responseJSON][@"Packages"] SortByDate:YES];
+                                     }
+                                     [SVProgressHUD dismiss];
+                                 }
+                                    onError:^(MKNetworkOperation *complete, NSError *error){
+                                        NSLog(@"error ------------------------ %@", error);
+                                        [SVProgressHUD dismiss];
+                                    }];
+    
+    [self updateNotificationData];
+    
+
+}
+
+-(void) updateNotificationData{
+    //get data from db
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *newNoti = [MDRealmNotificationRecord allObjectsInRealm:realm];
+    
+    NSString *lastId;
+    
+    if([newNoti count] > 0){
+        MDRealmNotificationRecord *noti = [newNoti lastObject];
+        lastId = noti.last_id;
+    } else {
+        lastId = @"0";
+    }
+    
+    [[MDAPI sharedAPI] getNotificationWithHash:[MDUser getInstance].userHash
+                                        lastId:lastId
+                                       OnComplete:^(MKNetworkOperation *complete) {
+                                           if([[complete responseJSON][@"code"] intValue] == 0){
+                                               [[MDNotificationService getInstance] initWithDataArray:[complete responseJSON][@"Notifications"]];
+                                               
+                                               if([[MDNotificationService getInstance].notificationList count] > 0){
+                                                   //save to realm
+                                                   [self saveNotiToDB];
+                                                   //update view
+                                                   int count = (int)[[MDNotificationService getInstance].notificationList count];
+                                                   [_settingView setNotificationCount:count];
+                                               } else {
+                                                   [_settingView setNotificationCount:0];
+                                               }
+                                           }
+                                       } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                           
+                                       }];
+}
+
+-(void) saveNotiToDB{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *newNoti = [MDRealmNotificationRecord allObjectsInRealm:realm];
+    MDRealmNotificationRecord *noti = [[MDRealmNotificationRecord alloc]init];
+    
+    MDNotifacation *notification = [[MDNotificationService getInstance].notificationList lastObject];
+    
+    for(MDRealmNotificationRecord *tmp in newNoti){
+        noti.index = tmp.index;
+    }
+    noti.last_id = notification.notification_id;
+    
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:noti];
+    [realm commitWriteTransaction];
 }
 
 @end

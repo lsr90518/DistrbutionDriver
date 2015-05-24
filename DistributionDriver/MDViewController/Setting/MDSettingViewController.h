@@ -10,6 +10,7 @@
 #import "MDSettingView.h"
 #import "MDUser.h"
 #import "MDIndexViewController.h"
+#import "MDMyPackageService.h"
 
 @interface MDSettingViewController : UIViewController<MDSettingViewDelegate>
 

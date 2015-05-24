@@ -12,7 +12,16 @@
          contextName = "-[MDNotificationTable tableView:heightForRowAtIndexPath:]:MDNotificationTable.m">
       </ContextState>
       <ContextState
+         contextName = "-[MDDeliveryViewController putPackageIntoMap]:MDDeliveryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDBankSettingView didSelectedRow::]:MDBankSettingView.m">
+      </ContextState>
+      <ContextState
          contextName = "__39-[MDIndexViewController viewDidAppear:]_block_invoke:MDIndexViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController mapView:didUpdateUserLocation:]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDPackageService initDataWithArray:WithDistance:]:MDPackageService.m">
@@ -39,6 +48,17 @@
       </ContextState>
       <ContextState
          contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data.driverReview">
+            </PersistentString>
+            <PersistentString
+               value = "data.driverReview.star">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController loadDataByPref:location:]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDTranspotationViewController backButtonPushed]:MDTranspotationViewController.m">
@@ -65,6 +85,9 @@
       </ContextState>
       <ContextState
          contextName = "-[MDTranspotation toggleButton:]:MDTranspotation.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController mapView:didSelectAnnotationView:]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDUser setData:]:MDUser.m">

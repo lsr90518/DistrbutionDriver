@@ -77,7 +77,7 @@
         self.from_lng = @"";
     }
     if(self.distance.length < 1){
-        self.distance = @"9999";
+        self.distance = @"9999999";
     }
 }
 

@@ -16,15 +16,8 @@
 @property (strong, nonatomic) NSString *account_number;
 @property (strong, nonatomic) NSString *name;
 
-//bank_number
 
-//branch_number
-
-//type
-
-//account_number
-
-//name
+-(NSString *)getType;
 
 -(void) initWithData:(MDBankInfo *)bankInfo;
 

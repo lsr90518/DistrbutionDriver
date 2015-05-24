@@ -20,12 +20,15 @@
 #import "MDDeliveryListViewController.h"
 #import "MDNotificationService.h"
 #import "MDMyPackageService.h"
+#import "MDUserLocationService.h"
+#import "MDPinCollectionView.h"
 
 
 @interface MDDeliveryViewController () {
     NSMutableArray *annotations;
     MDPinCalloutView *infoWindow;
     MKAnnotationView *currentAnnotationView;
+    MDUserLocationService *currentUesrLocation;
     MKCoordinateRegion currentUserRegion;
     NSString *currentPref;
     BOOL isSelected;
@@ -33,9 +36,13 @@
     BOOL isTrack;
     BOOL isCluster;
     
+//    MDPinCollectionView *infoWindow;
+    
     MDPackageService *packageService;
     MDMyPackageService *myPackageService;
     MDNotificationService *notificationService;
+    
+    
 }
 
 @end
@@ -80,8 +87,12 @@
     [self.view addSubview:_tabbar];
     [self.view addSubview:currentLocationButton];
     
+    
+    //user location
+    currentUesrLocation = [MDUserLocationService getInstance];
     //update lastest data
     [self updateMyPackageData];
+    //update notification data
 }
 
 
@@ -92,7 +103,7 @@
     _fromAnnotationsMapView = [[MKMapView alloc] initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
-    isSelected = false;
+    isSelected = NO;
 }
 
 -(void) getCurrentPref:(MKUserLocation *)userLocation{
@@ -295,10 +306,8 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.locationManager.location.coordinate, 2000, 2000);
         region.center.latitude = self.locationManager.location.coordinate.latitude;
         region.center.longitude = self.locationManager.location.coordinate.longitude;
-//        region.span.longitudeDelta = 0.01f;
-//        region.span.longitudeDelta = 0.01f;
     [self.mapView setRegion:region animated:YES];
-    isTrack = true;
+    isTrack = YES;
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -307,12 +316,13 @@
     if(isTrack){
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
         [self.mapView setRegion:region animated:YES];
-        isTrack = false;
+        isTrack = NO;
         [self getCurrentPref:userLocation];
         //loadData
         //
     }
-    currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
+    [MDUserLocationService getInstance].currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
+    [MDUserLocationService getInstance].userLocation = userLocation;
 }
 
 #pragma device location
@@ -418,12 +428,13 @@
         
         if([tmpView.containedAnnotations count] > 0){
             
-            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(tmpView.coordinate,
-                                                                           _mapView.region.span.latitudeDelta *300,
-                                                                           _mapView.region.span.longitudeDelta *300);
+//            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(tmpView.coordinate,
+//                                                                           _mapView.region.span.latitudeDelta *300,
+//                                                                           _mapView.region.span.longitudeDelta *300);
             //找到最大距离
+            MKCoordinateRegion region = MKCoordinateRegionMake(tmpView.coordinate, _mapView.region.span);
             isCluster = YES;
-            [self.mapView setRegion:region animated:YES];
+            [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         } else {
             
             if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"]){
@@ -485,7 +496,7 @@
 }
 
 -(void)moveToUserLocation {
-    [self.mapView setRegion:currentUserRegion animated:YES];
+    [self.mapView setRegion:[MDUserLocationService getInstance].currentUserRegion animated:YES];
 }
 
 
@@ -589,16 +600,7 @@
                                  } onError:^(MKNetworkOperation *operation, NSError *error) {
                                      //
                                  }];
-    
-    [[MDAPI sharedAPI] getAllNotificationWithHash:[MDUser getInstance].userHash
-                                       OnComplete:^(MKNetworkOperation *complete) {
-                                           if([[complete responseJSON][@"code"] intValue] == 0){
-                                               notificationService = [MDNotificationService getInstance];
-                                               [notificationService initWithDataArray:[complete responseJSON][@"Notifications"]];
-                                           }
-                                       } onError:^(MKNetworkOperation *operation, NSError *error) {
-                                           
-                                       }];
+
 }
 
 @end

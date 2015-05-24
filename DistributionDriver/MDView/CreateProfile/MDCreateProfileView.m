@@ -273,4 +273,18 @@
     }
 }
 
+-(BOOL) isAllInput{
+    for (UIView *view in [_scrollView subviews]) {
+        if([view isKindOfClass:[MDInput class]]){
+            MDInput *tmpView = (MDInput *)view;
+            if (tmpView.input.text.length > 0) {
+                //
+            } else {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
 @end

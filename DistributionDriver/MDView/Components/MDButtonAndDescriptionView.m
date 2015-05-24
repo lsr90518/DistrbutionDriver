@@ -70,7 +70,6 @@
     [_iconImageView setImage:icon];
     _iconImageView.center = _iconButton.center;
     [_iconButton addSubview:_iconImageView];
-    isHasPickture = YES;
     
 }
 
@@ -118,9 +117,6 @@
     }
     
     isHasPickture = YES;
-    
-    
-    
 
     [self.iconButton setImage:picture forState:UIControlStateNormal];
     [self.iconImageView removeFromSuperview];

@@ -135,6 +135,11 @@
 		0D3136341B10ECA20072A488 /* MDNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136331B10ECA20072A488 /* MDNotificationService.m */; };
 		0D3136371B10FE470072A488 /* MDAddressButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136361B10FE470072A488 /* MDAddressButton.m */; };
 		0D31363A1B1102160072A488 /* MDSizeDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136391B1102160072A488 /* MDSizeDescriptionViewController.m */; };
+		0D3136401B11ADCC0072A488 /* MDPinCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31363F1B11ADCC0072A488 /* MDPinCollectionView.m */; };
+		0D3136431B11ADE70072A488 /* MDPinCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136421B11ADE70072A488 /* MDPinCollectionCell.m */; };
+		0D3136511B11B7380072A488 /* MDRealmBankInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136501B11B7380072A488 /* MDRealmBankInfo.m */; };
+		0D3136541B11EA6D0072A488 /* MDUserLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136531B11EA6D0072A488 /* MDUserLocationService.m */; };
+		0D3136571B1222F50072A488 /* MDRealmNotificationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -406,6 +411,16 @@
 		0D3136361B10FE470072A488 /* MDAddressButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDAddressButton.m; sourceTree = "<group>"; };
 		0D3136381B1102160072A488 /* MDSizeDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDSizeDescriptionViewController.h; sourceTree = "<group>"; };
 		0D3136391B1102160072A488 /* MDSizeDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSizeDescriptionViewController.m; sourceTree = "<group>"; };
+		0D31363E1B11ADCC0072A488 /* MDPinCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinCollectionView.h; path = DelieveryMap/PinCollection/MDPinCollectionView.h; sourceTree = "<group>"; };
+		0D31363F1B11ADCC0072A488 /* MDPinCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinCollectionView.m; path = DelieveryMap/PinCollection/MDPinCollectionView.m; sourceTree = "<group>"; };
+		0D3136411B11ADE70072A488 /* MDPinCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPinCollectionCell.h; sourceTree = "<group>"; };
+		0D3136421B11ADE70072A488 /* MDPinCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPinCollectionCell.m; sourceTree = "<group>"; };
+		0D31364F1B11B7380072A488 /* MDRealmBankInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmBankInfo.h; sourceTree = "<group>"; };
+		0D3136501B11B7380072A488 /* MDRealmBankInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmBankInfo.m; sourceTree = "<group>"; };
+		0D3136521B11EA6D0072A488 /* MDUserLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDUserLocationService.h; path = MDService/MDUserLocationService.h; sourceTree = "<group>"; };
+		0D3136531B11EA6D0072A488 /* MDUserLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDUserLocationService.m; path = MDService/MDUserLocationService.m; sourceTree = "<group>"; };
+		0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmNotificationRecord.h; sourceTree = "<group>"; };
+		0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmNotificationRecord.m; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -525,6 +540,8 @@
 				0DAA27151AFF420B00AFD83A /* MyPackageService */,
 				0D07874A1AF4726F007607E9 /* MDPackageService.h */,
 				0D07874B1AF4726F007607E9 /* MDPackageService.m */,
+				0D3136521B11EA6D0072A488 /* MDUserLocationService.h */,
+				0D3136531B11EA6D0072A488 /* MDUserLocationService.m */,
 			);
 			name = MDService;
 			sourceTree = "<group>";
@@ -694,6 +711,10 @@
 				0D0F8A8F1AE61B0C00755A22 /* MDCustomer.m */,
 				0D0F8A901AE61B0C00755A22 /* Model.xcdatamodeld */,
 				0D0F8A921AE61B0C00755A22 /* SQLManager */,
+				0D31364F1B11B7380072A488 /* MDRealmBankInfo.h */,
+				0D3136501B11B7380072A488 /* MDRealmBankInfo.m */,
+				0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */,
+				0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */,
 			);
 			path = MDDAO;
 			sourceTree = "<group>";
@@ -1249,6 +1270,17 @@
 			name = SizeDescriptionViewController;
 			sourceTree = "<group>";
 		};
+		0D31363D1B11AD7E0072A488 /* MDPinCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				0D31363E1B11ADCC0072A488 /* MDPinCollectionView.h */,
+				0D31363F1B11ADCC0072A488 /* MDPinCollectionView.m */,
+				0D3136411B11ADE70072A488 /* MDPinCollectionCell.h */,
+				0D3136421B11ADE70072A488 /* MDPinCollectionCell.m */,
+			);
+			name = MDPinCollectionView;
+			sourceTree = "<group>";
+		};
 		0D79BF011AF497250053EB11 /* MDPin */ = {
 			isa = PBXGroup;
 			children = (
@@ -1379,6 +1411,7 @@
 		0DE785AD1AEA75A300E56333 /* DeliveryMap */ = {
 			isa = PBXGroup;
 			children = (
+				0D31363D1B11AD7E0072A488 /* MDPinCollectionView */,
 				0D79BF011AF497250053EB11 /* MDPin */,
 				0D0787441AF46841007607E9 /* MDDeliveryMapView.h */,
 				0D0787451AF46841007607E9 /* MDDeliveryMapView.m */,
@@ -1691,8 +1724,10 @@
 				0D0F8B3A1AE61B7000755A22 /* MDRequestView.m in Sources */,
 				0DDDA64A1AEC80A700067016 /* MDProfileViewController.m in Sources */,
 				0D0F8B291AE61B7000755A22 /* MDLoginViewController.m in Sources */,
+				0D3136511B11B7380072A488 /* MDRealmBankInfo.m in Sources */,
 				0D31363A1B1102160072A488 /* MDSizeDescriptionViewController.m in Sources */,
 				0D0F8B341AE61B7000755A22 /* MDDeliveryView.m in Sources */,
+				0D3136541B11EA6D0072A488 /* MDUserLocationService.m in Sources */,
 				0D1500DE1AFB909E003686AA /* MDDeliveryTableViewCell.m in Sources */,
 				0D0F8AB41AE61B0C00755A22 /* MDUtil.m in Sources */,
 				0D3136311B10EC800072A488 /* MDNotifacation.m in Sources */,
@@ -1707,6 +1742,7 @@
 				0DAA27091AFF1C1200AFD83A /* MDClient.m in Sources */,
 				0D0F8AB21AE61B0C00755A22 /* MDUser.m in Sources */,
 				839C50421AFC8ADC000A8A1D /* MDStarRatingBar.m in Sources */,
+				0D3136431B11ADE70072A488 /* MDPinCollectionCell.m in Sources */,
 				0D3136131B1005540072A488 /* MDConsignor.m in Sources */,
 				0D0F8B401AE61B7000755A22 /* MDInputRequestViewController.m in Sources */,
 				0D31362C1B10EC170072A488 /* MDReviewHistoryViewController.m in Sources */,
@@ -1714,6 +1750,7 @@
 				0D0F8B351AE61B7000755A22 /* MDIndexView.m in Sources */,
 				0D31361E1B10EAB60072A488 /* MDSelectRatingWell.m in Sources */,
 				0D3136251B10EBFF0072A488 /* MDNotificationTable.m in Sources */,
+				0D3136401B11ADCC0072A488 /* MDPinCollectionView.m in Sources */,
 				0DAA27181AFF471800AFD83A /* MDReviewWell.m in Sources */,
 				0D0F8B2C1AE61B7000755A22 /* MDInput.m in Sources */,
 				0DAA274F1B025DB400AFD83A /* MDBankSearchViewController.m in Sources */,
@@ -1754,6 +1791,7 @@
 				0DEAD8D21AF5D27E00202F01 /* MDTranspotation.m in Sources */,
 				0D31361F1B10EAB60072A488 /* MDSelectRating.m in Sources */,
 				0D0F8B4E1AE61B7000755A22 /* MDSettingViewController.m in Sources */,
+				0D3136571B1222F50072A488 /* MDRealmNotificationRecord.m in Sources */,
 				839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */,
 				0D0F8B431AE61B7000755A22 /* MDExpireViewController.m in Sources */,
 				0D0F8B4A1AE61B7000755A22 /* MDRecieveTimeViewController.m in Sources */,

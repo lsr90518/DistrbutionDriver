@@ -30,6 +30,8 @@
 
 @property (assign, nonatomic) id<CreateProfileViewDelegate> delegate;
 
+-(BOOL) isAllInput;
+
 -(BOOL) isChecked;
 
 @end
