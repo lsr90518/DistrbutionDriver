@@ -44,7 +44,7 @@
 }
 
 -(void) initNavigationBar {
-    self.navigationItem.title = @"絞り込み";
+    self.navigationItem.title = @"表示";
     //add right button item
     UIButton *_backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_backButton setTitle:@"戻る" forState:UIControlStateNormal];

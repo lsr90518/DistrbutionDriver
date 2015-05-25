@@ -135,6 +135,11 @@
         completeProcessLabel.textAlignment = NSTextAlignmentCenter;
         [_scrollView addSubview:completeProcessLabel];
         
+        //take button
+        takeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 95, self.frame.size.width - 20, 50)];
+        takeButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:16];
+        takeButton.layer.cornerRadius = 2.5;
+        takeButton.layer.borderWidth = 0.5;
         
         //状態
         statusButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, 95, frame.size.width-20, 50)];
@@ -143,14 +148,8 @@
         [statusButton setUnactive];
         [_scrollView addSubview:statusButton];
         
-        //take button
-        takeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10, self.frame.size.width - 20, 50)];
-        takeButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:16];
-        takeButton.layer.cornerRadius = 2.5;
-        takeButton.layer.borderWidth = 0.5;
-        
         //cameraButton
-        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 155,  frame.size.width-20, (frame.size.width-20)*0.6)];
+        cameraButton = [[UIButton alloc]initWithFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10,  frame.size.width-20, (frame.size.width-20)*0.6)];
         [cameraButton setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
         [cameraButton addTarget:self action:@selector(cameraButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         cameraButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -389,7 +388,7 @@
 -(void) resizeByTakeButton{
     
     //cameraButton
-    [cameraButton setFrame:CGRectMake(10, takeButton.frame.origin.y + takeButton.frame.size.height + 10, self.frame.size.width-20, (self.frame.size.width-20)*0.6)];
+    [cameraButton setFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10, self.frame.size.width-20, (self.frame.size.width-20)*0.6)];
     
     [self resizeSubviews];
     
@@ -403,6 +402,7 @@
 }
 
 -(void) setReviewContent:(MDReview *)review{
+    statusButton.frame = takeButton.frame;
     [takeButton removeFromSuperview];
     reviewWell = [[MDSelectRatingWell alloc]initWithFrame:CGRectMake(10, statusButton.frame.origin.y + statusButton.frame.size.height + 10, self.frame.size.width - 20, 100)];
     [reviewWell.selectRating setNoArrow];
@@ -483,6 +483,8 @@
     takeButton.tag = 1;
     [_scrollView addSubview:takeButton];
     
+    [statusButton setFrame:CGRectMake(10, takeButton.frame.origin.y + takeButton.frame.size.height + 10, self.frame.size.width - 20, 50)];
+    
     [self resizeByTakeButton];
     
 }
@@ -496,6 +498,8 @@
     takeButton.tag = 2;
     [_scrollView addSubview:takeButton];
     
+    [statusButton setFrame:CGRectMake(10, takeButton.frame.origin.y + takeButton.frame.size.height + 10, self.frame.size.width - 20, 50)];
+    
     [self resizeByTakeButton];
     
 }
@@ -507,6 +511,8 @@
     [takeButton addTarget:self action:@selector(takeButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     takeButton.tag = 3;
     [_scrollView addSubview:takeButton];
+    
+    [statusButton setFrame:CGRectMake(10, takeButton.frame.origin.y + takeButton.frame.size.height + 10, self.frame.size.width - 20, 50)];
     
     [self resizeByTakeButton];
 }

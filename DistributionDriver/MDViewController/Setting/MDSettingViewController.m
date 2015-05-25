@@ -194,10 +194,13 @@
     RLMResults *newNoti = [MDRealmNotificationRecord allObjectsInRealm:realm];
     MDRealmNotificationRecord *noti = [[MDRealmNotificationRecord alloc]init];
     
-    MDNotifacation *notification = [[MDNotificationService getInstance].notificationList lastObject];
+    MDNotifacation *notification = [[MDNotificationService getInstance].notificationList firstObject];
     
     for(MDRealmNotificationRecord *tmp in newNoti){
         noti.index = tmp.index;
+    }
+    if (noti.index == nil) {
+        noti.index = @"0";
     }
     noti.last_id = notification.notification_id;
     

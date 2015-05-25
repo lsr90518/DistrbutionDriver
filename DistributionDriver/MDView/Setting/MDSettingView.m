@@ -241,7 +241,7 @@
 -(void) setViewData:(MDUser *)user{
     nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
     phoneButton.selectLabel.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
-    notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", 0];
+    notificationButton.selectLabel.text = @"新着通知がありません";
     
     NSString *transportationStr = @"";
     if([user.walk isEqualToString:@"1"]){

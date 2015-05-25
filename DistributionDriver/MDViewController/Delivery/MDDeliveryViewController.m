@@ -26,6 +26,8 @@
 
 @interface MDDeliveryViewController () {
     NSMutableArray *annotations;
+    NSMutableArray *fromAnnotations;
+    NSMutableArray *toAnnotations;
     MDPinCalloutView *infoWindow;
     MKAnnotationView *currentAnnotationView;
     MDUserLocationService *currentUesrLocation;
@@ -35,6 +37,7 @@
     BOOL isMoved;
     BOOL isTrack;
     BOOL isCluster;
+    BOOL isShowHistory;
     
 //    MDPinCollectionView *infoWindow;
     
@@ -87,6 +90,7 @@
     [self.view addSubview:_tabbar];
     [self.view addSubview:currentLocationButton];
     
+    isShowHistory = YES;
     
     //user location
     currentUesrLocation = [MDUserLocationService getInstance];
@@ -101,6 +105,7 @@
     // Do any additional setup after loading the view.
     
     _fromAnnotationsMapView = [[MKMapView alloc] initWithFrame:CGRectZero];
+    _toAnnotationsMapView = [[MKMapView alloc]initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
     isSelected = NO;
@@ -141,7 +146,8 @@
                                          [self putPackageIntoMap];
                                          [_mapView addAnnotations:annotations];
 
-                                         [_fromAnnotationsMapView addAnnotations:annotations];
+                                         [_fromAnnotationsMapView addAnnotations:fromAnnotations];
+                                         [_toAnnotationsMapView addAnnotations:toAnnotations];
                                          [self updateVisibleAnnotations];
 
 
@@ -289,6 +295,7 @@
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
     [_mapView setUserTrackingMode:MKUserTrackingModeNone];
+    [_mapView setRotateEnabled:NO];
     
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -365,11 +372,18 @@
     } else {
         [annoView updatePinAnnotationByType:pin];
         if([pin.packageType isEqualToString:@"from"]){
-            
             //大头针的图片
             annoView.image = [UIImage imageNamed:@"pinFrom"];
+            
+        } else if([pin.packageType isEqualToString:@"from"]) {
+            annoView.image = [UIImage imageNamed:@"pinTo"];
+            
+        } else if([pin.packageType isEqualToString:@"history-from"]){
+            annoView.image = [UIImage imageNamed:@"pinFrom"];
+            [annoView setAlpha:0.5];
         } else {
             annoView.image = [UIImage imageNamed:@"pinTo"];
+            [annoView setAlpha:0.5];
         }
     }
     
@@ -383,12 +397,17 @@
 -(void)putPackageIntoMap{
     if(annotations == nil){
         annotations = [[NSMutableArray alloc] init];
+        fromAnnotations = [[NSMutableArray alloc]init];
+        toAnnotations = [[NSMutableArray alloc]init];
     }
     [_mapView removeAnnotations:annotations];
-    [_fromAnnotationsMapView removeAnnotations:annotations];
+    [_fromAnnotationsMapView removeAnnotations:fromAnnotations];
+    [_toAnnotationsMapView removeAnnotations:toAnnotations];
     [annotations removeAllObjects];
-    NSMutableArray *packageList = [[MDPackageService getInstance] getPackageListByPackage:[MDCurrentPackage getInstance]];
+    [fromAnnotations removeAllObjects];
+    [toAnnotations removeAllObjects];
     
+    NSMutableArray *packageList = [[MDPackageService getInstance] getPackageListByPackage:[MDCurrentPackage getInstance]];
     
     for (MDPackage *package in packageList) {
         
@@ -414,6 +433,40 @@
         
         [annotations addObject:from_annotation];
         [annotations addObject:to_annotation];
+        [fromAnnotations addObject:from_annotation];
+        [toAnnotations addObject:to_annotation];
+    }
+    
+    if(isShowHistory){
+        NSMutableArray *packageList = [[MDMyPackageService getInstance] packageList];
+        
+        for (MDPackage *package in packageList) {
+            
+            //from pin
+            NSString *from_lat = package.from_lat;
+            NSString *from_lng = package.from_lng;
+            //Create coordinates from the latitude and longitude values
+            CLLocationCoordinate2D coord;
+            coord.latitude = from_lat.doubleValue;
+            coord.longitude = from_lng.doubleValue;
+            MDPin *from_annotation = [[MDPin alloc]initWithCoordinates:coord title:@"" subTitle:@"" type:@"history-from"];
+            from_annotation.package = package;
+            
+            //to pin
+            NSString *to_lat = package.to_lat;
+            NSString *to_lng = package.to_lng;
+            //Create coordinates from the latitude and longitude values
+            CLLocationCoordinate2D to_coord;
+            to_coord.latitude = to_lat.doubleValue;
+            to_coord.longitude = to_lng.doubleValue;
+            MDPin *to_annotation = [[MDPin alloc] initWithCoordinates:to_coord title:@"" subTitle:@"" type:@"history-to"];
+            to_annotation.package = package;
+            
+            [annotations addObject:from_annotation];
+            [annotations addObject:to_annotation];
+            [fromAnnotations addObject:from_annotation];
+            [toAnnotations addObject:to_annotation];
+        }
     }
 }
 
@@ -437,7 +490,7 @@
             [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         } else {
             
-            if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"]){
+            if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"] || [tmpView.packageType isEqualToString:@"history-from"] || [tmpView.packageType isEqualToString:@"history-to"]){
                 isSelected = YES;
                 
                 MKCoordinateRegion region = MKCoordinateRegionMake(tmpView.coordinate, _mapView.region.span);
@@ -511,7 +564,7 @@
 
 
 -(void) initNavigationBar {
-    self.navigationItem.title = @"配送の依頼";
+    self.navigationItem.title = @"依頼を探す";
     //add right button item
     UIButton *_backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_backButton setTitle:@"表示" forState:UIControlStateNormal];

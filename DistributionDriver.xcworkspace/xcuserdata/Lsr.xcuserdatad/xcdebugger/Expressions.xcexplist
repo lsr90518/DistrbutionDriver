@@ -27,6 +27,14 @@
          contextName = "-[MDPackageService initDataWithArray:WithDistance:]:MDPackageService.m">
       </ContextState>
       <ContextState
+         contextName = "-[MDSettingViewController saveNotiToDB]:MDSettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[MDNotificationService getInstance].notificationList">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__49-[MDTranspotationViewController backButtonPushed]_block_invoke:MDTranspotationViewController.m">
       </ContextState>
       <ContextState
@@ -59,6 +67,9 @@
       </ContextState>
       <ContextState
          contextName = "-[MDDeliveryViewController loadDataByPref:location:]:MDDeliveryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDSettingViewController updateNotificationData]:MDSettingViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDTranspotationViewController backButtonPushed]:MDTranspotationViewController.m">
