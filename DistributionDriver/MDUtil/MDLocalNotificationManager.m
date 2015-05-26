@@ -70,6 +70,10 @@
                                                  [self makeNotification:[review_date initWithTimeInterval:-86400 sinceDate:review_date]
                                                               alertBody:@"荷物評価を1日以内にしてください。期限を過ぎると自動的に☆5となります。"
                                                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:package.package_id, @"package_id", nil]];
+                                                 // 12時間前
+                                                 [self makeNotification:[review_date initWithTimeInterval:-43200 sinceDate:review_date]
+                                                              alertBody:@"荷物評価を12時間以内にしてください。期限を過ぎると自動的に☆5となります。"
+                                                               userInfo:[NSDictionary dictionaryWithObjectsAndKeys:package.package_id, @"package_id", nil]];
                                                  // 3時間前
                                                  [self makeNotification:[review_date initWithTimeInterval:-10800 sinceDate:review_date]
                                                               alertBody:@"荷物評価を3時間以内にしてください。期限を過ぎると自動的に☆5となります。"
