@@ -17,4 +17,6 @@
 
 +(MDUserLocationService *)getInstance;
 
+-(void) initUserLocation;
+
 @end

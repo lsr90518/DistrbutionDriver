@@ -10,12 +10,14 @@
 #import "MDSelect.h"
 #import "MDInput.h"
 #import "MDCurrentPackage.h"
+#import "MDSwitch.h"
 
 @implementation MDMapFilter{
     MDSelect *sizePicker;
     MDSelect *costPicker;
     MDSelect *distancePicker;
     MDSelect *destinateTimePicker;
+    MDSwitch *showHistoryPicker;
     
     NSMutableArray *options;
     NSMutableArray* time;
@@ -91,6 +93,17 @@
         [destinateTimePicker addTarget:self action:@selector(pickerButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:destinateTimePicker];
         destinateTimePicker.selectLabel.text = [self getInitStr];
+        
+        
+        //switch
+        showHistoryPicker = [[MDSwitch alloc]initWithFrame:CGRectMake(10, destinateTimePicker.frame.origin.y + destinateTimePicker.frame.size.height + 10, frame.size.width - 20, 50)];
+        showHistoryPicker.title.text = @"終了表示";
+        [showHistoryPicker.title sizeToFit];
+        if([MDCurrentPackage getInstance].isShowHistory){
+            showHistoryPicker.switchInput.on = YES;
+        }
+        [showHistoryPicker.switchInput addTarget:self action:@selector(changeShowHistory:) forControlEvents:UIControlEventValueChanged];
+        [_scrollView addSubview:showHistoryPicker];
     }
     
     return self;
@@ -168,7 +181,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     for (UIView *view in [scrollView subviews]) {
         if([view isKindOfClass:[MDInput class]]){
-            MDInput *tmpView = view;
+            MDInput *tmpView = (MDInput *)view;
             [tmpView.input resignFirstResponder];
         }
     }
@@ -239,6 +252,14 @@
     
     [MDCurrentPackage getInstance].deliver_limit = [NSString stringWithFormat:@"%@ %@:%@:00",newDate, stardardHour, stardardMinute];
     NSLog(@"%@",[MDCurrentPackage getInstance].deliver_limit);
+}
+
+-(void) changeShowHistory:(UISwitch *)switchInput{
+    if(switchInput.on){
+        [MDCurrentPackage getInstance].isShowHistory = YES;
+    } else {
+        [MDCurrentPackage getInstance].isShowHistory = NO;
+    }
 }
 
 @end

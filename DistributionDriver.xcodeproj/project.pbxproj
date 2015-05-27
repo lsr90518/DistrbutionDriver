@@ -140,6 +140,10 @@
 		0D3136511B11B7380072A488 /* MDRealmBankInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136501B11B7380072A488 /* MDRealmBankInfo.m */; };
 		0D3136541B11EA6D0072A488 /* MDUserLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136531B11EA6D0072A488 /* MDUserLocationService.m */; };
 		0D3136571B1222F50072A488 /* MDRealmNotificationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */; };
+		0D31365D1B14017A0072A488 /* MDSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31365C1B14017A0072A488 /* MDSwitch.m */; };
+		0D3136601B15220B0072A488 /* MDPinCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */; };
+		0D3136631B1530E00072A488 /* MDPinNewCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */; };
+		0D3136661B1530FB0072A488 /* MDPinNewCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -421,6 +425,14 @@
 		0D3136531B11EA6D0072A488 /* MDUserLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDUserLocationService.m; path = MDService/MDUserLocationService.m; sourceTree = "<group>"; };
 		0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmNotificationRecord.h; sourceTree = "<group>"; };
 		0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmNotificationRecord.m; sourceTree = "<group>"; };
+		0D31365B1B14017A0072A488 /* MDSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDSwitch.h; sourceTree = "<group>"; };
+		0D31365C1B14017A0072A488 /* MDSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwitch.m; sourceTree = "<group>"; };
+		0D31365E1B15220B0072A488 /* MDPinCollectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinCollectionCellView.h; path = DelieveryMap/PinCollection/MDPinCollectionCellView.h; sourceTree = "<group>"; };
+		0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinCollectionCellView.m; path = DelieveryMap/PinCollection/MDPinCollectionCellView.m; sourceTree = "<group>"; };
+		0D3136611B1530E00072A488 /* MDPinNewCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinNewCollectionView.h; path = DelieveryMap/PinCollection/MDPinNewCollectionView.h; sourceTree = "<group>"; };
+		0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionView.m; sourceTree = "<group>"; };
+		0D3136641B1530FB0072A488 /* MDPinNewCollectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinNewCollectionCellView.h; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.h; sourceTree = "<group>"; };
+		0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionCellView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.m; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -883,6 +895,8 @@
 				0DEAD8CC1AF5CCBF00202F01 /* MDTitleWell.m */,
 				839C50401AFC8ADC000A8A1D /* MDStarRatingBar.h */,
 				839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */,
+				0D31365B1B14017A0072A488 /* MDSwitch.h */,
+				0D31365C1B14017A0072A488 /* MDSwitch.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1273,12 +1287,36 @@
 		0D31363D1B11AD7E0072A488 /* MDPinCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136671B1534C30072A488 /* History */,
+				0D3136691B1534EA0072A488 /* New */,
+			);
+			name = MDPinCollectionView;
+			sourceTree = "<group>";
+		};
+		0D3136671B1534C30072A488 /* History */ = {
+			isa = PBXGroup;
+			children = (
 				0D31363E1B11ADCC0072A488 /* MDPinCollectionView.h */,
 				0D31363F1B11ADCC0072A488 /* MDPinCollectionView.m */,
 				0D3136411B11ADE70072A488 /* MDPinCollectionCell.h */,
 				0D3136421B11ADE70072A488 /* MDPinCollectionCell.m */,
+				0D31365E1B15220B0072A488 /* MDPinCollectionCellView.h */,
+				0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */,
 			);
-			name = MDPinCollectionView;
+			name = History;
+			sourceTree = "<group>";
+		};
+		0D3136691B1534EA0072A488 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				0D3136611B1530E00072A488 /* MDPinNewCollectionView.h */,
+				0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */,
+				0D3136641B1530FB0072A488 /* MDPinNewCollectionCellView.h */,
+				0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */,
+				0DEAD8C51AF5350E00202F01 /* MDPinCalloutView.h */,
+				0DEAD8C61AF5350E00202F01 /* MDPinCalloutView.m */,
+			);
+			name = New;
 			sourceTree = "<group>";
 		};
 		0D79BF011AF497250053EB11 /* MDPin */ = {
@@ -1288,8 +1326,6 @@
 				0D79BF031AF497800053EB11 /* MDPin.m */,
 				0D79BF051AF4A7D90053EB11 /* MDPinCallout.h */,
 				0D79BF061AF4A7DA0053EB11 /* MDPinCallout.m */,
-				0DEAD8C51AF5350E00202F01 /* MDPinCalloutView.h */,
-				0DEAD8C61AF5350E00202F01 /* MDPinCalloutView.m */,
 				0DF0811C1AF7402F00437700 /* MDClusterView.h */,
 				0DF0811D1AF7402F00437700 /* MDClusterView.m */,
 			);
@@ -1767,6 +1803,7 @@
 				0D0F8AAD1AE61B0C00755A22 /* MDSQLManager.m in Sources */,
 				0D0F8AB01AE61B0C00755A22 /* MDRequest.m in Sources */,
 				0D0F8B2F1AE61B7000755A22 /* MDStatusLabel.m in Sources */,
+				0D31365D1B14017A0072A488 /* MDSwitch.m in Sources */,
 				0D0F8B471AE61B7000755A22 /* MDNoteViewController.m in Sources */,
 				0D1500E21AFB90C1003686AA /* MDDeliveryListViewController.m in Sources */,
 				0DAA27141AFF420800AFD83A /* MDMyPackageService.m in Sources */,
@@ -1800,9 +1837,12 @@
 				0D3136371B10FE470072A488 /* MDAddressButton.m in Sources */,
 				0D0F8A5A1AE60B2C00755A22 /* main.m in Sources */,
 				0DEAD8CA1AF5AFF500202F01 /* MDAddressTable.m in Sources */,
+				0D3136661B1530FB0072A488 /* MDPinNewCollectionCellView.m in Sources */,
 				0D0F8B3F1AE61B7000755A22 /* MDInputDestinationViewController.m in Sources */,
 				0D0F8AB11AE61B0C00755A22 /* MDPackage.m in Sources */,
 				0DAA270C1AFF1C8800AFD83A /* MDReview.m in Sources */,
+				0D3136601B15220B0072A488 /* MDPinCollectionCellView.m in Sources */,
+				0D3136631B1530E00072A488 /* MDPinNewCollectionView.m in Sources */,
 				0D0F8B3D1AE61B7000755A22 /* MDWell.m in Sources */,
 				0D0F8B281AE61B7000755A22 /* MDCheckNumberViewController.m in Sources */,
 				0DEAD8CD1AF5CCBF00202F01 /* MDTitleWell.m in Sources */,

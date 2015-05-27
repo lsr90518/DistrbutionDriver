@@ -71,17 +71,18 @@
 }
 
 -(void) postButtonTouched {
+    
     if(_inputView.input.text.length == 0){
-        [MDUtil makeAlertWithTitle:@"未入力" message:@"電話番号を入力してください。" done:@"OK" viewController:self];
+        [MDUtil makeAlertWithTitle:@"未入力" message:@"携帯番号を入力してください。" done:@"OK" viewController:self];
     }else{
         // "-" 判断
         NSRange range = [_inputView.input.text rangeOfString:@"-"];
         if(range.length > 0) {
-            [MDUtil makeAlertWithTitle:@"不正な番号" message:@"ハイフン「-」の除いた電話番号を入力してください。" done:@"OK" viewController:self];
+            [MDUtil makeAlertWithTitle:@"不正な番号" message:@"ハイフン「-」の除いた携帯番号を入力してください。" done:@"OK" viewController:self];
         } else if( _inputView.input.text.length != 11) {
             [MDUtil makeAlertWithTitle:@"不正な番号" message:@"11桁の携帯番号を入力してください。" done:@"OK" viewController:self];
         } else {
-            //有効な電話番号
+            //有効な携帯番号
             NSString *phoneNumber = [MDUtil internationalPhoneNumber:_inputView.input.text];
             
             if([[MDUser getInstance] isLogin]){
@@ -98,9 +99,9 @@
                                                                 } else if([[completeOperation responseJSON][@"code"] integerValue] == -99){
                                                                     [MDUtil makeAlertWithTitle:@"連続送信禁止" message:@"悪用防止のため連続での送信はお控えください。しばらくお待ちいただいてから再度お試しください。" done:@"OK" viewController:self];
                                                                 } else if ([[completeOperation responseJSON][@"code"] integerValue] == 3){
-                                                                    [MDUtil makeAlertWithTitle:@"変更できません" message:@"電話番号と確認コードの対応が不正です。" done:@"OK" viewController:self];
+                                                                    [MDUtil makeAlertWithTitle:@"変更できません" message:@"携帯番号と確認コードの対応が不正です。" done:@"OK" viewController:self];
                                                                 } else if ([[completeOperation responseJSON][@"code"] integerValue] == 2){
-                                                                    [MDUtil makeAlertWithTitle:@"変更できません" message:@"既に指定した電話番号が使われています。" done:@"OK" viewController:self];
+                                                                    [MDUtil makeAlertWithTitle:@"変更できません" message:@"既に指定した携帯番号が使われています。" done:@"OK" viewController:self];
                                                                 }
                                                                 [SVProgressHUD dismiss];
                                                             }onError:^(MKNetworkOperation *completeOperarion, NSError *error){
@@ -124,18 +125,16 @@
                                                 // NSLog(@"%ld",(long)[[completeOperation responseJSON][@"code"] integerValue]);
                                                 [SVProgressHUD dismiss];
                                                 if([[completeOperation responseJSON][@"code"] integerValue] == 0){
-                                                    MDUser *user = [MDUser getInstance];
-                                                    // NSLog(@"user_id: %d", [[completeOperation responseJSON][@"user_id"] intValue]);
-                                                    user.user_id = [[completeOperation responseJSON][@"user_id"] intValue];
-                                                    user.phoneNumber = [MDUtil japanesePhoneNumber: phoneNumber];
+
+                                                    [MDUser getInstance].user_id = [[completeOperation responseJSON][@"user_id"] intValue];
+                                                    [MDUser getInstance].phoneNumber = [MDUtil japanesePhoneNumber: phoneNumber];
                                                     MDCheckNumberViewController *checkNumberController = [[MDCheckNumberViewController alloc]init];
                                                     [self.navigationController pushViewController:checkNumberController animated:YES];
                                                 } else if([[completeOperation responseJSON][@"code"] integerValue] == 2){
-                                                    [MDUtil makeAlertWithTitle:@"既存の番号" message:@"この電話番号は既に登録されています。" done:@"OK" viewController:self];
+                                                    [MDUtil makeAlertWithTitle:@"既存の番号" message:@"この携帯番号は既に登録されています。" done:@"OK" viewController:self];
                                                 } else if([[completeOperation responseJSON][@"code"] integerValue] == -99){
                                                     [MDUtil makeAlertWithTitle:@"連続送信禁止" message:@"悪用防止のため連続での送信はお控えください。しばらくお待ちいただいてから再度お試しください。" done:@"OK" viewController:self];
                                                 }
-                                                
                                             } onError:^(MKNetworkOperation *completeOperarion, NSError *error){
                                                 NSLog(@"error --------------  %@", error);
                                                 [SVProgressHUD dismiss];

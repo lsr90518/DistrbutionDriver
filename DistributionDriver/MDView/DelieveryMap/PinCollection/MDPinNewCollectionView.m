@@ -1,15 +1,15 @@
 //
-//  MDPinCollectionView.m
+//  MDPinNewCollectionView.m
 //  DistributionDriver
 //
-//  Created by Lsr on 5/24/15.
+//  Created by Lsr on 5/27/15.
 //  Copyright (c) 2015 Lsr. All rights reserved.
 //
 
-#import "MDPinCollectionView.h"
-#import "MDPinCollectionCell.h"
+#import "MDPinNewCollectionView.h"
+#import "MDPinNewCollectionCellView.h"
 
-@implementation MDPinCollectionView{
+@implementation MDPinNewCollectionView{
     UICollectionViewFlowLayout *vFlowLayout;
 }
 
@@ -36,7 +36,7 @@
         
         [self.collectionView setCollectionViewLayout:vFlowLayout animated:YES];
         
-        [self.collectionView registerClass:[MDPinCollectionCell class] forCellWithReuseIdentifier:@"CollectionViewCell"];
+        [self.collectionView registerClass:[MDPinNewCollectionCellView class] forCellWithReuseIdentifier:@"NewCollectionViewCell"];
         [self addSubview:self.collectionView];
     }
     return self;
@@ -59,18 +59,17 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    MDPinCollectionCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell"
-                                                                              forIndexPath:indexPath];
+    MDPinNewCollectionCellView *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NewCollectionViewCell"
+                                                                               forIndexPath:indexPath];
     [cell setCellData:[_packageList objectAtIndex:indexPath.section]];
     cell.delegate = self;
     return cell;
 }
 
 -(void) contentPushed:(MDPin *)pin{
-    if([self.cellDelegate respondsToSelector:@selector(cellContentPushed:)]){
+    if ([self.cellDelegate respondsToSelector:@selector(cellContentPushed:)]) {
         [self.cellDelegate cellContentPushed:pin];
     }
 }
-
 
 @end

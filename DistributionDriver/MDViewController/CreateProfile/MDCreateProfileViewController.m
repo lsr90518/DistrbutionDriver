@@ -9,6 +9,7 @@
 #import "MDCreateProfileViewController.h"
 #import "MDUser.h"
 #import "MDViewController.h"
+#import "MDIndexViewController.h"
 #import "MDUtil.h"
 #import "MDAPI.h"
 #import <SVProgressHUD.h>
@@ -109,11 +110,9 @@
         [[MDAPI sharedAPI] newProfileByUser:user
                                     onComplete:^(MKNetworkOperation *completeOperation) {
                                         NSLog(@"%@", [completeOperation responseJSON]);
-                                        user.userHash = [completeOperation responseJSON][@"hash"];
-                                        [user setLogin];
                                         [SVProgressHUD dismiss];
-                                        MDViewController *viewcontroller = [[MDViewController alloc]init];
-                                        [self presentViewController:viewcontroller animated:YES completion:nil];
+                                        
+                                        [self dismissViewControllerAnimated:YES completion:nil];
                                     } onError:^(MKNetworkOperation *completeOperarion, NSError *error){
                                         NSLog(@"error --------------  %@", error);
                                         [SVProgressHUD dismiss];

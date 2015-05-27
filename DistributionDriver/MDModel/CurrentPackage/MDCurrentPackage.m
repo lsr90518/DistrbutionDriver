@@ -79,6 +79,8 @@
     if(self.distance.length < 1){
         self.distance = @"9999999";
     }
+    
+    _isShowHistory = NO;
 }
 
 @end

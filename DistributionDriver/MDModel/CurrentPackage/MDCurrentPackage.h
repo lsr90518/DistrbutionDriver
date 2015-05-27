@@ -37,6 +37,7 @@
 @property (strong, nonatomic) NSString *requestType;
 @property (strong, nonatomic) NSString *order;
 @property (strong, nonatomic) NSString *distance;
+@property (nonatomic) BOOL isShowHistory;
 
 +(MDCurrentPackage *)getInstance;
 

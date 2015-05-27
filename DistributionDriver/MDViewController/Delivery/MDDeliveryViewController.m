@@ -13,22 +13,16 @@
 #import "MDMapFilterViewController.h"
 #import "MDPackageService.h"
 #import <SVProgressHUD.h>
-#import "MDPin.h"
-#import "MDPinCalloutView.h"
-#import "MDPinCallout.h"
-#import "MDClusterView.h"
-#import "MDDeliveryListViewController.h"
-#import "MDNotificationService.h"
-#import "MDMyPackageService.h"
-#import "MDUserLocationService.h"
-#import "MDPinCollectionView.h"
 
 
 @interface MDDeliveryViewController () {
     NSMutableArray *annotations;
     NSMutableArray *fromAnnotations;
     NSMutableArray *toAnnotations;
-    MDPinCalloutView *infoWindow;
+    NSMutableArray *historyFromAnnotations;
+    NSMutableArray *historyToAnnotations;
+    
+    MDPinNewCollectionView *infoWindow;
     MKAnnotationView *currentAnnotationView;
     MDUserLocationService *currentUesrLocation;
     MKCoordinateRegion currentUserRegion;
@@ -39,7 +33,7 @@
     BOOL isCluster;
     BOOL isShowHistory;
     
-//    MDPinCollectionView *infoWindow;
+    MDPinCollectionView *collectionInfoWindow;
     
     MDPackageService *packageService;
     MDMyPackageService *myPackageService;
@@ -89,26 +83,30 @@
     }
     [self.view addSubview:_tabbar];
     [self.view addSubview:currentLocationButton];
-    
-    isShowHistory = YES;
-    
-    //user location
-    currentUesrLocation = [MDUserLocationService getInstance];
-    //update lastest data
-    [self updateMyPackageData];
-    //update notification data
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _fromAnnotationsMapView = [[MKMapView alloc] initWithFrame:CGRectZero];
-    _toAnnotationsMapView = [[MKMapView alloc]initWithFrame:CGRectZero];
+    _fromAnnotationsMapView         = [[MKMapView alloc] initWithFrame:CGRectZero];
+    _toAnnotationsMapView           = [[MKMapView alloc] initWithFrame:CGRectZero];
+    _historyToAnnotationsMapView    = [[MKMapView alloc] initWithFrame:CGRectZero];
+    _histroyFromAnnotationsMapView  = [[MKMapView alloc] initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
     isSelected = NO;
+    isShowHistory = [MDCurrentPackage getInstance].isShowHistory;
+
+    //user location
+    currentUesrLocation = [MDUserLocationService getInstance];//currentUesrLocation
+    //update lastest data
+    [self updateMyPackageData];
+    //update notification data
+    
+    isTrack = YES;
+    
+    [self getCurrentPref:currentUesrLocation.userLocation];
 }
 
 -(void) getCurrentPref:(MKUserLocation *)userLocation{
@@ -148,6 +146,8 @@
 
                                          [_fromAnnotationsMapView addAnnotations:fromAnnotations];
                                          [_toAnnotationsMapView addAnnotations:toAnnotations];
+                                         [_histroyFromAnnotationsMapView addAnnotations:historyFromAnnotations];
+                                         [_historyToAnnotationsMapView addAnnotations:historyToAnnotations];
                                          [self updateVisibleAnnotations];
 
 
@@ -198,37 +198,142 @@
         gridMapRect.origin.x = startX;
         
         while (MKMapRectGetMinX(gridMapRect) <= endX) {
-            NSSet *allAnnotationsInBucket = [self.fromAnnotationsMapView annotationsInMapRect:gridMapRect];
-            NSSet *visibleAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+            //from pin
+            NSSet *allFromAnnotationsInBucket = [self.fromAnnotationsMapView annotationsInMapRect:gridMapRect];
+            NSSet *visibleFromAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
             
             // we only care about PhotoAnnotations
-            NSMutableSet *filteredAnnotationsInBucket = [[allAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+            NSMutableSet *filteredFromAnnotationsInBucket = [[allFromAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
                 return ([obj isKindOfClass:[MDPin class]]);
             }] mutableCopy];
             
-            if (filteredAnnotationsInBucket.count > 0) {
-                MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredAnnotationsInBucket];
+            if (filteredFromAnnotationsInBucket.count > 0) {
+                MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredFromAnnotationsInBucket];
 //
-                [filteredAnnotationsInBucket removeObject:annotationForGrid];
+                [filteredFromAnnotationsInBucket removeObject:annotationForGrid];
 //
 //                // give the annotationForGrid a reference to all the annotations it will represent
-                annotationForGrid.containedAnnotations = [filteredAnnotationsInBucket allObjects];
+                annotationForGrid.containedAnnotations = [filteredFromAnnotationsInBucket allObjects];
 //
                 [self.mapView addAnnotation:annotationForGrid];
 //
-                for (MDPin *annotation in filteredAnnotationsInBucket) {
+                for (MDPin *annotation in filteredFromAnnotationsInBucket) {
                     // give all the other annotations a reference to the one which is representing them
                     annotation.clusterAnnotation = annotationForGrid;
                     annotation.containedAnnotations = nil;
                     
                     // remove annotations which we've decided to cluster
-                    if ([visibleAnnotationsInBucket containsObject:annotation]) {
+                    if ([visibleFromAnnotationsInBucket containsObject:annotation]) {
                         CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
                         annotation.coordinate = annotation.clusterAnnotation.coordinate;
                         annotation.coordinate = actualCoordinate;
                         [self.mapView removeAnnotation:annotation];
                     }
                 }
+            }
+            
+            //to pin
+            NSSet *allToAnnotationsInBucket = [self.toAnnotationsMapView annotationsInMapRect:gridMapRect];
+            NSSet *visibleToAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+            
+            // we only care about PhotoAnnotations
+            NSMutableSet *filteredToAnnotationsInBucket = [[allToAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                return ([obj isKindOfClass:[MDPin class]]);
+            }] mutableCopy];
+            
+            if (filteredToAnnotationsInBucket.count > 0) {
+                MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredToAnnotationsInBucket];
+                //
+                [filteredToAnnotationsInBucket removeObject:annotationForGrid];
+                //
+                //                // give the annotationForGrid a reference to all the annotations it will represent
+                annotationForGrid.containedAnnotations = [filteredToAnnotationsInBucket allObjects];
+                //
+                [self.mapView addAnnotation:annotationForGrid];
+                //
+                for (MDPin *annotation in filteredToAnnotationsInBucket) {
+                    // give all the other annotations a reference to the one which is representing them
+                    annotation.clusterAnnotation = annotationForGrid;
+                    annotation.containedAnnotations = nil;
+                    
+                    // remove annotations which we've decided to cluster
+                    if ([visibleToAnnotationsInBucket containsObject:annotation]) {
+                        CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+                        annotation.coordinate = annotation.clusterAnnotation.coordinate;
+                        annotation.coordinate = actualCoordinate;
+                        [self.mapView removeAnnotation:annotation];
+                    }
+                }
+            }
+            if(isShowHistory){
+                //history to pin
+                NSSet *allToAnnotationsInBucket = [self.historyToAnnotationsMapView annotationsInMapRect:gridMapRect];
+                NSSet *visibleToAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+                
+                // we only care about PhotoAnnotations
+                NSMutableSet *filteredToAnnotationsInBucket = [[allToAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                    return ([obj isKindOfClass:[MDPin class]]);
+                }] mutableCopy];
+                
+                if (filteredToAnnotationsInBucket.count > 0) {
+                    MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredToAnnotationsInBucket];
+                    //
+                    [filteredToAnnotationsInBucket removeObject:annotationForGrid];
+                    //
+                    //                // give the annotationForGrid a reference to all the annotations it will represent
+                    annotationForGrid.containedAnnotations = [filteredToAnnotationsInBucket allObjects];
+                    //
+                    [self.mapView addAnnotation:annotationForGrid];
+                    //
+                    for (MDPin *annotation in filteredToAnnotationsInBucket) {
+                        // give all the other annotations a reference to the one which is representing them
+                        annotation.clusterAnnotation = annotationForGrid;
+                        annotation.containedAnnotations = nil;
+                        
+                        // remove annotations which we've decided to cluster
+                        if ([visibleToAnnotationsInBucket containsObject:annotation]) {
+                            CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+                            annotation.coordinate = annotation.clusterAnnotation.coordinate;
+                            annotation.coordinate = actualCoordinate;
+                            [self.mapView removeAnnotation:annotation];
+                        }
+                    }
+                }
+                //history from pin
+                NSSet *allFromAnnotationsInBucket = [self.histroyFromAnnotationsMapView annotationsInMapRect:gridMapRect];
+                NSSet *visibleFromAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
+                
+                // we only care about PhotoAnnotations
+                NSMutableSet *filteredFromAnnotationsInBucket = [[allFromAnnotationsInBucket objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+                    return ([obj isKindOfClass:[MDPin class]]);
+                }] mutableCopy];
+                
+                if (filteredFromAnnotationsInBucket.count > 0) {
+                    MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredFromAnnotationsInBucket];
+                    //
+                    [filteredFromAnnotationsInBucket removeObject:annotationForGrid];
+                    //
+                    //                // give the annotationForGrid a reference to all the annotations it will represent
+                    annotationForGrid.containedAnnotations = [filteredFromAnnotationsInBucket allObjects];
+                    //
+                    [self.mapView addAnnotation:annotationForGrid];
+                    //
+                    for (MDPin *annotation in filteredFromAnnotationsInBucket) {
+                        // give all the other annotations a reference to the one which is representing them
+                        annotation.clusterAnnotation = annotationForGrid;
+                        annotation.containedAnnotations = nil;
+                        
+                        // remove annotations which we've decided to cluster
+                        if ([visibleFromAnnotationsInBucket containsObject:annotation]) {
+                            CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+                            annotation.coordinate = annotation.clusterAnnotation.coordinate;
+                            annotation.coordinate = actualCoordinate;
+                            [self.mapView removeAnnotation:annotation];
+                        }
+                    }
+                }
+                
+                
             }
             
             gridMapRect.origin.x += gridSize;
@@ -314,15 +419,14 @@
         region.center.latitude = self.locationManager.location.coordinate.latitude;
         region.center.longitude = self.locationManager.location.coordinate.longitude;
     [self.mapView setRegion:region animated:YES];
-    isTrack = YES;
+    
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     //跟踪用户
     if(isTrack){
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
-        [self.mapView setRegion:region animated:YES];
+        
         isTrack = NO;
         [self getCurrentPref:userLocation];
         //loadData
@@ -374,16 +478,16 @@
         if([pin.packageType isEqualToString:@"from"]){
             //大头针的图片
             annoView.image = [UIImage imageNamed:@"pinFrom"];
-            
-        } else if([pin.packageType isEqualToString:@"from"]) {
+            [annoView setAlpha:1];
+        } else if([pin.packageType isEqualToString:@"to"]) {
             annoView.image = [UIImage imageNamed:@"pinTo"];
-            
+            [annoView setAlpha:1];
         } else if([pin.packageType isEqualToString:@"history-from"]){
             annoView.image = [UIImage imageNamed:@"pinFrom"];
-            [annoView setAlpha:0.5];
+            [annoView setAlpha:0.32];
         } else {
             annoView.image = [UIImage imageNamed:@"pinTo"];
-            [annoView setAlpha:0.5];
+            [annoView setAlpha:0.32];
         }
     }
     
@@ -397,15 +501,22 @@
 -(void)putPackageIntoMap{
     if(annotations == nil){
         annotations = [[NSMutableArray alloc] init];
-        fromAnnotations = [[NSMutableArray alloc]init];
-        toAnnotations = [[NSMutableArray alloc]init];
+        fromAnnotations         = [[NSMutableArray alloc]init];
+        toAnnotations           = [[NSMutableArray alloc]init];
+        historyFromAnnotations  = [[NSMutableArray alloc]init];
+        historyToAnnotations    = [[NSMutableArray alloc]init];
     }
-    [_mapView removeAnnotations:annotations];
-    [_fromAnnotationsMapView removeAnnotations:fromAnnotations];
-    [_toAnnotationsMapView removeAnnotations:toAnnotations];
-    [annotations removeAllObjects];
-    [fromAnnotations removeAllObjects];
-    [toAnnotations removeAllObjects];
+    [_mapView                       removeAnnotations:annotations];
+    [_fromAnnotationsMapView        removeAnnotations:fromAnnotations];
+    [_toAnnotationsMapView          removeAnnotations:toAnnotations];
+    [_historyToAnnotationsMapView   removeAnnotations:historyToAnnotations];
+    [_histroyFromAnnotationsMapView removeAnnotations:historyFromAnnotations];
+    
+    [annotations            removeAllObjects];
+    [fromAnnotations        removeAllObjects];
+    [toAnnotations          removeAllObjects];
+    [historyToAnnotations   removeAllObjects];
+    [historyFromAnnotations removeAllObjects];
     
     NSMutableArray *packageList = [[MDPackageService getInstance] getPackageListByPackage:[MDCurrentPackage getInstance]];
     
@@ -464,8 +575,8 @@
             
             [annotations addObject:from_annotation];
             [annotations addObject:to_annotation];
-            [fromAnnotations addObject:from_annotation];
-            [toAnnotations addObject:to_annotation];
+            [historyFromAnnotations addObject:from_annotation];
+            [historyToAnnotations addObject:to_annotation];
         }
     }
 }
@@ -487,6 +598,7 @@
             //找到最大距离
             MKCoordinateRegion region = MKCoordinateRegionMake(tmpView.coordinate, _mapView.region.span);
             isCluster = YES;
+            isSelected = YES;
             [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         } else {
             
@@ -513,20 +625,22 @@
     if(isSelected && isMoved){
         isSelected = NO;
     }
+    if(isCluster && isMoved){
+        isCluster = NO;
+    }
     [infoWindow removeFromSuperview];
+    [collectionInfoWindow removeFromSuperview];
 //    [infoWindow removeFromSuperview];
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
 
     MDPin *currentPin = currentAnnotationView.annotation;
-    if(isSelected && !isCluster){
-            isMoved = YES;
-            CGSize  calloutSize = CGSizeMake(self.view.frame.size.width - 30, 166);
-            infoWindow = [[MDPinCalloutView alloc] initWithFrame:CGRectMake(15, 121, calloutSize.width, calloutSize.height)];
-            [infoWindow setData:currentPin.package];
-            [infoWindow addTarget:self action:@selector(seeDetail) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:infoWindow];
+    
+    if(isSelected){
+        isMoved = YES;
+        NSRange range = [currentPin.packageType rangeOfString:@"history"];
+        ((int)range.length > 0) ? [self showHistoryWindow:currentPin] : [self showNewWindow:currentPin];
         
     } else {
         NSSet *visitableAnnotations = [mapView annotationsInMapRect:[mapView visibleMapRect]];
@@ -545,7 +659,34 @@
         [self updateVisibleAnnotations];
         isCluster = NO;
     }
-    
+}
+
+-(void) showNewWindow:(MDPin *)pin{
+    CGSize  calloutSize = CGSizeMake(self.view.frame.size.width - 30, 166);
+    infoWindow = [[MDPinNewCollectionView alloc] initWithFrame:CGRectMake(15, 121, calloutSize.width, calloutSize.height)];
+    infoWindow.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+    infoWindow.layer.shadowOffset = CGSizeMake(1,1);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    infoWindow.layer.shadowOpacity = 0.3;//阴影透明度，默认0
+    infoWindow.layer.shadowRadius = 4;//阴影半径，默认3
+    infoWindow.cellDelegate = self;
+    NSMutableArray *pinList = [[NSMutableArray alloc]initWithArray:pin.containedAnnotations];
+    [pinList addObject:pin];
+    infoWindow.packageList = [[NSMutableArray alloc]initWithArray:pinList];
+    [self.view addSubview:infoWindow];
+}
+
+-(void) showHistoryWindow:(MDPin *)pin{
+    CGSize calloutSize = CGSizeMake(self.view.frame.size.width - 30, 200);
+    collectionInfoWindow = [[MDPinCollectionView alloc] initWithFrame:CGRectMake(15,81,calloutSize.width, calloutSize.height)];
+    collectionInfoWindow.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+    collectionInfoWindow.layer.shadowOffset = CGSizeMake(1,1);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    collectionInfoWindow.layer.shadowOpacity = 0.3;//阴影透明度，默认0
+    collectionInfoWindow.layer.shadowRadius = 4;//阴影半径，默认3
+    collectionInfoWindow.cellDelegate = self;
+    NSMutableArray *pinList = [[NSMutableArray alloc]initWithArray:pin.containedAnnotations];
+    [pinList addObject:pin];
+    collectionInfoWindow.packageList = [[NSMutableArray alloc]initWithArray:pinList];
+    [self.view addSubview:collectionInfoWindow];
 }
 
 -(void)moveToUserLocation {
@@ -654,6 +795,12 @@
                                      //
                                  }];
 
+}
+
+-(void) cellContentPushed:(MDPin *)pin{
+    MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
+    rdvc.package = pin.package;
+    [self.navigationController pushViewController:rdvc animated:YES];
 }
 
 @end

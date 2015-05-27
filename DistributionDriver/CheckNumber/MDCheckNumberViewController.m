@@ -11,6 +11,7 @@
 #import <SVProgressHUD.h>
 #import "MDCreateProfileViewController.h"
 #import "MDUser.h"
+#import "MDUtil.h"
 #import "MDPhoneNumberSettingViewController.h"
 
 @interface MDCheckNumberViewController ()
@@ -68,10 +69,12 @@
 
 -(void) postButtonTouched {
     [SVProgressHUD show];
-    [[MDAPI sharedAPI] checkUserWithPhone:[MDUser getInstance].phoneNumber
+    NSLog(@"%@", [MDUser getInstance].phoneNumber);
+    [[MDAPI sharedAPI] checkUserWithPhone:[MDUtil internationalPhoneNumber:[MDUser getInstance].phoneNumber]
                                  withCode:_inputView.input.text
                                onComplete:^(MKNetworkOperation *completeOperation) {
                                    [SVProgressHUD dismiss];
+                                   NSLog(@"%@", [completeOperation responseJSON]);
                                    if([[completeOperation responseJSON][@"code"] integerValue] == 0 && [[completeOperation responseJSON][@"check"] integerValue] == 1) {
                                        MDUser *user = [MDUser getInstance];
                                        user.checknumber = _inputView.input.text;

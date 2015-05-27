@@ -74,7 +74,7 @@
         
         //phone button
         phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, nameButton.frame.origin.y + nameButton.frame.size.height + 10, frame.size.width-20, 50)];
-        phoneButton.buttonTitle.text = @"電話番号";
+        phoneButton.buttonTitle.text = @"携帯番号";
         [phoneButton addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneButton];
         

@@ -1,14 +1,14 @@
 //
-//  MDPinCollectionCellCollectionViewCell.m
+//  MDPinNewCollectionCellView.m
 //  DistributionDriver
 //
-//  Created by Lsr on 5/24/15.
+//  Created by Lsr on 5/27/15.
 //  Copyright (c) 2015 Lsr. All rights reserved.
 //
 
-#import "MDPinCollectionCell.h"
+#import "MDPinNewCollectionCellView.h"
 
-@implementation MDPinCollectionCell
+@implementation MDPinNewCollectionCellView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,7 +16,7 @@
     if (self) {
         self.layer.cornerRadius = 5.0;
         
-        _calloutView = [[MDPinCollectionCellView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        _calloutView = [[MDPinCalloutView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         
         [self.contentView addSubview:_calloutView];
         
@@ -31,10 +31,9 @@
 }
 
 -(void) contentTouched{
-    if([self.delegate respondsToSelector:@selector(contentPushed:)]){
+    if ([self.delegate respondsToSelector:@selector(contentPushed:)]) {
         [self.delegate contentPushed:_pin];
     }
 }
-
 
 @end

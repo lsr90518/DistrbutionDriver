@@ -101,7 +101,7 @@
         [_scrollView addSubview:requestPerson];
         
         phoneNumber = [[MDSelect alloc]initWithFrame:CGRectMake(10, 264, frame.size.width-20, 50)];
-        phoneNumber.buttonTitle.text = @"電話番号";
+        phoneNumber.buttonTitle.text = @"携帯番号";
         phoneNumber.selectLabel.text = [NSString stringWithFormat:@"%@",user.phoneNumber];
         [phoneNumber addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneNumber];

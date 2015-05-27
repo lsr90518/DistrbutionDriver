@@ -3,7 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
+         contextName = "-[MDPackage initWithData:]:MDPackage.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[@&quot;User&quot;]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
@@ -12,10 +17,10 @@
          contextName = "-[MDNotificationTable tableView:heightForRowAtIndexPath:]:MDNotificationTable.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDDeliveryViewController putPackageIntoMap]:MDDeliveryViewController.m">
+         contextName = "-[MDBankSettingView didSelectedRow::]:MDBankSettingView.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDBankSettingView didSelectedRow::]:MDBankSettingView.m">
+         contextName = "-[MDDeliveryViewController putPackageIntoMap]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
          contextName = "__39-[MDIndexViewController viewDidAppear:]_block_invoke:MDIndexViewController.m">
@@ -58,10 +63,10 @@
          contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
          <PersistentStrings>
             <PersistentString
-               value = "data.driverReview">
+               value = "data.driverReview.star">
             </PersistentString>
             <PersistentString
-               value = "data.driverReview.star">
+               value = "data.driverReview">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -86,6 +91,14 @@
          contextName = "-[MDReview initWithData:]:MDReview.m">
       </ContextState>
       <ContextState
+         contextName = "-[MDCheckNumberViewController postButtonTouched]:MDCheckNumberViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[MDUtil internationalPhoneNumber:[MDUser getInstance].phoneNumber]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
       </ContextState>
       <ContextState
@@ -101,18 +114,13 @@
          contextName = "-[MDDeliveryViewController mapView:didSelectAnnotationView:]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
+      </ContextState>
+      <ContextState
          contextName = "-[MDUser setData:]:MDUser.m">
          <PersistentStrings>
             <PersistentString
                value = "data[@&quot;deposit&quot;]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[MDPackage initWithData:]:MDPackage.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "data[@&quot;User&quot;]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
