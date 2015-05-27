@@ -14,7 +14,7 @@
     _notification_id = ([data[@"id"] isEqual:[NSNull null]]) ? @"" : data[@"id"];
     _package_id = ([data[@"_package_id"] isEqual:[NSNull null]]) ? @"" : data[@"package_id"];
     _message = ([data[@"_message"] isEqual:[NSNull null]]) ? @"" : data[@"message"];
-    _created_time = ([data[@"created"] isEqual:[NSNull null]]) ? @"" : [MDUtil getLocalDateTimeStrFromString:data[@"created"] format:@"yyyy年MM月dd日 HH:mm:ss"];;
+    _created_time = ([data[@"created"] isEqual:[NSNull null]]) ? @"" : [MDUtil getLocalDateTimeStrFromString:data[@"created"] format:@"yyyy年MM月dd日 HH:mm:ss"];
 }
 
 @end

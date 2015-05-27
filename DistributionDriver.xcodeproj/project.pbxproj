@@ -144,6 +144,7 @@
 		0D3136601B15220B0072A488 /* MDPinCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */; };
 		0D3136631B1530E00072A488 /* MDPinNewCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */; };
 		0D3136661B1530FB0072A488 /* MDPinNewCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */; };
+		0D31366C1B166F870072A488 /* MDRealmPushNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31366B1B166F870072A488 /* MDRealmPushNotice.m */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -433,6 +434,8 @@
 		0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionView.m; sourceTree = "<group>"; };
 		0D3136641B1530FB0072A488 /* MDPinNewCollectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinNewCollectionCellView.h; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.h; sourceTree = "<group>"; };
 		0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionCellView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.m; sourceTree = "<group>"; };
+		0D31366A1B166F870072A488 /* MDRealmPushNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmPushNotice.h; sourceTree = "<group>"; };
+		0D31366B1B166F870072A488 /* MDRealmPushNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmPushNotice.m; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 				0D3136501B11B7380072A488 /* MDRealmBankInfo.m */,
 				0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */,
 				0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */,
+				0D31366A1B166F870072A488 /* MDRealmPushNotice.h */,
+				0D31366B1B166F870072A488 /* MDRealmPushNotice.m */,
 			);
 			path = MDDAO;
 			sourceTree = "<group>";
@@ -1773,6 +1778,7 @@
 				0D0F8B4B1AE61B7000755A22 /* MDRequestViewController.m in Sources */,
 				0D0F8AAC1AE61B0C00755A22 /* Model.xcdatamodeld in Sources */,
 				0D0F8B381AE61B7000755A22 /* MDRequestTableView.m in Sources */,
+				0D31366C1B166F870072A488 /* MDRealmPushNotice.m in Sources */,
 				0D07874C1AF4726F007607E9 /* MDPackageService.m in Sources */,
 				0D79BF041AF497800053EB11 /* MDPin.m in Sources */,
 				0DAA27091AFF1C1200AFD83A /* MDClient.m in Sources */,

@@ -102,7 +102,9 @@
     currentUesrLocation = [MDUserLocationService getInstance];//currentUesrLocation
     //update lastest data
     [self updateMyPackageData];
+    
     //update notification data
+    [self loadNotificationData];
     
     isTrack = YES;
     
@@ -794,7 +796,10 @@
                                  } onError:^(MKNetworkOperation *operation, NSError *error) {
                                      //
                                  }];
+}
 
+-(void) loadNotificationData{
+    
 }
 
 -(void) cellContentPushed:(MDPin *)pin{

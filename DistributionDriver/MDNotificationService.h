@@ -11,7 +11,8 @@
 
 @interface MDNotificationService : NSObject
 
-@property (strong, nonatomic) NSMutableArray *notificationList;
+@property (nonatomic) NSMutableArray *notificationList;
+@property (nonatomic) NSMutableArray *oldNotificationList;
 
 +(MDNotificationService *)getInstance;
 
