@@ -30,6 +30,7 @@
         
         //input
         self.switchInput = [[UISwitch alloc]initWithFrame:CGRectMake(frame.size.width-60, 11, 40, 27)];
+        self.switchInput.onTintColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1];
         [self addSubview:_switchInput];
         
     }

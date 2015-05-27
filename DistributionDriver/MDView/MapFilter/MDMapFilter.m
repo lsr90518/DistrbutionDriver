@@ -97,7 +97,7 @@
         
         //switch
         showHistoryPicker = [[MDSwitch alloc]initWithFrame:CGRectMake(10, destinateTimePicker.frame.origin.y + destinateTimePicker.frame.size.height + 10, frame.size.width - 20, 50)];
-        showHistoryPicker.title.text = @"終了表示";
+        showHistoryPicker.title.text = @"終了依頼表示";
         [showHistoryPicker.title sizeToFit];
         if([MDCurrentPackage getInstance].isShowHistory){
             showHistoryPicker.switchInput.on = YES;
