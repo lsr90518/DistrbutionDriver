@@ -71,6 +71,7 @@
 }
 
 -(void) postButtonTouched {
+
     
     if(_inputView.input.text.length == 0){
         [MDUtil makeAlertWithTitle:@"未入力" message:@"携帯番号を入力してください。" done:@"OK" viewController:self];
@@ -146,7 +147,12 @@
 
 -(void)backButtonPushed {
     [_inputView.input resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if ([[MDUser getInstance] isLogin]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 @end

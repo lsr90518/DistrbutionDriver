@@ -21,6 +21,9 @@
 #import "MDRealmNotificationRecord.h"
 #import "MDRealmPushNotice.h"
 #import "MDBankInfoSettingViewController.h"
+#import "MDProtocolViewController.h"
+#import "MDPrivacyViewController.h"
+#import "MDAQViewController.h"
 
 @interface MDSettingViewController (){
 }
@@ -35,14 +38,17 @@
     _settingView = [[MDSettingView alloc]initWithFrame:self.view.frame];
     _settingView.delegate = self;
     [self.view addSubview:_settingView];
-    
-
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    int count = (int)[[MDNotificationService getInstance].notificationList count];
+    [_settingView setNotificationCount:count];
+    
+    [_settingView setRating:[[MDMyPackageService getInstance] getAverageStar]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,7 +58,14 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [_settingView setViewData:[MDUser getInstance]];
+    
     [self updateData];
+    
+    if([[MDMyPackageService getInstance] getAverageStar] > 0){
+        [_settingView setRating:[[MDMyPackageService getInstance] getAverageStar]];
+    } else {
+        [_settingView setRating:5];
+    }
 }
 
 #pragma delegate methods
@@ -125,7 +138,7 @@
 -(void) notificationButtonPushed {
     MDNotificationTable *nt = [[MDNotificationTable alloc]init];
     
-//    nt.notificationList = [MDNotificationService getInstance].notificationList;
+    nt.notificationList = [MDNotificationService getInstance].notificationList;
     [self.navigationController pushViewController:nt animated:YES];
 }
 
@@ -135,12 +148,28 @@
     [self.navigationController pushViewController:rhvc animated:YES];
 }
 
+-(void) privacyButtonPushed{
+    MDPrivacyViewController *pvc = [[MDPrivacyViewController alloc]init];
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
+-(void) protocolButtonPushed{
+    MDProtocolViewController *pvc = [[MDProtocolViewController alloc]init];
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
+-(void) aqButtonPushed{
+    MDAQViewController *av = [[MDAQViewController alloc]init];
+    [self.navigationController pushViewController:av animated:YES];
+}
+
 -(void) updateData{
     //call api
     [[MDAPI sharedAPI] getMyPackageWithHash:[MDUser getInstance].userHash
                                  OnComplete:^(MKNetworkOperation *complete){
                                      if([[complete responseJSON][@"code"] integerValue] == 0){
                                          [[MDMyPackageService getInstance] initDataWithArray:[complete responseJSON][@"Packages"] SortByDate:YES];
+                                         [_settingView setRating:[[MDMyPackageService getInstance] getAverageStar]];
                                      }
                                      [SVProgressHUD dismiss];
                                  }
@@ -154,15 +183,35 @@
 
 }
 
--(void) updateNotificationData{
+
+-(NSMutableArray *) loadDataFromDB{
+    
+    NSMutableArray *tmpList = [[NSMutableArray alloc]init];
+    
     //get data from db
     RLMRealm *realm = [RLMRealm defaultRealm];
-    RLMResults *oldNotice = [MDRealmPushNotice allObjectsInRealm:realm];
+    RLMResults *oldNotice = [[MDRealmPushNotice allObjectsInRealm:realm] sortedResultsUsingProperty:@"notification_id" ascending:YES];
+    
+    for(MDRealmPushNotice *tmpNotice in oldNotice){
+        MDNotifacation *notice = [[MDNotifacation alloc]init];
+        notice.package_id       = tmpNotice.package_id;
+        notice.notification_id  = tmpNotice.notification_id;
+        notice.created_time     = tmpNotice.created_time;
+        notice.message          = tmpNotice.message;
+        [tmpList addObject:notice];
+    }
+    return tmpList;
+    
+}
+
+-(void) updateNotificationData{
+    //get data from db
+    NSArray *tmpList = [[self loadDataFromDB] sortedArrayUsingSelector:@selector(noticeCompareByDate:)];
     
     NSString *lastId;
     
-    if([oldNotice count] > 0){
-        MDRealmPushNotice *noti = [oldNotice firstObject];
+    if([tmpList count] > 0){
+        MDNotifacation *noti = [tmpList firstObject];
         lastId = noti.notification_id;
     } else {
         lastId = @"0";
@@ -175,8 +224,6 @@
                                                [[MDNotificationService getInstance] initWithDataArray:[complete responseJSON][@"Notifications"]];
                                                
                                                if([[MDNotificationService getInstance].notificationList count] > 0){
-                                                   //save to realm
-                                                   [self saveNotiToDB];
                                                    //update view
                                                    int count = (int)[[MDNotificationService getInstance].notificationList count];
                                                    [_settingView setNotificationCount:count];
@@ -189,25 +236,6 @@
                                        }];
 }
 
--(void) saveNotiToDB{
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    NSMutableArray *noticArray = [[NSMutableArray alloc]init];
-    @autoreleasepool {
-        [realm beginWriteTransaction];
-        
-        [[MDNotificationService getInstance].notificationList enumerateObjectsUsingBlock:^(MDNotifacation *obj, NSUInteger idx, BOOL *stop) {
-            MDRealmPushNotice *noti = [[MDRealmPushNotice alloc]init];
-            
-            noti.notification_id        = obj.notification_id;
-            noti.package_id             = obj.package_id;
-            noti.created_time           = obj.created_time;
-            noti.message                = obj.message;
-            [noticArray addObject:noti];
-            
-        }];
-        [realm addOrUpdateObjectsFromArray:noticArray];
-        [realm commitWriteTransaction];
-    }
-}
+
 
 @end

@@ -64,11 +64,13 @@
         self.navigationItem.title = @"キャンセルされた荷物";
     } else {
         
-        [_requestDetailView setStatus:[_package.status intValue]];
+        
         
         [self getUserData];
         
         [_requestDetailView makeupByData:_package];
+        
+        [_requestDetailView setStatus:[_package.status intValue]];
         
         NSString *driverReviewed = [NSString stringWithFormat:@"%@", _package.driverReview.reviewed];
         if([driverReviewed isEqualToString:@"1"]){
@@ -76,7 +78,7 @@
         }
         
         NSString *userReviewed = [NSString stringWithFormat:@"%@", _package.userReview.reviewed];
-        if([userReviewed isEqualToString:@"1"]){
+        if([userReviewed isEqualToString:@"1"] && [driverReviewed isEqualToString:@"1"]){
             [_requestDetailView setReviewContent:_package.userReview];
         }
     }
@@ -299,8 +301,8 @@
     UIAlertView *view = [[UIAlertView alloc]initWithTitle:@"依頼のキャンセル"    //标题
                                                   message:@"依頼をキャンセルすると自動的に星1がつきますが、よろしいでしょうか。"   //显示内容
                                                  delegate:self          //委托，可以点击事件进行处理
-                                        cancelButtonTitle:@"取消"
-                                        otherButtonTitles:@"依頼をキャンセル",nil];
+                                        cancelButtonTitle:@"いいえ"
+                                        otherButtonTitles:@"はい",nil];
      [view show];
 }
 

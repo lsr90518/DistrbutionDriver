@@ -29,6 +29,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"trux_bgvideo_portrait" ofType:@"mp4"];
+    NSURL *fileURL = [NSURL fileURLWithPath:filepath];
+    self.avPlayer = [AVPlayer playerWithURL:fileURL];
+    
+    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
+    self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+    
+    layer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    [self.view.layer addSublayer: layer];
+    
+    [self.avPlayer play];
+    
+    self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playerItemDidReachEnd:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:[self.avPlayer currentItem]];
+    
+}
+
+- (void)playerItemDidReachEnd:(NSNotification *)notification {
+    AVPlayerItem *p = [notification object];
+    [p seekToTime:kCMTimeZero];
 }
 
 - (void)didReceiveMemoryWarning {

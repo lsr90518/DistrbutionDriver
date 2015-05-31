@@ -40,8 +40,6 @@
         [self addSubview:postButton];
         
     }
-    
-    [self loginTest];
     return self;
 }
 
@@ -51,9 +49,5 @@
     }
 }
 
--(void) loginTest {
-    _phoneInput.input.text = @"09065698655";
-    _passwordInput.input.text = @"123456";
-}
 
 @end

@@ -40,7 +40,15 @@
 #define USER_DEVICE                 @"ios"
 
 
-#define API_HOST_NAME @"modelordistribution-dev.elasticbeanstalk.com"
+#define API_HOST_NAME               @"modelordistribution-dev.elasticbeanstalk.com"
+#define API_HOST_HELP               @"http://trux.life/help/"
+#define API_HOST_FAQ                @"http://trux.life/help/faq.html"
+#define API_HOST_PRIVACY            @"http://trux.life/help/privacypolicy.html"
+#define API_HOST_TERMOFUSE          @"http://trux.life/help/term_of_use.html"
+
+
+
+
 
 @interface MDAPI : NSObject
 

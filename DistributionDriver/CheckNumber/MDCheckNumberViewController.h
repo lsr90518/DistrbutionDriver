@@ -12,7 +12,7 @@
 #import "MDAPI.h"
 
 
-@interface MDCheckNumberViewController : UIViewController
+@interface MDCheckNumberViewController : UIViewController<UIAlertViewDelegate>
 
 @property (strong, nonatomic) MDInput *inputView;
 @property (strong, nonatomic) NSString *phoneNumber;

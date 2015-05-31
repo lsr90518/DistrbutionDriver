@@ -17,9 +17,10 @@
         //add code
         
         //background
-        UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:frame];
-        [bgImageView setImage:[UIImage imageNamed:@"firstBG"]];
-        [self addSubview:bgImageView];
+//        UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:frame];
+//        [bgImageView setImage:[UIImage imageNamed:@"firstBG"]];
+//        [self addSubview:bgImageView];
+//                
         
         //title
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, frame.size.width, 30)];
@@ -28,6 +29,7 @@
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:37];
         [self addSubview:titleLabel];
+        
         
         //さっそく使う
         UIButton *useButton = [[UIButton alloc]initWithFrame:CGRectMake(15, frame.size.height-124, frame.size.width-30, 50)];

@@ -44,5 +44,7 @@
 -(void) gotoTansptationView;
 -(void) introButtonPushed;
 -(void) payButtonPushed;
+-(void) privateButtonPushed;
+-(void) protocolButtonPushed;
 
 @end

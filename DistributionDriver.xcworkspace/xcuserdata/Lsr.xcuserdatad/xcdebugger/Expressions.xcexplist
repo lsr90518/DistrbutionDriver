@@ -3,32 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[MDPackage initWithData:]:MDPackage.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "data[@&quot;User&quot;]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDNotificationTable tableView:heightForRowAtIndexPath:]:MDNotificationTable.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDBankSettingView didSelectedRow::]:MDBankSettingView.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDDeliveryViewController putPackageIntoMap]:MDDeliveryViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "__39-[MDIndexViewController viewDidAppear:]_block_invoke:MDIndexViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDDeliveryViewController mapView:didUpdateUserLocation:]:MDDeliveryViewController.m">
-      </ContextState>
-      <ContextState
          contextName = "__49-[MDSettingViewController updateNotificationData]_block_invoke:MDSettingViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -37,60 +11,44 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDPackageService initDataWithArray:WithDistance:]:MDPackageService.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDSettingViewController saveNotiToDB]:MDSettingViewController.m">
+         contextName = "-[MDAPI newProfileByUser:onComplete:onError:]:MDAPI.m">
          <PersistentStrings>
             <PersistentString
-               value = "[MDNotificationService getInstance].notificationList">
+               value = "[MDDevice getInstance]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDPinNewCollectionView collectionView:cellForItemAtIndexPath:]:MDPinNewCollectionView.m">
-      </ContextState>
-      <ContextState
-         contextName = "__49-[MDTranspotationViewController backButtonPushed]_block_invoke:MDTranspotationViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDNotificationTableCell setDataWithModel:]:MDNotificationTableCell.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDRequestDetailViewController viewWillAppear:]:MDRequestDetailViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "__36-[MDMyPackageService getAverageStar]_block_invoke:MDMyPackageService.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[obj.star intValue]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__34-[MDLoginViewController postData:]_block_invoke:MDLoginViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "data.driverReview.star">
-            </PersistentString>
-            <PersistentString
-               value = "data.driverReview">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "__39-[MDIndexViewController viewDidAppear:]_block_invoke:MDIndexViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDDeliveryViewController loadDataByPref:location:]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDSettingViewController updateNotificationData]:MDSettingViewController.m">
+         contextName = "-[MDDeliveryViewController mapView:didSelectAnnotationView:]:MDDeliveryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDUser setData:]:MDUser.m">
          <PersistentStrings>
             <PersistentString
-               value = "[oldNotice count]">
+               value = "data[@&quot;deposit&quot;]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDNotificationTable tableView:heightForRowAtIndexPath:]:MDNotificationTable.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDReview initWithData:]:MDReview.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController reviewButtonPushed]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDNotificationTableCell setDataWithModel:]:MDNotificationTableCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDPinNewCollectionView collectionView:cellForItemAtIndexPath:]:MDPinNewCollectionView.m">
       </ContextState>
       <ContextState
          contextName = "-[MDTranspotationViewController backButtonPushed]:MDTranspotationViewController.m">
@@ -101,10 +59,95 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDRequestDetailViewController reviewButtonPushed]:MDRequestDetailViewController.m">
+         contextName = "-[MDMyPackageService initDataWithArray:]:MDMyPackageService.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDReview initWithData:]:MDReview.m">
+         contextName = "-[MDSettingViewController updateNotificationData]:MDSettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[oldNotice firstObject]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDTranspotation toggleButton:]:MDTranspotation.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDCreateProfileViewController postData:]:MDCreateProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDPackageService initDataWithArray:WithDistance:]:MDPackageService.m">
+      </ContextState>
+      <ContextState
+         contextName = "__34-[MDNotificationTable loadNewData]_block_invoke:MDNotificationTable.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDCreateProfileView isAllInput]:MDCreateProfileView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController mapView:didUpdateUserLocation:]:MDDeliveryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDSettingViewController viewWillAppear:]:MDSettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[MDMyPackageService getInstance] getAverageStar]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__49-[MDTranspotationViewController backButtonPushed]_block_invoke:MDTranspotationViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDProfileViewController loadView]:MDProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController putPackageIntoMap]:MDDeliveryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDDeliveryViewController viewDidAppear:]:MDDeliveryViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentVisitRegion">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestTableViewCell initCellWithData:]:MDRequestTableViewCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data.driverReview">
+            </PersistentString>
+            <PersistentString
+               value = "data.driverReview.star">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDPinNewCollectionCellView setCellData:]:MDPinNewCollectionCellView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MDRequestDetailViewController viewWillAppear:]:MDRequestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__48-[MDDeliveryViewController loadNotificationData]_block_invoke:MDDeliveryViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[MDNotificationService getInstance]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MDBankSettingView didSelectedRow::]:MDBankSettingView.m">
+      </ContextState>
+      <ContextState
+         contextName = "__34-[MDLoginViewController postData:]_block_invoke:MDLoginViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[MDCheckNumberViewController postButtonTouched]:MDCheckNumberViewController.m">
@@ -115,31 +158,32 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "__38-[MDRequestViewController makeUpData:]_block_invoke:MDRequestViewController.m">
+         contextName = "-[MDDeliveryViewController configMap]:MDDeliveryViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDProfileViewController loadView]:MDProfileViewController.m">
+         contextName = "__36-[MDMyPackageService getAverageStar]_block_invoke:MDMyPackageService.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[obj.star intValue]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[MDPinNewCollectionCellView setCellData:]:MDPinNewCollectionCellView.m">
+         contextName = "-[MDPackage initWithData:]:MDPackage.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "data[@&quot;User&quot;]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[MDRequestDetailViewController loadView]:MDRequestDetailViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[MDTranspotation toggleButton:]:MDTranspotation.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDDeliveryViewController mapView:didSelectAnnotationView:]:MDDeliveryViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDSettingView setViewData:]:MDSettingView.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[MDUser setData:]:MDUser.m">
+         contextName = "-[MDSettingViewController saveNotiToDB]:MDSettingViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "data[@&quot;deposit&quot;]">
+               value = "[MDNotificationService getInstance].notificationList">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

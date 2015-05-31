@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        isChecked = false;
+        isChecked = NO;
         
         self.layer.cornerRadius = 2.5;
         self.layer.borderColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1].CGColor;
@@ -45,6 +45,10 @@
         isChecked = YES;
     }
     
+    return isChecked;
+}
+
+-(BOOL) isChecked{
     return isChecked;
 }
 

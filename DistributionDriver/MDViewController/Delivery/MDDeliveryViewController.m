@@ -13,6 +13,8 @@
 #import "MDMapFilterViewController.h"
 #import "MDPackageService.h"
 #import <SVProgressHUD.h>
+#import "MDDevice.h"
+#import "MDRealmPushNotice.h"
 
 
 @interface MDDeliveryViewController () {
@@ -59,7 +61,7 @@
     [self.view addSubview:_mapView];
     
     //currentLocation
-    UIButton *currentLocationButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 69, 40, 40)];
+    UIButton *currentLocationButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 50, 69, 40, 40)];
     [currentLocationButton setImage:[UIImage imageNamed:@"currentLocation"] forState:UIControlStateNormal];
     [currentLocationButton addTarget:self  action:@selector(moveToUserLocation) forControlEvents:UIControlEventTouchUpInside];
     
@@ -95,6 +97,11 @@
     _histroyFromAnnotationsMapView  = [[MKMapView alloc] initWithFrame:CGRectZero];
 }
 -(void) viewDidAppear:(BOOL)animated{
+    
+    if (self.currentVisitRegion.center.latitude != 0) {
+        [self.mapView setRegion:self.currentVisitRegion animated:NO];
+    }
+    
     isSelected = NO;
     isShowHistory = [MDCurrentPackage getInstance].isShowHistory;
 
@@ -106,9 +113,14 @@
     //update notification data
     [self loadNotificationData];
     
+    //send token
+    [self sendToken];
+    
     isTrack = YES;
     
     [self getCurrentPref:currentUesrLocation.userLocation];
+    
+    
 }
 
 -(void) getCurrentPref:(MKUserLocation *)userLocation{
@@ -124,7 +136,6 @@
              //获取城市
              currentPref = placemark.administrativeArea;
              [self loadDataByPref:currentPref location:userLocation.location];
-             [SVProgressHUD dismiss];
          }
      }];
     
@@ -133,7 +144,7 @@
 -(void) loadDataByPref:(NSString *)pref
               location:(CLLocation *)location{
     
-    [SVProgressHUD show];
+//    [SVProgressHUD show];
     
     [[MDAPI sharedAPI]getWaitingPackageWithHash:[MDUser getInstance].userHash
                                        WithPref:@"東京都"
@@ -153,7 +164,7 @@
                                          [self updateVisibleAnnotations];
 
 
-                                         [SVProgressHUD dismiss];
+//                                         [SVProgressHUD dismiss];
                                      }onError:^(MKNetworkOperation *operation, NSError *error) {
                                          
                                          NSLog(@"%@", [operation responseJSON]);
@@ -389,13 +400,7 @@
 #pragma mapDelegate
 -(void) configMap{
     _mapView.delegate = self;
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-#ifdef __IPHONE_8_0
-    if(IS_OS_8_OR_LATER) {
-        [self.locationManager requestAlwaysAuthorization];
-    }
-#endif
+    [MDLocationManager getInstance].locationManager.delegate = self;
     
     _mapView.showsUserLocation = YES;
     [_mapView setMapType:MKMapTypeStandard];
@@ -404,23 +409,15 @@
     [_mapView setUserTrackingMode:MKUserTrackingModeNone];
     [_mapView setRotateEnabled:NO];
     
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
-    
-    
-    // Start heading updates.
-    if ([CLLocationManager headingAvailable]) {
-        self.locationManager.headingFilter = 5;
-        [self.locationManager startUpdatingHeading];
-    }
-    
+
     //View Area
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.locationManager.location.coordinate, 2000, 2000);
-        region.center.latitude = self.locationManager.location.coordinate.latitude;
-        region.center.longitude = self.locationManager.location.coordinate.longitude;
-    [self.mapView setRegion:region animated:YES];
+    if (self.currentVisitRegion.center.longitude == 0) {
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([MDLocationManager getInstance].locationManager.location.coordinate, 2000, 2000);
+        region.center.latitude = [MDLocationManager getInstance].locationManager.location.coordinate.latitude;
+        region.center.longitude = [MDLocationManager getInstance].locationManager.location.coordinate.longitude;
+        [self.mapView setRegion:region animated:YES];
+    }
     
 }
 
@@ -428,28 +425,29 @@
 {
     //跟踪用户
     if(isTrack){
-        
-        isTrack = NO;
-        [self getCurrentPref:userLocation];
-        //loadData
-        //
+        if(userLocation.location.coordinate.longitude != 0 && userLocation.location.coordinate.latitude != 0){
+            
+            isTrack = NO;
+            [self getCurrentPref:userLocation];
+            [MDUserLocationService getInstance].currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
+            [MDUserLocationService getInstance].userLocation = userLocation;
+        }
     }
-    [MDUserLocationService getInstance].currentUserRegion = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 4000, 4000);
-    [MDUserLocationService getInstance].userLocation = userLocation;
+    
 }
 
 #pragma device location
 - (NSString *)deviceLocation {
-    return [NSString stringWithFormat:@"latitude: %f longitude: %f", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    return [NSString stringWithFormat:@"latitude: %f longitude: %f", [MDLocationManager getInstance].locationManager.location.coordinate.latitude, [MDLocationManager getInstance].locationManager.location.coordinate.longitude];
 }
 - (NSString *)deviceLat {
-    return [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.latitude];
+    return [NSString stringWithFormat:@"%f", [MDLocationManager getInstance].locationManager.location.coordinate.latitude];
 }
 - (NSString *)deviceLon {
-    return [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.longitude];
+    return [NSString stringWithFormat:@"%f", [MDLocationManager getInstance].locationManager.location.coordinate.longitude];
 }
 - (NSString *)deviceAlt {
-    return [NSString stringWithFormat:@"%f", self.locationManager.location.altitude];
+    return [NSString stringWithFormat:@"%f", [MDLocationManager getInstance].locationManager.location.altitude];
 }
 
 
@@ -661,6 +659,9 @@
         [self updateVisibleAnnotations];
         isCluster = NO;
     }
+    
+    //save current region
+    self.currentVisitRegion = mapView.region;
 }
 
 -(void) showNewWindow:(MDPin *)pin{
@@ -718,13 +719,13 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     
     //right button
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setTitle:@"リスト" forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
-    rightButton.frame = CGRectMake(0, 0, 37, 44);
-    [rightButton addTarget:self action:@selector(gotoListView) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+//    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [rightButton setTitle:@"リスト" forState:UIControlStateNormal];
+//    rightButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:12];
+//    rightButton.frame = CGRectMake(0, 0, 37, 44);
+//    [rightButton addTarget:self action:@selector(gotoListView) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+//    self.navigationItem.rightBarButtonItem = rightBtn;
 }
 
 #pragma DeliveryDelegate
@@ -798,8 +799,59 @@
                                  }];
 }
 
--(void) loadNotificationData{
+-(NSMutableArray *) loadDataFromDB{
     
+    NSMutableArray *tmpList = [[NSMutableArray alloc]init];
+    
+    //get data from db
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *oldNotice = [[MDRealmPushNotice allObjectsInRealm:realm] sortedResultsUsingProperty:@"notification_id" ascending:YES];
+    
+    for(MDRealmPushNotice *tmpNotice in oldNotice){
+        MDNotifacation *notice = [[MDNotifacation alloc]init];
+        notice.package_id       = tmpNotice.package_id;
+        notice.notification_id  = tmpNotice.notification_id;
+        notice.created_time     = tmpNotice.created_time;
+        notice.message          = tmpNotice.message;
+        [tmpList addObject:notice];
+    }
+    return tmpList;
+    
+}
+
+-(void) loadNotificationData{
+    //get data from db
+    NSArray *tmpList = [[self loadDataFromDB] sortedArrayUsingSelector:@selector(noticeCompareByDate:)];
+    
+    NSString *lastId;
+    
+    if([tmpList count] > 0){
+        MDNotifacation *noti = [tmpList firstObject];
+        lastId = noti.notification_id;
+    } else {
+        lastId = @"0";
+    }
+    
+    [[MDAPI sharedAPI] getNotificationWithHash:[MDUser getInstance].userHash
+                                        lastId:lastId
+                                    OnComplete:^(MKNetworkOperation *complete) {
+                                        if([[complete responseJSON][@"code"] intValue] == 0){
+                                            [[MDNotificationService getInstance] initWithDataArray:[complete responseJSON][@"Notifications"]];
+                                        }
+                                    } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                        
+                                    }];
+}
+
+-(void) sendToken{
+    if ([MDDevice getInstance].token.length > 0) {
+        [[MDAPI sharedAPI]changeProfileByUser:[MDUser getInstance]
+                                   onComplete:^(MKNetworkOperation *complete) {
+            //
+        } onError:^(MKNetworkOperation *operation, NSError *error) {
+            //
+        }];
+    }
 }
 
 -(void) cellContentPushed:(MDPin *)pin{

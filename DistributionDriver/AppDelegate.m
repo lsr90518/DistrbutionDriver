@@ -19,6 +19,8 @@
 #import "SRGVersionUpdater.h"
 #import <Crashlytics/Crashlytics.h>
 #import "MDLocalNotificationManager.h"
+#import "MDLocationManager.h"
+#import "MDCreateProfileViewController.h"
 
 @implementation AppDelegate
 
@@ -139,14 +141,13 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // デバイストークン取得完了
-    
+
     NSString *token = deviceToken.description;
     token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
     token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     [MDDevice getInstance].token = token;
-    
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -157,6 +158,7 @@
     //open api
     MDAPI *api = [[MDAPI alloc]init];
     [self checkIOS7];
+    [self configMap];
 }
 
 - (void)checkIOS7
@@ -174,6 +176,28 @@
 -(void)initDB {
     MDCustomerDAO   *customerDAO = [[MDCustomerDAO alloc]init];
     [customerDAO deleteCustomer];
+}
+
+#pragma mapDelegate
+-(void) configMap{
+    [MDLocationManager getInstance].locationManager = [[CLLocationManager alloc] init];
+#ifdef __IPHONE_8_0
+    if([[MDDevice getInstance].iosVersion isEqualToString:@"8"]) {
+        [[MDLocationManager getInstance].locationManager requestAlwaysAuthorization];
+    }
+#endif
+    
+    [MDLocationManager getInstance].locationManager.distanceFilter = kCLDistanceFilterNone;
+    [MDLocationManager getInstance].locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [[MDLocationManager getInstance].locationManager startUpdatingLocation];
+    
+    
+    // Start heading updates.
+    if ([CLLocationManager headingAvailable]) {
+        [MDLocationManager getInstance].locationManager.headingFilter = 5;
+        [[MDLocationManager getInstance].locationManager startUpdatingHeading];
+    }
+    
 }
 
 

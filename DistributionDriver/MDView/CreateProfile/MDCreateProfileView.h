@@ -34,6 +34,8 @@
 
 -(BOOL) isChecked;
 
+-(void) setWarnViewStatus:(int)status;
+
 @end
 
 @protocol CreateProfileViewDelegate <NSObject>

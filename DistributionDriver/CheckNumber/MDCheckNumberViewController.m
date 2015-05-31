@@ -13,6 +13,7 @@
 #import "MDUser.h"
 #import "MDUtil.h"
 #import "MDPhoneNumberSettingViewController.h"
+#import "MDIndexViewController.h"
 
 @interface MDCheckNumberViewController ()
 
@@ -68,8 +69,8 @@
 }
 
 -(void) postButtonTouched {
+    
     [SVProgressHUD show];
-    NSLog(@"%@", [MDUser getInstance].phoneNumber);
     [[MDAPI sharedAPI] checkUserWithPhone:[MDUtil internationalPhoneNumber:[MDUser getInstance].phoneNumber]
                                  withCode:_inputView.input.text
                                onComplete:^(MKNetworkOperation *completeOperation) {
@@ -90,8 +91,7 @@
                                    }
                                }
                                   onError:^(MKNetworkOperation *completeOperartion, NSError *error){
-                                      NSLog(@"%@", error);
-                                      
+
                                       [SVProgressHUD dismiss];
                                   }];
     
@@ -104,13 +104,52 @@
 -(void) checkHash {
     if([MDUser getInstance].userHash.length > 0) {
         //番号変更
-        MDPhoneNumberSettingViewController *phoneNumberSettingViewController = [[MDPhoneNumberSettingViewController alloc]init];
-        [self.navigationController pushViewController:phoneNumberSettingViewController animated:YES];
+        //logout
+        UIAlertView *view = [[UIAlertView alloc]initWithTitle:@"ログアウト"    //标题
+                                                      message:@"もう一回ログインしてください。"   //显示内容
+                                                     delegate:self          //委托，可以点击事件进行处理
+                                            cancelButtonTitle:@"いいえ"
+                                            otherButtonTitles:nil];
+        [view show];
     } else {
         //新規
         MDCreateProfileViewController *cpv = [[MDCreateProfileViewController alloc]init];
         [self.navigationController pushViewController:cpv animated:YES];
     }
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            [self logout];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void) logout{
+    [SVProgressHUD showSuccessWithStatus:@"ログアウト..."];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *newconsiger = [MDConsignor allObjectsInRealm:realm];
+    MDConsignor *consignor = [[MDConsignor alloc]init];
+    
+    for(MDConsignor *tmp in newconsiger){
+        consignor.userid = tmp.userid;
+        consignor.phonenumber = tmp.phonenumber;
+    }
+    consignor.password = @"";
+    
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:consignor];
+    [realm commitWriteTransaction];
+    
+    [[MDUser getInstance] clearData];
+    
+    [SVProgressHUD dismiss];
+    MDIndexViewController *ivc = [[MDIndexViewController alloc]init];
+    [self presentViewController:ivc animated:NO completion:nil];
 }
 
 @end

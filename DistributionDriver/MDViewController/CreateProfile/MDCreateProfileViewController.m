@@ -39,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self initUserData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +61,7 @@
 }
 
 -(void) backButtonTouched {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void) toggleButton:(MDKindButton *)button{
@@ -73,6 +74,13 @@
     } else {
         [MDUser getInstance].car = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
     }
+    
+    //change warnview status
+    int status = 0;
+    ([[MDUser getInstance].motorBike isEqualToString:@"1"]) ? status = status + 1 : status;
+    ([[MDUser getInstance].car isEqualToString:@"1"]) ? status = status + 2 : status;
+    
+    [_createProfileView setWarnViewStatus:status];
 }
 
 -(void) postData:(MDCreateProfileView *)createProfileView {
@@ -229,6 +237,16 @@
         
 
     }
+}
+
+-(void) initUserData{
+    [MDUser getInstance].walk = @"0";
+
+    [MDUser getInstance].motorBike = @"0";
+
+    [MDUser getInstance].bike = @"0";
+
+    [MDUser getInstance].car = @"0";
 }
 
 
