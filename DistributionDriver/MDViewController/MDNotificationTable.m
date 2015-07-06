@@ -10,6 +10,9 @@
 #import "MDNotificationTableCell.h"
 #import "MDRequestDetailViewController.h"
 #import "MDMyPackageService.h"
+#import "MDRealmPushNotice.h"
+#import "MDNotificationService.h"
+#import "MDAPI.h"
 
 @implementation MDNotificationTable
 
@@ -20,8 +23,17 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     self.tableView.header.updatedTimeHidden = YES;
+    
+    [self saveNotiToDB];
+    [self loadDataFromDB];
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
     
     if([_notificationList count] == 0){
         UILabel *messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width, 15)];
@@ -30,12 +42,8 @@
         messageLabel.textAlignment = NSTextAlignmentCenter;
         messageLabel.textColor = [UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1];
         [self.view addSubview:messageLabel];
-    
+        
     }
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     
 }
 
@@ -114,14 +122,97 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     MDNotifacation *notification = [_notificationList objectAtIndex:indexPath.row];
-    MDPackage *package = [[MDMyPackageService getInstance] getPackageByPackageId:notification.package_id];
-    MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
-    rdvc.package = package;
-    [self.navigationController pushViewController:rdvc animated:YES];
+    if(![notification.package_id isEqualToString:@""]){
+        MDPackage *package = [[MDMyPackageService getInstance] getPackageByPackageId:notification.package_id];
+        MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
+        rdvc.package = package;
+        [self.navigationController pushViewController:rdvc animated:YES];
+    }
+}
+
+-(void) refreshData{
+    [self loadNewData];
+    [self.tableView.header endRefreshing];
 }
 
 -(void) loadNewData{
-    [self.tableView.header endRefreshing];
+    
+    [self updateNotificationData];
 }
+
+-(void) loadDataFromDB{
+    
+    NSMutableArray *tmpList = [[NSMutableArray alloc]init];
+    
+    //get data from db
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *oldNotice = [[MDRealmPushNotice allObjectsInRealm:realm] sortedResultsUsingProperty:@"notification_id" ascending:YES];
+    
+    for(MDRealmPushNotice *tmpNotice in oldNotice){
+        MDNotifacation *notice = [[MDNotifacation alloc]init];
+        notice.package_id       = tmpNotice.package_id;
+        notice.notification_id  = tmpNotice.notification_id;
+        notice.created_time     = tmpNotice.created_time;
+        notice.message          = tmpNotice.message;
+        [tmpList addObject:notice];
+    }
+
+    _notificationList = [[NSMutableArray alloc]initWithArray:[tmpList sortedArrayUsingSelector:@selector(noticeCompareByDate:)]];
+}
+
+-(void) updateNotificationData{
+    //get data from db
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *oldNotice = [MDRealmPushNotice allObjectsInRealm:realm];
+    
+    NSString *lastId;
+    
+    if([oldNotice count] > 0){
+        MDRealmPushNotice *noti = [oldNotice firstObject];
+        lastId = noti.notification_id;
+    } else {
+        lastId = @"0";
+    }
+    
+    [[MDAPI sharedAPI] getNotificationWithHash:[MDUser getInstance].userHash
+                                        lastId:lastId
+                                    OnComplete:^(MKNetworkOperation *complete) {
+                                        if([[complete responseJSON][@"code"] intValue] == 0){
+                                            [[MDNotificationService getInstance] initWithDataArray:[complete responseJSON][@"Notifications"]];
+                                            
+                                            if([[MDNotificationService getInstance].notificationList count] > 0){
+                                                //save to realm
+                                                [self saveNotiToDB];
+                                                [self loadDataFromDB];
+                                                [self.tableView reloadData];
+                                            }
+
+                                        }
+                                    } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                        
+                                    }];
+}
+
+-(void) saveNotiToDB{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    NSMutableArray *noticArray = [[NSMutableArray alloc]init];
+    @autoreleasepool {
+        [realm beginWriteTransaction];
+        
+        [[MDNotificationService getInstance].notificationList enumerateObjectsUsingBlock:^(MDNotifacation *obj, NSUInteger idx, BOOL *stop) {
+            MDRealmPushNotice *noti = [[MDRealmPushNotice alloc]init];
+            
+            noti.notification_id        = ([obj.notification_id isEqual:[NSNull null]]) ? @"" : obj.notification_id;
+            noti.package_id             = ([obj.package_id isEqual:[NSNull null]]) ? @"" : obj.package_id;
+            noti.created_time           = ([obj.created_time isEqual:[NSNull null]]) ? @"" : obj.created_time;
+            noti.message                = ([obj.message isEqual:[NSNull null]]) ? @"" : obj.message;
+            [noticArray addObject:noti];
+            
+        }];
+        [realm addOrUpdateObjectsFromArray:noticArray];
+        [realm commitWriteTransaction];
+    }
+}
+
 
 @end

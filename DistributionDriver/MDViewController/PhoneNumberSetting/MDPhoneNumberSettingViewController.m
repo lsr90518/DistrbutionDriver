@@ -28,7 +28,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     _phoneInput = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, self.view.frame.size.width-20, 50)];
-    _phoneInput.title.text = @"電話番号";
+    _phoneInput.title.text = @"携帯番号";
+    [_phoneInput setUserInteractionEnabled:NO];
     _phoneInput.input.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
     [_phoneInput.input setKeyboardType:UIKeyboardTypeNumberPad];
     [_phoneInput.title sizeToFit];
@@ -36,7 +37,7 @@
     
     postButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 134, self.view.frame.size.width-20, 50)];
     [postButton setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1]];
-    [postButton setTitle:@"電話番号の変更" forState:UIControlStateNormal];
+    [postButton setTitle:@"携帯番号の変更" forState:UIControlStateNormal];
     postButton.layer.cornerRadius = 2.5;
     [postButton addTarget:self action:@selector(changePhoneNumber) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:postButton];

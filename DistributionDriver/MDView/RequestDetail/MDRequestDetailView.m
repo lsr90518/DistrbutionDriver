@@ -223,7 +223,7 @@
         cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(10, requestTerm.frame.origin.y + requestTerm.frame.size.height + 10, self.frame.size.width - 20, 50)];
         [cancelButton setBackgroundColor:[UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1]];
         cancelButton.layer.cornerRadius = 2.0;
-        [cancelButton setTitle:@"掲載をキャンセルする" forState:UIControlStateNormal];
+        [cancelButton setTitle:@"依頼をキャンセルする" forState:UIControlStateNormal];
         cancelButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
         [cancelButton addTarget:self action:@selector(cancelButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:cancelButton];
@@ -289,9 +289,11 @@
             distributionProcessLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0/255.0 alpha:1];
             completeProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
             [_scrollView setFrame:self.frame];
+            requestTerm.selectLabel.text = @"荷物配達中";
             [matchingImageView setHidden:YES];
             [distributionImageView setHidden:NO];
             [completeImageView setHidden:YES];
+            [cancelButton setHidden:YES];
             [statusButton addTarget:self action:@selector(matchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             [self deliveryPackageButton];
             break;
@@ -300,6 +302,7 @@
             distributionProcessLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
             completeProcessLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1];
             [_scrollView setFrame:self.frame];
+            requestTerm.selectLabel.text = @"配達完了";
             [matchingImageView setHidden:YES];
             [distributionImageView setHidden:YES];
             [completeImageView setHidden:NO];

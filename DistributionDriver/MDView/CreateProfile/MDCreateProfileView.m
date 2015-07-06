@@ -13,10 +13,12 @@
 #import "MDKindButton.h"
 
 @implementation MDCreateProfileView{
-    MDKindButton *trankButton;
-    MDKindButton *walkButton;
-    MDKindButton *bikeButton;
-    MDKindButton *motorbikeButton;
+    MDKindButton    *trankButton;
+    MDKindButton    *walkButton;
+    MDKindButton    *bikeButton;
+    MDKindButton    *motorbikeButton;
+    UILabel         *warnLabel;
+    UIView          *warnView;
     BOOL isChecked;
 }
 
@@ -73,6 +75,7 @@
                                                                 50)];
         [_phoneButton setBackgroundColor:[UIColor whiteColor]];
         _phoneButton.title.text = @"携帯番号";
+        _phoneButton.tag = 3;
         [_phoneButton.title sizeToFit];
         _phoneButton.input.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
 //        [_phoneButton setReadOnly];
@@ -150,47 +153,119 @@
         [_scrollView addSubview:trankButton];
         [_scrollView addSubview:transpotationTitleView];
         
+        [self setWarnViewStatus:0];
         
-        //checkbox
-        MDCheckBox *checkBox = [[MDCheckBox alloc]initWithFrame:CGRectMake(10, walkButton.frame.origin.y + walkButton.frame.size.height + 10, 34, 34)];
-        [checkBox addTarget:self action:@selector(toggleCheck:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollView addSubview:checkBox];
-        
-        
-        UIButton *userProtocol = [[UIButton alloc]initWithFrame:CGRectMake(checkBox.frame.origin.x + checkBox.frame.size.width+10, checkBox.frame.origin.y+10, 64, 14)];
-        userProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
-        [userProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
-        [userProtocol setTitle:@"利用規約" forState:UIControlStateNormal];
-        [_scrollView addSubview:userProtocol];
-        
-        UILabel *toLabel = [[UILabel alloc]initWithFrame:CGRectMake(userProtocol.frame.origin.x + userProtocol.frame.size.width, userProtocol.frame.origin.y, 14, 14)];
-        toLabel.text = @"と";
-        toLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
-        toLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
-        [_scrollView addSubview:toLabel];
-        
-        UIButton *driverProtocol = [[UIButton alloc]initWithFrame:CGRectMake(toLabel.frame.origin.x+14, toLabel.frame.origin.y, 126, 14)];
-        driverProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
-        [driverProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
-        [driverProtocol setTitle:@"プライバシポリシー" forState:UIControlStateNormal];
-        [_scrollView addSubview:driverProtocol];
-        
-        UILabel *niLabel = [[UILabel alloc]initWithFrame:CGRectMake(driverProtocol.frame.origin.x + driverProtocol.frame.size.width, driverProtocol.frame.origin.y, 42, 14)];
-        niLabel.text = @"に同意";
-        niLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
-        niLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
-        [_scrollView addSubview:niLabel];
-        
-        _postButton = [[UIButton alloc]initWithFrame:CGRectMake(10, checkBox.frame.origin.y + checkBox.frame.size.height + 20, frame.size.width-20, 50)];
-        [_postButton setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1]];
-        [_postButton setTitle:@"以上で登録" forState:UIControlStateNormal];
-        _postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:18];
-        [_postButton addTarget:self action:@selector(postData) forControlEvents:UIControlEventTouchUpInside];
-        _postButton.layer.cornerRadius = 2.5;
-        [_scrollView addSubview:_postButton];
     }
     
     return self;
+}
+
+-(void) setWarnViewStatus:(int)status{
+    
+    [warnView removeFromSuperview];
+    
+    warnView = [[UIView alloc]initWithFrame:CGRectMake(10, walkButton.frame.origin.y + walkButton.frame.size.height + 10, self.frame.size.width - 20, 300)];
+    
+    //warn label
+    warnLabel  = [[UILabel alloc]init];
+    warnLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:11];
+    warnLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    warnLabel.numberOfLines = 0;
+    
+    //content
+    if (status == 0) {
+        [warnLabel setFrame:CGRectMake(20, 0, warnView.frame.size.width - 40, 0)];
+        warnLabel.text = @"";
+    } else if(status == 1){
+        [warnLabel  setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"125CC以上のバイクを利用して運送を行う場合、許認可が必要となりますので、ご注意ください。";
+        
+    } else if(status == 2){
+        [warnLabel setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"自動車を利用して、運送を行う場合、許認可が必要となりますので、ご注意ください。";
+        
+    } else {
+        [warnLabel setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"125CC以上のバイク、また自動車を利用して運送を行う場合、許認可が必要となりますので、ご注意ください。";
+    }
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:warnLabel.text];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:11];//调整行间距
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [warnLabel.text length])];
+    warnLabel.attributedText = attributedString;
+    [warnLabel sizeToFit];
+    [warnView addSubview:warnLabel];
+    
+    //warn check
+    MDCheckBox *shipCheckBox = [[MDCheckBox alloc]initWithFrame:CGRectMake(0, 0, 34, 0)];
+    
+    if (status != 0) {
+        [shipCheckBox setFrame:CGRectMake(0, warnLabel.frame.origin.y + warnLabel.frame.size.height + 30, 34, 34)];
+        //checkbox
+        [shipCheckBox addTarget:self action:@selector(toggleCheck:) forControlEvents:UIControlEventTouchUpInside];
+        [warnView addSubview:shipCheckBox];
+        
+        UILabel *shipToLabel = [[UILabel alloc]initWithFrame:CGRectMake(shipCheckBox.frame.origin.x + shipCheckBox.frame.size.width+10, shipCheckBox.frame.origin.y+10, 84, 14)];
+        shipToLabel.text = @"運送に関わる";
+        shipToLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+        shipToLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+        [warnView addSubview:shipToLabel];
+        
+        UIButton *shipDriverProtocol = [[UIButton alloc]initWithFrame:CGRectMake(shipToLabel.frame.origin.x+shipToLabel.frame.size.width, shipToLabel.frame.origin.y, 42, 14)];
+        shipDriverProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+        [shipDriverProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [shipDriverProtocol setTitle:@"許認可" forState:UIControlStateNormal];
+        [warnView addSubview:shipDriverProtocol];
+        
+        UILabel *shipNiLabel = [[UILabel alloc]initWithFrame:CGRectMake(shipDriverProtocol.frame.origin.x + shipDriverProtocol.frame.size.width, shipDriverProtocol.frame.origin.y, 126, 14)];
+        shipNiLabel.text = @"を保有しています。";
+        shipNiLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+        shipNiLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+        [warnView addSubview:shipNiLabel];
+    }
+
+
+    //checkbox
+    MDCheckBox *checkBox = [[MDCheckBox alloc]initWithFrame:CGRectMake(0, shipCheckBox.frame.origin.y + shipCheckBox.frame.size.height + 10, 34, 34)];
+    [checkBox addTarget:self action:@selector(toggleCheck:) forControlEvents:UIControlEventTouchUpInside];
+    [warnView addSubview:checkBox];
+    
+    
+    UIButton *userProtocol = [[UIButton alloc]initWithFrame:CGRectMake(checkBox.frame.origin.x + checkBox.frame.size.width+5, checkBox.frame.origin.y+10, 64, 14)];
+    userProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+    [userProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
+    [userProtocol setTitle:@"利用規約" forState:UIControlStateNormal];
+    [warnView addSubview:userProtocol];
+    
+    UILabel *toLabel = [[UILabel alloc]initWithFrame:CGRectMake(userProtocol.frame.origin.x + userProtocol.frame.size.width, userProtocol.frame.origin.y, 14, 14)];
+    toLabel.text = @"と";
+    toLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+    toLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+    [warnView addSubview:toLabel];
+    
+    UIButton *driverProtocol = [[UIButton alloc]initWithFrame:CGRectMake(toLabel.frame.origin.x+14, toLabel.frame.origin.y, 126, 14)];
+    driverProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+    [driverProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
+    [driverProtocol setTitle:@"プライバシポリシー" forState:UIControlStateNormal];
+    [warnView addSubview:driverProtocol];
+    
+    UILabel *niLabel = [[UILabel alloc]initWithFrame:CGRectMake(driverProtocol.frame.origin.x + driverProtocol.frame.size.width, driverProtocol.frame.origin.y, 42, 14)];
+    niLabel.text = @"に同意";
+    niLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+    niLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+    [warnView addSubview:niLabel];
+    
+    _postButton = [[UIButton alloc]initWithFrame:CGRectMake(0, checkBox.frame.origin.y + checkBox.frame.size.height + 20, warnView.frame.size.width, 50)];
+    [_postButton setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:138.0/255.0 blue:0 alpha:1]];
+    [_postButton setTitle:@"以上で登録" forState:UIControlStateNormal];
+    _postButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:18];
+    [_postButton addTarget:self action:@selector(postData) forControlEvents:UIControlEventTouchUpInside];
+    _postButton.layer.cornerRadius = 2.5;
+    [warnView addSubview:_postButton];
+    
+    [_scrollView addSubview:warnView];
+    [_scrollView setContentSize:CGSizeMake(self.frame.size.width, warnView.frame.origin.y + warnView.frame.size.height + 20)];
 }
 
 -(void) postData {
@@ -235,20 +310,28 @@
     if([input isEqual:_repeatInput]){
         [input resignFirstResponder];
     } else {
-        bool isFind = false;
+        bool isFind = NO;
         
         for (UIView *view in [_scrollView subviews]) {
             if([view isKindOfClass:[MDInput class]]){
                 MDInput *tmpView = (MDInput *)view;
-                if(isFind){
-                    [tmpView.input becomeFirstResponder];
-                    break;
-                } else {
-                    
-                    if([input isEqual:tmpView]){
-                        isFind = true;
+                
+                    if(isFind){
+                        if(tmpView.tag == 3){
+                         
+                            continue;
+                        } else {
+                            [tmpView.input becomeFirstResponder];
+                            break;
+                        }
+                        
+                    } else {
+                        
+                        if([input isEqual:tmpView]){
+                            isFind = YES;
+                        }
                     }
-                }
+                
             }
         }
     }
@@ -284,6 +367,19 @@
             }
         }
     }
+    
+    //checkbox
+    for(UIView *view in [warnView subviews]){
+        if ([view isKindOfClass:[MDCheckBox class]]) {
+            //
+            NSLog(@"count");
+            MDCheckBox *tmp = (MDCheckBox *)view;
+            if (![tmp isChecked]) {
+                return NO;
+            }
+        }
+    }
+
     return YES;
 }
 

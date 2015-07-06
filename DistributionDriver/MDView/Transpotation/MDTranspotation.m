@@ -9,12 +9,16 @@
 #import "MDTranspotation.h"
 #import "MDKindButton.h"
 #import "MDUser.h"
+#import "MDCheckBox.h"
 
 @implementation MDTranspotation{
     MDKindButton *trankButton;
     MDKindButton *walkButton;
     MDKindButton *bikeButton;
     MDKindButton *motorbikeButton;
+    
+    UILabel         *warnLabel;
+    UIView          *warnView;
 }
 
 -(id)initWithFrame:(CGRect)frame{
@@ -69,9 +73,79 @@
         [trankButton addTarget:self action:@selector(toggleButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:trankButton];
         [self addSubview:transpotationTitleView];
+        
+        [self setWarnViewStatus:0];
 
     }
     return self;
+}
+
+-(void) setWarnViewStatus:(int)status{
+    
+    [warnView removeFromSuperview];
+    
+    warnView = [[UIView alloc]initWithFrame:CGRectMake(10, walkButton.frame.origin.y + walkButton.frame.size.height + 10, self.frame.size.width - 20, 300)];
+    
+    //warn label
+    warnLabel  = [[UILabel alloc]init];
+    warnLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:11];
+    warnLabel.textColor = [UIColor colorWithRed:226.0/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    warnLabel.numberOfLines = 0;
+    
+    //content
+    if (status == 0) {
+        [warnLabel setFrame:CGRectMake(20, 0, warnView.frame.size.width - 40, 0)];
+        warnLabel.text = @"";
+    } else if(status == 1){
+        [warnLabel  setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"125CC以上のバイクを利用して運送を行う場合、許認可が必要となりますので、ご注意ください。";
+        
+    } else if(status == 2){
+        [warnLabel setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"自動車を利用して、運送を行う場合、許認可が必要となりますので、ご注意ください。";
+        
+    } else {
+        [warnLabel setFrame:CGRectMake(20, 15, warnView.frame.size.width - 40, 50)];
+        warnLabel.text = @"125CC以上のバイク、また自動車を利用して運送を行う場合、許認可が必要となりますので、ご注意ください。";
+    }
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:warnLabel.text];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:11];//调整行间距
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [warnLabel.text length])];
+    warnLabel.attributedText = attributedString;
+    [warnLabel sizeToFit];
+    [warnView addSubview:warnLabel];
+    
+//    //warn check
+//    MDCheckBox *shipCheckBox = [[MDCheckBox alloc]initWithFrame:CGRectMake(0, 0, 34, 0)];
+//    
+//    if (status != 0) {
+//        [shipCheckBox setFrame:CGRectMake(0, warnLabel.frame.origin.y + warnLabel.frame.size.height + 30, 34, 34)];
+//        //checkbox
+//        [shipCheckBox addTarget:self action:@selector(toggleCheck:) forControlEvents:UIControlEventTouchUpInside];
+//        [warnView addSubview:shipCheckBox];
+//        
+//        UILabel *shipToLabel = [[UILabel alloc]initWithFrame:CGRectMake(shipCheckBox.frame.origin.x + shipCheckBox.frame.size.width+10, shipCheckBox.frame.origin.y+10, 84, 14)];
+//        shipToLabel.text = @"運送に関わる";
+//        shipToLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+//        shipToLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+//        [warnView addSubview:shipToLabel];
+//        
+//        UIButton *shipDriverProtocol = [[UIButton alloc]initWithFrame:CGRectMake(shipToLabel.frame.origin.x+shipToLabel.frame.size.width, shipToLabel.frame.origin.y, 42, 14)];
+//        shipDriverProtocol.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+//        [shipDriverProtocol setTitleColor:[UIColor colorWithRed:30.0/255.0 green:132.0/255.0 blue:158.0/255.0 alpha:1] forState:UIControlStateNormal];
+//        [shipDriverProtocol setTitle:@"許認可" forState:UIControlStateNormal];
+//        [warnView addSubview:shipDriverProtocol];
+//        
+//        UILabel *shipNiLabel = [[UILabel alloc]initWithFrame:CGRectMake(shipDriverProtocol.frame.origin.x + shipDriverProtocol.frame.size.width, shipDriverProtocol.frame.origin.y, 126, 14)];
+//        shipNiLabel.text = @"を保有しています。";
+//        shipNiLabel.font = [UIFont fontWithName:@"HiraKakuProN-W6" size:14];
+//        shipNiLabel.textColor = [UIColor colorWithRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1];
+//        [warnView addSubview:shipNiLabel];
+//    }
+    
+    [self addSubview:warnView];
 }
 
 -(void) toggleButton:(MDKindButton *)button{
@@ -84,6 +158,12 @@
     } else {
         [MDUser getInstance].car = ([[button toggleButton] isEqualToString:@"On"]) ? @"1" : @"0";
     }
+    
+    int status = 0;
+    ([[MDUser getInstance].motorBike isEqualToString:@"1"]) ? status = status + 1 : status;
+    ([[MDUser getInstance].car isEqualToString:@"1"]) ? status = status + 2 : status;
+    
+    [self setWarnViewStatus:status];
 }
 
 -(void) initWithData:(MDUser *)user{

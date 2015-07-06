@@ -31,6 +31,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //change warnview status
+    int status = 0;
+    ([[MDUser getInstance].motorBike isEqualToString:@"1"]) ? status = status + 1 : status;
+    ([[MDUser getInstance].car isEqualToString:@"1"]) ? status = status + 2 : status;
+    
+    [transpotationView setWarnViewStatus:status];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,6 +44,9 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)initNavigationBar{
+    
+    self.navigationItem.title = @"交通手段";
+    
     //add right button item
     UIButton *_backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_backButton setTitle:@"戻る" forState:UIControlStateNormal];

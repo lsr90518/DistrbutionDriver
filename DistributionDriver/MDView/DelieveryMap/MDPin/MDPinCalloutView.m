@@ -82,7 +82,7 @@
     
     [_image sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
     _sizeLabel.text = [NSString stringWithFormat:@"合計 %@cm 以内", package.size];
-    _rewardLabel.text = [NSString stringWithFormat:@"報酬: %@円", package.reward_amount];
+    _rewardLabel.text = [NSString stringWithFormat:@"報酬: %@ 円", package.reward_amount];
     _toAddrLabel.text = [NSString stringWithFormat:@"配達場所: %@", package.to_addr];
     
     //convert
@@ -101,6 +101,32 @@
     int hour = timeBetween/60/60;
     _expireLabel.text = [NSString stringWithFormat:@"依頼期限: %d時間以内", hour+1];
     
+}
+
+-(void) setDataByPin:(MDPin *)pin{
+    
+    MDPackage *package = pin.package;
+    
+    [_image sd_setImageWithURL:[NSURL URLWithString:package.image] placeholderImage:[UIImage imageNamed:@"cargo"] options:SDWebImageRetryFailed];
+    _sizeLabel.text = [NSString stringWithFormat:@"合計 %@cm 以内", package.size];
+    _rewardLabel.text = [NSString stringWithFormat:@"報酬: %@ 円", package.reward_amount];
+    _toAddrLabel.text = [NSString stringWithFormat:@"配達場所: %@", package.to_addr];
+    
+    //convert
+    NSDate *now = [NSDate date];
+    NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setLocale:[NSLocale systemLocale]];
+    [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:00"];
+    NSDate *deliverLimitDate =[dateFormat dateFromString:package.deliver_limit];
+    NSDateFormatter* janpaneseFormat = [[NSDateFormatter alloc] init];
+    [janpaneseFormat setLocale:[NSLocale systemLocale]];
+    [janpaneseFormat setDateFormat:@"YYYY年MM月dd日 HH時mm分"];
+    _deliveryLimitLabel.text = [NSString stringWithFormat:@"配達期限: %@", [janpaneseFormat stringFromDate:deliverLimitDate]];
+    
+    NSDate *expireDate =[dateFormat dateFromString:package.expire];
+    NSTimeInterval timeBetween = [expireDate timeIntervalSinceDate:now];
+    int hour = timeBetween/60/60;
+    _expireLabel.text = [NSString stringWithFormat:@"依頼期限: %d時間以内", hour+1];
 }
 
 @end

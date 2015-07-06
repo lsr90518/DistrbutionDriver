@@ -18,7 +18,7 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         
         _phoneInput = [[MDInput alloc]initWithFrame:CGRectMake(10, 74, frame.size.width-20, 50)];
-        _phoneInput.title.text = @"電話番号";
+        _phoneInput.title.text = @"携帯番号";
         _phoneInput.input.placeholder = @"番号入力(「-」無し)";
         [_phoneInput.input setKeyboardType:UIKeyboardTypeNumberPad];
         [_phoneInput.title sizeToFit];
@@ -40,8 +40,6 @@
         [self addSubview:postButton];
         
     }
-    
-    [self loginTest];
     return self;
 }
 
@@ -51,9 +49,5 @@
     }
 }
 
--(void) loginTest {
-    _phoneInput.input.text = @"09065698655";
-    _passwordInput.input.text = @"123456";
-}
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MDPackage.h"
+#import "MDPin.h"
 
 @interface MDPinCalloutView : UIButton
 
@@ -19,5 +20,7 @@
 @property (strong, nonatomic) UILabel       *expireLabel;
 
 -(void) setData:(MDPackage *)package;
+-(void) setDataByPin:(MDPin *)pin;
 
 @end
+

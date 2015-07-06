@@ -74,7 +74,7 @@
         
         //phone button
         phoneButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, nameButton.frame.origin.y + nameButton.frame.size.height + 10, frame.size.width-20, 50)];
-        phoneButton.buttonTitle.text = @"電話番号";
+        phoneButton.buttonTitle.text = @"携帯番号";
         [phoneButton addTarget:self action:@selector(phoneNumberTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:phoneButton];
         
@@ -105,7 +105,7 @@
         qaButton.buttonTitle.text = @"よくある質問";
         qaButton.selectLabel.text = @"";
         [qaButton setUnactive];
-        [qaButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
+        [qaButton addTarget:self action:@selector(aqButtonPushed) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:qaButton];
         
         //name button
@@ -114,15 +114,15 @@
         [privateButton.buttonTitle sizeToFit];
         privateButton.selectLabel.text = @"";
         [privateButton setUnactive];
-        [privateButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
+        [privateButton addTarget:self action:@selector(privateButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:privateButton];
         
         //name button
         MDSelect *protocolButton = [[MDSelect alloc]initWithFrame:CGRectMake(10, privateButton.frame.origin.y + privateButton.frame.size.height + 10, frame.size.width-20, 50)];
-        protocolButton.buttonTitle.text = @"利用契約";
+        protocolButton.buttonTitle.text = @"利用規約";
         protocolButton.selectLabel.text = @"";
         [protocolButton setUnactive];
-        [protocolButton addTarget:self action:@selector(nameButtonPushed) forControlEvents:UIControlEventTouchUpInside];
+        [protocolButton addTarget:self action:@selector(protocolButtonTouched) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:protocolButton];
         
         //button
@@ -238,10 +238,27 @@
     }
 }
 
+-(void) privateButtonTouched{
+    if([self.delegate respondsToSelector:@selector(privacyButtonPushed)]){
+        [self.delegate privacyButtonPushed];
+    }
+}
+
+-(void) protocolButtonTouched {
+    if([self.delegate respondsToSelector:@selector(protocolButtonPushed)]){
+        [self.delegate protocolButtonPushed];
+    }
+}
+
+-(void) aqButtonPushed{
+    if([self.delegate respondsToSelector:@selector(aqButtonPushed)]){
+        [self.delegate aqButtonPushed];
+    }
+}
+
 -(void) setViewData:(MDUser *)user{
     nameButton.selectLabel.text = [NSString stringWithFormat:@"%@ %@", user.lastname, user.firstname];
     phoneButton.selectLabel.text = [MDUtil japanesePhoneNumber:[MDUser getInstance].phoneNumber];
-    notificationButton.selectLabel.text = @"新着通知がありません";
     
     NSString *transportationStr = @"";
     if([user.walk isEqualToString:@"1"]){
@@ -268,7 +285,7 @@
 -(void)setNotificationCount:(int)count{
     
     if(count == 0){
-        notificationButton.selectLabel.text = @"新着通知はありません";
+        notificationButton.selectLabel.text = @"新着通知がありません";
     } else {
         notificationButton.selectLabel.text = [NSString stringWithFormat:@"%d件の新着", count];
     }

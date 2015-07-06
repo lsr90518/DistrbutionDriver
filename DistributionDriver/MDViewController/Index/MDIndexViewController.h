@@ -15,6 +15,7 @@
 @interface MDIndexViewController : UIViewController<indexDelegate>
 
 @property (strong, nonatomic) MDIndexView *indexView;
+@property (strong, nonatomic) AVPlayer *avPlayer;
 
 
 @end

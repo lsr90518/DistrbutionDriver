@@ -140,6 +140,11 @@
 		0D3136511B11B7380072A488 /* MDRealmBankInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136501B11B7380072A488 /* MDRealmBankInfo.m */; };
 		0D3136541B11EA6D0072A488 /* MDUserLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136531B11EA6D0072A488 /* MDUserLocationService.m */; };
 		0D3136571B1222F50072A488 /* MDRealmNotificationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */; };
+		0D31365D1B14017A0072A488 /* MDSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31365C1B14017A0072A488 /* MDSwitch.m */; };
+		0D3136601B15220B0072A488 /* MDPinCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */; };
+		0D3136631B1530E00072A488 /* MDPinNewCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */; };
+		0D3136661B1530FB0072A488 /* MDPinNewCollectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */; };
+		0D31366C1B166F870072A488 /* MDRealmPushNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D31366B1B166F870072A488 /* MDRealmPushNotice.m */; };
 		0D79BEFF1AF496E50053EB11 /* pinTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFD1AF496E50053EB11 /* pinTo.png */; };
 		0D79BF001AF496E50053EB11 /* pinFrom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D79BEFE1AF496E50053EB11 /* pinFrom.png */; };
 		0D79BF041AF497800053EB11 /* MDPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D79BF031AF497800053EB11 /* MDPin.m */; };
@@ -176,6 +181,10 @@
 		0DEAD8EC1AF5DB0000202F01 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEAD8E71AF5DB0000202F01 /* Icon-Small.png */; };
 		0DEAD8ED1AF5DB0000202F01 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEAD8E81AF5DB0000202F01 /* Icon-Small@2x.png */; };
 		0DEAD8EE1AF5DB0000202F01 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEAD8E91AF5DB0000202F01 /* iTunesArtwork.png */; };
+		0DEDF45C1B1B54F800B29882 /* MDPrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DEDF45B1B1B54F800B29882 /* MDPrivacyViewController.m */; };
+		0DEDF4661B1B570900B29882 /* MDAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DEDF4651B1B570900B29882 /* MDAQViewController.m */; };
+		0DEDF46A1B1B590B00B29882 /* MDProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DEDF4691B1B590B00B29882 /* MDProtocolViewController.m */; };
+		0DEDF46C1B1BC97C00B29882 /* fromPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEDF46B1B1BC97C00B29882 /* fromPin.png */; };
 		0DF081141AF73BC200437700 /* cluster.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081101AF73BC200437700 /* cluster.png */; };
 		0DF081151AF73BC200437700 /* cluster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081111AF73BC200437700 /* cluster@2x.png */; };
 		0DF081161AF73BC200437700 /* pinpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081121AF73BC200437700 /* pinpoint.png */; };
@@ -184,6 +193,11 @@
 		0DF0811B1AF73E5400437700 /* numberTo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081191AF73E5400437700 /* numberTo.png */; };
 		0DF0811E1AF7402F00437700 /* MDClusterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0811D1AF7402F00437700 /* MDClusterView.m */; };
 		0DF081271AF8716F00437700 /* currentLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF081261AF8716F00437700 /* currentLocation.png */; };
+		0DF738911B19493D00D3D0E0 /* MDBugReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF738901B19493D00D3D0E0 /* MDBugReportViewController.m */; };
+		0DF738941B1958A200D3D0E0 /* MDLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF738931B1958A200D3D0E0 /* MDLocationManager.m */; };
+		0DF738961B1AFA3400D3D0E0 /* trux_bgvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0DF738951B1AFA3400D3D0E0 /* trux_bgvideo.mp4 */; };
+		0DF738981B1AFA5700D3D0E0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF738971B1AFA5700D3D0E0 /* AVFoundation.framework */; };
+		0DF7389B1B1B0EDC00D3D0E0 /* trux_bgvideo_portrait.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0DF7389A1B1B0EDC00D3D0E0 /* trux_bgvideo_portrait.mp4 */; };
 		487E58A61B0B3C150033E2BC /* MDLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 487E58A51B0B3C150033E2BC /* MDLocalNotificationManager.m */; };
 		839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503A1AFC7E74000A8A1D /* MDReviewViewController.m */; };
 		839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839C503E1AFC7E99000A8A1D /* MDReviewView.m */; };
@@ -421,6 +435,16 @@
 		0D3136531B11EA6D0072A488 /* MDUserLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDUserLocationService.m; path = MDService/MDUserLocationService.m; sourceTree = "<group>"; };
 		0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmNotificationRecord.h; sourceTree = "<group>"; };
 		0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmNotificationRecord.m; sourceTree = "<group>"; };
+		0D31365B1B14017A0072A488 /* MDSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDSwitch.h; sourceTree = "<group>"; };
+		0D31365C1B14017A0072A488 /* MDSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDSwitch.m; sourceTree = "<group>"; };
+		0D31365E1B15220B0072A488 /* MDPinCollectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinCollectionCellView.h; path = DelieveryMap/PinCollection/MDPinCollectionCellView.h; sourceTree = "<group>"; };
+		0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinCollectionCellView.m; path = DelieveryMap/PinCollection/MDPinCollectionCellView.m; sourceTree = "<group>"; };
+		0D3136611B1530E00072A488 /* MDPinNewCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinNewCollectionView.h; path = DelieveryMap/PinCollection/MDPinNewCollectionView.h; sourceTree = "<group>"; };
+		0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionView.m; sourceTree = "<group>"; };
+		0D3136641B1530FB0072A488 /* MDPinNewCollectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPinNewCollectionCellView.h; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.h; sourceTree = "<group>"; };
+		0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDPinNewCollectionCellView.m; path = DelieveryMap/PinCollection/MDPinNewCollectionCellView.m; sourceTree = "<group>"; };
+		0D31366A1B166F870072A488 /* MDRealmPushNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRealmPushNotice.h; sourceTree = "<group>"; };
+		0D31366B1B166F870072A488 /* MDRealmPushNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRealmPushNotice.m; sourceTree = "<group>"; };
 		0D79BEFD1AF496E50053EB11 /* pinTo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinTo.png; sourceTree = "<group>"; };
 		0D79BEFE1AF496E50053EB11 /* pinFrom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinFrom.png; sourceTree = "<group>"; };
 		0D79BF021AF497800053EB11 /* MDPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDPin.h; path = DelieveryMap/MDPin/MDPin.h; sourceTree = "<group>"; };
@@ -481,6 +505,13 @@
 		0DEAD8E71AF5DB0000202F01 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		0DEAD8E81AF5DB0000202F01 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		0DEAD8E91AF5DB0000202F01 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		0DEDF45A1B1B54F800B29882 /* MDPrivacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDPrivacyViewController.h; sourceTree = "<group>"; };
+		0DEDF45B1B1B54F800B29882 /* MDPrivacyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDPrivacyViewController.m; sourceTree = "<group>"; };
+		0DEDF4641B1B570900B29882 /* MDAQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDAQViewController.h; path = AQ/MDAQViewController.h; sourceTree = "<group>"; };
+		0DEDF4651B1B570900B29882 /* MDAQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDAQViewController.m; path = AQ/MDAQViewController.m; sourceTree = "<group>"; };
+		0DEDF4681B1B590B00B29882 /* MDProtocolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDProtocolViewController.h; sourceTree = "<group>"; };
+		0DEDF4691B1B590B00B29882 /* MDProtocolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDProtocolViewController.m; sourceTree = "<group>"; };
+		0DEDF46B1B1BC97C00B29882 /* fromPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fromPin.png; sourceTree = "<group>"; };
 		0DF081101AF73BC200437700 /* cluster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cluster.png; sourceTree = "<group>"; };
 		0DF081111AF73BC200437700 /* cluster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cluster@2x.png"; sourceTree = "<group>"; };
 		0DF081121AF73BC200437700 /* pinpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinpoint.png; sourceTree = "<group>"; };
@@ -490,6 +521,13 @@
 		0DF0811C1AF7402F00437700 /* MDClusterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDClusterView.h; path = DelieveryMap/MDPin/MDClusterView.h; sourceTree = "<group>"; };
 		0DF0811D1AF7402F00437700 /* MDClusterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDClusterView.m; path = DelieveryMap/MDPin/MDClusterView.m; sourceTree = "<group>"; };
 		0DF081261AF8716F00437700 /* currentLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = currentLocation.png; sourceTree = "<group>"; };
+		0DF7388F1B19493D00D3D0E0 /* MDBugReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBugReportViewController.h; path = BugReport/MDBugReportViewController.h; sourceTree = "<group>"; };
+		0DF738901B19493D00D3D0E0 /* MDBugReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBugReportViewController.m; path = BugReport/MDBugReportViewController.m; sourceTree = "<group>"; };
+		0DF738921B1958A200D3D0E0 /* MDLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDLocationManager.h; path = MDService/MDLocationManager.h; sourceTree = "<group>"; };
+		0DF738931B1958A200D3D0E0 /* MDLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDLocationManager.m; path = MDService/MDLocationManager.m; sourceTree = "<group>"; };
+		0DF738951B1AFA3400D3D0E0 /* trux_bgvideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = trux_bgvideo.mp4; sourceTree = "<group>"; };
+		0DF738971B1AFA5700D3D0E0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0DF7389A1B1B0EDC00D3D0E0 /* trux_bgvideo_portrait.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = trux_bgvideo_portrait.mp4; sourceTree = "<group>"; };
 		487E58A41B0B3C150033E2BC /* MDLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDLocalNotificationManager.h; sourceTree = "<group>"; };
 		487E58A51B0B3C150033E2BC /* MDLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDLocalNotificationManager.m; sourceTree = "<group>"; };
 		839C50391AFC7E74000A8A1D /* MDReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDReviewViewController.h; path = Review/MDReviewViewController.h; sourceTree = "<group>"; };
@@ -509,6 +547,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DF738981B1AFA5700D3D0E0 /* AVFoundation.framework in Frameworks */,
 				0D3136101B1002BA0072A488 /* Fabric.framework in Frameworks */,
 				0D07874E1AF47ABC007607E9 /* MapKit.framework in Frameworks */,
 				0D0F8A501AE60B2C00755A22 /* CoreGraphics.framework in Frameworks */,
@@ -542,6 +581,8 @@
 				0D07874B1AF4726F007607E9 /* MDPackageService.m */,
 				0D3136521B11EA6D0072A488 /* MDUserLocationService.h */,
 				0D3136531B11EA6D0072A488 /* MDUserLocationService.m */,
+				0DF738921B1958A200D3D0E0 /* MDLocationManager.h */,
+				0DF738931B1958A200D3D0E0 /* MDLocationManager.m */,
 			);
 			name = MDService;
 			sourceTree = "<group>";
@@ -569,6 +610,7 @@
 		0D0F8A4C1AE60B2C00755A22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DF738971B1AFA5700D3D0E0 /* AVFoundation.framework */,
 				0DAA27331B00519000AFD83A /* Crashlytics.framework */,
 				0D31360F1B1002BA0072A488 /* Fabric.framework */,
 				0D07874D1AF47ABC007607E9 /* MapKit.framework */,
@@ -635,6 +677,9 @@
 		0D0F8A821AE61A5700755A22 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				0DEDF46B1B1BC97C00B29882 /* fromPin.png */,
+				0DF7389A1B1B0EDC00D3D0E0 /* trux_bgvideo_portrait.mp4 */,
+				0DF738951B1AFA3400D3D0E0 /* trux_bgvideo.mp4 */,
 				0D3136181B10B4730072A488 /* judgementIcon.png */,
 				0DAA26CD1AFCFC6000AFD83A /* cargo.png */,
 				839C50451AFC8CC3000A8A1D /* star.png */,
@@ -715,6 +760,8 @@
 				0D3136501B11B7380072A488 /* MDRealmBankInfo.m */,
 				0D3136551B1222F50072A488 /* MDRealmNotificationRecord.h */,
 				0D3136561B1222F50072A488 /* MDRealmNotificationRecord.m */,
+				0D31366A1B166F870072A488 /* MDRealmPushNotice.h */,
+				0D31366B1B166F870072A488 /* MDRealmPushNotice.m */,
 			);
 			path = MDDAO;
 			sourceTree = "<group>";
@@ -883,6 +930,8 @@
 				0DEAD8CC1AF5CCBF00202F01 /* MDTitleWell.m */,
 				839C50401AFC8ADC000A8A1D /* MDStarRatingBar.h */,
 				839C50411AFC8ADC000A8A1D /* MDStarRatingBar.m */,
+				0D31365B1B14017A0072A488 /* MDSwitch.h */,
+				0D31365C1B14017A0072A488 /* MDSwitch.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -980,6 +1029,10 @@
 		0D0F8AEE1AE61B7000755A22 /* MDViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0DEDF4671B1B572400B29882 /* AQ */,
+				0DEDF4591B1B54CC00B29882 /* Privacy */,
+				0DEDF4551B1B54C400B29882 /* Protocol */,
+				0DF7388B1B1948FB00D3D0E0 /* BugReport */,
 				0D31363B1B11021A0072A488 /* SizeDescriptionViewController */,
 				0D3136271B10EC040072A488 /* ReviewHistory */,
 				0D3136201B10EBED0072A488 /* NotificationTable */,
@@ -1273,12 +1326,36 @@
 		0D31363D1B11AD7E0072A488 /* MDPinCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				0D3136671B1534C30072A488 /* History */,
+				0D3136691B1534EA0072A488 /* New */,
+			);
+			name = MDPinCollectionView;
+			sourceTree = "<group>";
+		};
+		0D3136671B1534C30072A488 /* History */ = {
+			isa = PBXGroup;
+			children = (
 				0D31363E1B11ADCC0072A488 /* MDPinCollectionView.h */,
 				0D31363F1B11ADCC0072A488 /* MDPinCollectionView.m */,
 				0D3136411B11ADE70072A488 /* MDPinCollectionCell.h */,
 				0D3136421B11ADE70072A488 /* MDPinCollectionCell.m */,
+				0D31365E1B15220B0072A488 /* MDPinCollectionCellView.h */,
+				0D31365F1B15220B0072A488 /* MDPinCollectionCellView.m */,
 			);
-			name = MDPinCollectionView;
+			name = History;
+			sourceTree = "<group>";
+		};
+		0D3136691B1534EA0072A488 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				0D3136611B1530E00072A488 /* MDPinNewCollectionView.h */,
+				0D3136621B1530E00072A488 /* MDPinNewCollectionView.m */,
+				0D3136641B1530FB0072A488 /* MDPinNewCollectionCellView.h */,
+				0D3136651B1530FB0072A488 /* MDPinNewCollectionCellView.m */,
+				0DEAD8C51AF5350E00202F01 /* MDPinCalloutView.h */,
+				0DEAD8C61AF5350E00202F01 /* MDPinCalloutView.m */,
+			);
+			name = New;
 			sourceTree = "<group>";
 		};
 		0D79BF011AF497250053EB11 /* MDPin */ = {
@@ -1288,8 +1365,6 @@
 				0D79BF031AF497800053EB11 /* MDPin.m */,
 				0D79BF051AF4A7D90053EB11 /* MDPinCallout.h */,
 				0D79BF061AF4A7DA0053EB11 /* MDPinCallout.m */,
-				0DEAD8C51AF5350E00202F01 /* MDPinCalloutView.h */,
-				0DEAD8C61AF5350E00202F01 /* MDPinCalloutView.m */,
 				0DF0811C1AF7402F00437700 /* MDClusterView.h */,
 				0DF0811D1AF7402F00437700 /* MDClusterView.m */,
 			);
@@ -1461,6 +1536,42 @@
 			name = Icon;
 			sourceTree = "<group>";
 		};
+		0DEDF4551B1B54C400B29882 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				0DEDF4681B1B590B00B29882 /* MDProtocolViewController.h */,
+				0DEDF4691B1B590B00B29882 /* MDProtocolViewController.m */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		0DEDF4591B1B54CC00B29882 /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				0DEDF45A1B1B54F800B29882 /* MDPrivacyViewController.h */,
+				0DEDF45B1B1B54F800B29882 /* MDPrivacyViewController.m */,
+			);
+			path = Privacy;
+			sourceTree = "<group>";
+		};
+		0DEDF4671B1B572400B29882 /* AQ */ = {
+			isa = PBXGroup;
+			children = (
+				0DEDF4641B1B570900B29882 /* MDAQViewController.h */,
+				0DEDF4651B1B570900B29882 /* MDAQViewController.m */,
+			);
+			name = AQ;
+			sourceTree = "<group>";
+		};
+		0DF7388B1B1948FB00D3D0E0 /* BugReport */ = {
+			isa = PBXGroup;
+			children = (
+				0DF7388F1B19493D00D3D0E0 /* MDBugReportViewController.h */,
+				0DF738901B19493D00D3D0E0 /* MDBugReportViewController.m */,
+			);
+			name = BugReport;
+			sourceTree = "<group>";
+		};
 		839C50381AFC7E56000A8A1D /* Review */ = {
 			isa = PBXGroup;
 			children = (
@@ -1574,6 +1685,7 @@
 				0D0F8B9A1AE6A04600755A22 /* IDCardIcon.png in Resources */,
 				839C50441AFC8CBE000A8A1D /* star_highlight.png in Resources */,
 				0D0F8B851AE61BAA00755A22 /* statusBarBg.png in Resources */,
+				0DF7389B1B1B0EDC00D3D0E0 /* trux_bgvideo_portrait.mp4 in Resources */,
 				0D0F8B6D1AE61BAA00755A22 /* addressFrameImage.png in Resources */,
 				0DF081271AF8716F00437700 /* currentLocation.png in Resources */,
 				0D0F8B841AE61BAA00755A22 /* setting_tab_unactive@2x.png in Resources */,
@@ -1585,6 +1697,7 @@
 				0D0F8A661AE60B2C00755A22 /* Images.xcassets in Resources */,
 				0D0F8B801AE61BAA00755A22 /* request_tab_active@2x.png in Resources */,
 				0DF0811B1AF73E5400437700 /* numberTo.png in Resources */,
+				0DF738961B1AFA3400D3D0E0 /* trux_bgvideo.mp4 in Resources */,
 				0D0F8B731AE61BAA00755A22 /* delivery_tab_active@2x.png in Resources */,
 				0DF0811A1AF73E5400437700 /* numberFrom.png in Resources */,
 				0D0F8B721AE61BAA00755A22 /* Default-568h@2x.png in Resources */,
@@ -1593,6 +1706,7 @@
 				0D0F8B861AE61BAA00755A22 /* taskRound.png in Resources */,
 				0DDDA6521AEC83BE00067016 /* profile.jpg in Resources */,
 				0D0F8A581AE60B2C00755A22 /* InfoPlist.strings in Resources */,
+				0DEDF46C1B1BC97C00B29882 /* fromPin.png in Resources */,
 				0D0F8B6F1AE61BAA00755A22 /* boardLine.png in Resources */,
 				0D0F8B761AE61BAA00755A22 /* firstBG.png in Resources */,
 				0D0F8B881AE61BAA00755A22 /* zipcode.png in Resources */,
@@ -1697,6 +1811,7 @@
 			files = (
 				0DAA27221AFF556000AFD83A /* MDHistoryCell.m in Sources */,
 				0DAA271F1AFF54EE00AFD83A /* MDDriverHistoryViewController.m in Sources */,
+				0DEDF45C1B1B54F800B29882 /* MDPrivacyViewController.m in Sources */,
 				0D0F8B3C1AE61B7000755A22 /* MDSettingView.m in Sources */,
 				0D3136341B10ECA20072A488 /* MDNotificationService.m in Sources */,
 				0D3136171B10B3A50072A488 /* MDJudgmentViewController.m in Sources */,
@@ -1709,6 +1824,7 @@
 				0DAA27441B01CC8200AFD83A /* MDBankSettingView.m in Sources */,
 				0DE785AC1AE7378500E56333 /* MDButtonAndDescriptionView.m in Sources */,
 				0D0F8AAE1AE61B0C00755A22 /* MDCurrentPackage.m in Sources */,
+				0DF738911B19493D00D3D0E0 /* MDBugReportViewController.m in Sources */,
 				0D0F8AAF1AE61B0C00755A22 /* MDDevice.m in Sources */,
 				0DAA274B1B01DCF000AFD83A /* MDBankInfoSettingViewController.m in Sources */,
 				0D0F8AA91AE61B0C00755A22 /* MDAPI.m in Sources */,
@@ -1716,6 +1832,7 @@
 				0D0F8AAB1AE61B0C00755A22 /* MDCustomer.m in Sources */,
 				0DAA27251AFF8FB900AFD83A /* BothReview.m in Sources */,
 				0D0787461AF46841007607E9 /* MDDeliveryMapView.m in Sources */,
+				0DEDF4661B1B570900B29882 /* MDAQViewController.m in Sources */,
 				0DF0811E1AF7402F00437700 /* MDClusterView.m in Sources */,
 				0D79BF071AF4A7DA0053EB11 /* MDPinCallout.m in Sources */,
 				0D1500DD1AFB909E003686AA /* MDDeliveryTableView.m in Sources */,
@@ -1737,6 +1854,7 @@
 				0D0F8B4B1AE61B7000755A22 /* MDRequestViewController.m in Sources */,
 				0D0F8AAC1AE61B0C00755A22 /* Model.xcdatamodeld in Sources */,
 				0D0F8B381AE61B7000755A22 /* MDRequestTableView.m in Sources */,
+				0D31366C1B166F870072A488 /* MDRealmPushNotice.m in Sources */,
 				0D07874C1AF4726F007607E9 /* MDPackageService.m in Sources */,
 				0D79BF041AF497800053EB11 /* MDPin.m in Sources */,
 				0DAA27091AFF1C1200AFD83A /* MDClient.m in Sources */,
@@ -1753,6 +1871,7 @@
 				0D3136401B11ADCC0072A488 /* MDPinCollectionView.m in Sources */,
 				0DAA27181AFF471800AFD83A /* MDReviewWell.m in Sources */,
 				0D0F8B2C1AE61B7000755A22 /* MDInput.m in Sources */,
+				0DEDF46A1B1B590B00B29882 /* MDProtocolViewController.m in Sources */,
 				0DAA274F1B025DB400AFD83A /* MDBankSearchViewController.m in Sources */,
 				0D0F8AAA1AE61B0C00755A22 /* MDCustomerDAO.m in Sources */,
 				839C503B1AFC7E74000A8A1D /* MDReviewViewController.m in Sources */,
@@ -1767,6 +1886,7 @@
 				0D0F8AAD1AE61B0C00755A22 /* MDSQLManager.m in Sources */,
 				0D0F8AB01AE61B0C00755A22 /* MDRequest.m in Sources */,
 				0D0F8B2F1AE61B7000755A22 /* MDStatusLabel.m in Sources */,
+				0D31365D1B14017A0072A488 /* MDSwitch.m in Sources */,
 				0D0F8B471AE61B7000755A22 /* MDNoteViewController.m in Sources */,
 				0D1500E21AFB90C1003686AA /* MDDeliveryListViewController.m in Sources */,
 				0DAA27141AFF420800AFD83A /* MDMyPackageService.m in Sources */,
@@ -1791,6 +1911,7 @@
 				0DEAD8D21AF5D27E00202F01 /* MDTranspotation.m in Sources */,
 				0D31361F1B10EAB60072A488 /* MDSelectRating.m in Sources */,
 				0D0F8B4E1AE61B7000755A22 /* MDSettingViewController.m in Sources */,
+				0DF738941B1958A200D3D0E0 /* MDLocationManager.m in Sources */,
 				0D3136571B1222F50072A488 /* MDRealmNotificationRecord.m in Sources */,
 				839C503F1AFC7E99000A8A1D /* MDReviewView.m in Sources */,
 				0D0F8B431AE61B7000755A22 /* MDExpireViewController.m in Sources */,
@@ -1800,9 +1921,12 @@
 				0D3136371B10FE470072A488 /* MDAddressButton.m in Sources */,
 				0D0F8A5A1AE60B2C00755A22 /* main.m in Sources */,
 				0DEAD8CA1AF5AFF500202F01 /* MDAddressTable.m in Sources */,
+				0D3136661B1530FB0072A488 /* MDPinNewCollectionCellView.m in Sources */,
 				0D0F8B3F1AE61B7000755A22 /* MDInputDestinationViewController.m in Sources */,
 				0D0F8AB11AE61B0C00755A22 /* MDPackage.m in Sources */,
 				0DAA270C1AFF1C8800AFD83A /* MDReview.m in Sources */,
+				0D3136601B15220B0072A488 /* MDPinCollectionCellView.m in Sources */,
+				0D3136631B1530E00072A488 /* MDPinNewCollectionView.m in Sources */,
 				0D0F8B3D1AE61B7000755A22 /* MDWell.m in Sources */,
 				0D0F8B281AE61B7000755A22 /* MDCheckNumberViewController.m in Sources */,
 				0DEAD8CD1AF5CCBF00202F01 /* MDTitleWell.m in Sources */,

@@ -25,11 +25,21 @@
 #import "MDDeliveryMapView.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MDPin.h"
+#import "MDPinCalloutView.h"
 #import "MDPinCallout.h"
+#import "MDClusterView.h"
+#import "MDDeliveryListViewController.h"
+#import "MDNotificationService.h"
+#import "MDMyPackageService.h"
+#import "MDUserLocationService.h"
+#import "MDPinCollectionView.h"
+#import "MDPinNewCollectionView.h"
+#import "MDLocationManager.h"
 
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
-@interface MDDeliveryViewController : UIViewController <MKMapViewDelegate,MKAnnotation,MKOverlay,CLLocationManagerDelegate>
+@interface MDDeliveryViewController : UIViewController <MKMapViewDelegate,MKAnnotation,MKOverlay,CLLocationManagerDelegate,MDPinNewCollectionViewDelegate,MDPinCollectionViewDelegate>
 
 @property (strong, nonatomic) MDDeliveryMapView *deliveryView;
 @property (strong, nonatomic) MDPinCallout *currentAnnotationView;
@@ -39,11 +49,13 @@
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapView *fromAnnotationsMapView;
 @property (strong, nonatomic) MKMapView *toAnnotationsMapView;
+@property (strong, nonatomic) MKMapView *histroyFromAnnotationsMapView;
+@property (strong, nonatomic) MKMapView *historyToAnnotationsMapView;
 //自己经度
 @property (strong, nonatomic) NSString *longitude;
 //自己纬度
 @property (strong, nonatomic) NSString *latitude;
 
-@property(nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic) MKCoordinateRegion currentVisitRegion;
 
 @end

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) UIImageView *checkImage;
 
 -(BOOL) toggleCheck;
+-(BOOL) isChecked;
 
 @end

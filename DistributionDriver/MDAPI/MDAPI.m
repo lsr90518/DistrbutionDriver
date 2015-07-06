@@ -10,6 +10,7 @@
 #import "MDUser.h"
 #import "MDCurrentPackage.h"
 #import "MDDevice.h"
+#import "MDUtil.h"
 
 @implementation MDAPI {
     MKNetworkEngine *_engine;
@@ -111,7 +112,7 @@
               onComplete:(void (^)(MKNetworkOperation *))complete
                  onError:(void (^)(MKNetworkOperation *, NSError *))error{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:user.phoneNumber  forKey:@"phone"];
+    [dic setValue:[MDUtil internationalPhoneNumber:user.phoneNumber]  forKey:@"phone"];
     [dic setValue:user.checknumber  forKey:@"check_number"];
     [dic setValue:[NSString stringWithFormat:@"%@ %@",user.lastname,user.firstname] forKey:@"name"];
     [dic setValue:user.password     forKey:@"password"];

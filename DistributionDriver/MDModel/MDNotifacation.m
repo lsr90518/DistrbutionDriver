@@ -14,7 +14,29 @@
     _notification_id = ([data[@"id"] isEqual:[NSNull null]]) ? @"" : data[@"id"];
     _package_id = ([data[@"_package_id"] isEqual:[NSNull null]]) ? @"" : data[@"package_id"];
     _message = ([data[@"_message"] isEqual:[NSNull null]]) ? @"" : data[@"message"];
-    _created_time = ([data[@"created"] isEqual:[NSNull null]]) ? @"" : [MDUtil getLocalDateTimeStrFromString:data[@"created"] format:@"yyyy年MM月dd日 HH:mm:ss"];;
+    _created_time = ([data[@"created"] isEqual:[NSNull null]]) ? @"" : [MDUtil getLocalDateTimeStrFromString:data[@"created"] format:@"yyyy年MM月dd日 HH:mm:ss"];
+}
+
+-(NSComparisonResult) noticeCompareByDate: (MDNotifacation *)otherData{
+    MDNotifacation *tmpNotification = (MDNotifacation *)self;
+    
+
+        //排序
+        NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy年MM月dd日 HH:mm:ss"];
+        NSDate *date1 = [dateFormat dateFromString:tmpNotification.created_time];
+        NSDate *date2 = [dateFormat dateFromString:otherData.created_time];
+
+        NSTimeInterval time1 = [date1 timeIntervalSince1970];
+        NSTimeInterval time2 = [date2 timeIntervalSince1970];
+
+
+        if (time1 > time2) {
+            return NSOrderedAscending;
+        } else {
+            return NSOrderedDescending;
+        }
+    
 }
 
 @end

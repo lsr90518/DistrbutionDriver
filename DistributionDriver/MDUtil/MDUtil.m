@@ -43,7 +43,7 @@
 }
 
 //对图片尺寸进行压缩--
--(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
++(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
 {
     // Create a graphics image context
     UIGraphicsBeginImageContext(newSize);

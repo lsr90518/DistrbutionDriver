@@ -39,8 +39,14 @@
 -(void) updateClusterAnnotationByType:(MDPin *)pin{
     if([pin.packageType isEqualToString:@"from"]){
         [imageView setImage:[UIImage imageNamed:@"numberFrom"]];
+    } else if([pin.packageType isEqualToString:@"to"]) {
+        [imageView setImage:[UIImage imageNamed:@"numberTo"]];
+    } else if([pin.packageType isEqualToString:@"history-from"]){
+        [imageView setImage:[UIImage imageNamed:@"numberFrom"]];
+        [imageView setAlpha:0.32];
     } else {
         [imageView setImage:[UIImage imageNamed:@"numberTo"]];
+        [imageView setAlpha:0.32];
     }
     [imageView setHidden:NO];
     [numberLabel setHidden:NO];

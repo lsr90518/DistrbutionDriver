@@ -53,7 +53,7 @@
 }
 
 -(void) backButtonTouched{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad {

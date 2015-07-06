@@ -31,6 +31,8 @@
     [self.view addSubview:_profileView];
     _profileView.delegate = self;
     [self initNavigationBar];
+    
+    
 }
 
 - (void)viewDidLoad

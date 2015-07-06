@@ -77,7 +77,9 @@
                                            [MDUtil makeAlertWithTitle:@"途中で解雇" message:@"解雇されました。" done:@"OK" viewController:self];
                                        } else if([status isEqualToString:@"0"]){
                                            
-                                           [MDUtil makeAlertWithTitle:@"審査中" message:@"審査中で、お待ちください。" done:@"OK" viewController:self];
+//                                           [MDUtil makeAlertWithTitle:@"審査中" message:@"審査中で、お待ちください。" done:@"OK" viewController:self];
+                                           MDJudgmentViewController *jvc = [[MDJudgmentViewController alloc]init];
+                                           [self.navigationController pushViewController:jvc animated:YES];
                                            
                                        } else {
                                            MDUser *user = [MDUser getInstance];
@@ -90,6 +92,18 @@
                                            [self sendToken];
                                            
                                            [self saveUserToDB];
+                                           
+                                           [[MDAPI sharedAPI] changeProfileByUser:[MDUser getInstance]
+                                                                       onComplete:^(MKNetworkOperation *complete) {
+                                                                           
+                                                                           [MDUser getInstance].userHash = [completeOperation responseJSON][@"hash"];
+                                                                           
+                                                                           MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
+                                                                           UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];
+                                                                           [self presentViewController:deliveryNavigationController animated:YES completion:nil];
+                                                                       } onError:^(MKNetworkOperation *operation, NSError *error) {
+                                                                           //
+                                                                       }];
                                            
                                            MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
                                            UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];

@@ -12,5 +12,6 @@
 @interface MDTranspotation : UIView
 
 -(void)initWithData:(MDUser*)user;
+-(void) setWarnViewStatus:(int)status;
 
 @end

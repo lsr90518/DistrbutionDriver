@@ -20,4 +20,12 @@
     return sharedInstance;
 }
 
+-(void) initUserLocation{
+    //set user to tokyo
+    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(MKCoordinateForMapPoint(MKMapPointMake(35.66919, 139.7413805)), 4000, 4000);
+    _currentUserRegion = region;
+    
+}
+
 @end
