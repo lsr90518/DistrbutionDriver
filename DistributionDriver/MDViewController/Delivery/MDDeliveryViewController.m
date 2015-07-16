@@ -220,12 +220,13 @@
                 return ([obj isKindOfClass:[MDPin class]]);
             }] mutableCopy];
             
+            
             if (filteredFromAnnotationsInBucket.count > 0) {
                 MDPin *annotationForGrid = (MDPin *)[self annotationInGrid:gridMapRect usingAnnotations:filteredFromAnnotationsInBucket];
 //
                 [filteredFromAnnotationsInBucket removeObject:annotationForGrid];
 //
-//                // give the annotationForGrid a reference to all the annotations it will represent
+//              // give the annotationForGrid a reference to all the annotations it will represent
                 annotationForGrid.containedAnnotations = [filteredFromAnnotationsInBucket allObjects];
 //
                 [self.mapView addAnnotation:annotationForGrid];
@@ -357,7 +358,7 @@
 }
 
 - (id<MKAnnotation>)annotationInGrid:(MKMapRect)gridMapRect usingAnnotations:(NSSet *)annotations {
-    
+    // 表示されている最初の1つを選ぶ。無ければ作って返す。
     // first, see if one of the annotations we were already showing is in this mapRect
     NSSet *visibleAnnotationsInBucket = [self.mapView annotationsInMapRect:gridMapRect];
     NSSet *annotationsForGridSet = [annotations objectsPassingTest:^BOOL(id obj, BOOL *stop) {
@@ -461,14 +462,14 @@
     MDClusterView *annoView = (MDClusterView *)[mapView dequeueReusableAnnotationViewWithIdentifier:ID];
     MDPin *pin = annotation;
     if (annoView == nil) {
-        annoView = [[MDClusterView alloc] initWithAnnotation:annotation reuseIdentifier:ID];
+        annoView = [[MDClusterView alloc] initWithAnnotation:pin reuseIdentifier:ID];
         annoView.canShowCallout = NO;
     } else {
         [annoView updatePinAnnotationByType:pin];
         annoView.image = nil;
     }
     // 传递模型数据
-    annoView.annotation = annotation;
+    annoView.annotation = pin;
     
     if([pin.containedAnnotations count] > 0){
         // 创建MKAnnotationView
@@ -519,6 +520,7 @@
     [historyFromAnnotations removeAllObjects];
     
     NSMutableArray *packageList = [[MDPackageService getInstance] getPackageListByPackage:[MDCurrentPackage getInstance]];
+    // NSLog(@"%@",packageList);
     
     for (MDPackage *package in packageList) {
         
@@ -584,14 +586,14 @@
 
 //点击大头针
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-    
     currentAnnotationView = view;
 
     MDPin *tmpView = (MDPin *)view.annotation;
     if(![view.annotation isKindOfClass:[MKUserLocation class]]) {
-        
         if([tmpView.containedAnnotations count] > 0){
-            
+            // まとまってるやつ
+            //（代表点を選んでそのannotationsクラスに同じgridのannotationを入れるのでcontainedAnnotationsが1以上でまとまりとなる）
+// ズーム変更
 //            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(tmpView.coordinate,
 //                                                                           _mapView.region.span.latitudeDelta *300,
 //                                                                           _mapView.region.span.longitudeDelta *300);
@@ -601,12 +603,22 @@
             isSelected = YES;
             [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         } else {
-            
             if([tmpView.packageType isEqualToString:@"from"] || [tmpView.packageType isEqualToString:@"to"] || [tmpView.packageType isEqualToString:@"history-from"] || [tmpView.packageType isEqualToString:@"history-to"]){
-                isSelected = YES;
                 
-                MKCoordinateRegion region = MKCoordinateRegionMake(tmpView.coordinate, _mapView.region.span);
+                isSelected = YES;
+                CLLocationCoordinate2D coord_from = CLLocationCoordinate2DMake(tmpView.package.from_lat.doubleValue,
+                                                                               tmpView.package.from_lng.doubleValue);
+                CLLocationCoordinate2D coord_to = CLLocationCoordinate2DMake(tmpView.package.to_lat.doubleValue,
+                                                                             tmpView.package.to_lng.doubleValue);
+                CLLocationCoordinate2D coord_center = CLLocationCoordinate2DMake(
+                                                                                 (tmpView.package.from_lat.doubleValue + tmpView.package.to_lat.doubleValue)/2.0,
+                                                                                 (tmpView.package.from_lng.doubleValue + tmpView.package.to_lng.doubleValue)/2.0);
+                
+                MKCoordinateRegion region = MKCoordinateRegionMake(coord_center, _mapView.region.span);
                 [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+                
+                // route
+                [self drawRouteWithCoordinateFrom:coord_from To:coord_to];
                 
             }
         }
@@ -615,7 +627,6 @@
 }
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
-    
     isSelected = NO;
     isMoved = NO;
     isCluster = NO;
@@ -631,6 +642,9 @@
     [infoWindow removeFromSuperview];
     [collectionInfoWindow removeFromSuperview];
 //    [infoWindow removeFromSuperview];
+    if (mapView.overlays.count > 0) {
+        [mapView removeOverlays:mapView.overlays];
+    }
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
@@ -639,8 +653,10 @@
     
     if(isSelected){
         isMoved = YES;
-        NSRange range = [currentPin.packageType rangeOfString:@"history"];
-        ((int)range.length > 0) ? [self showHistoryWindow:currentPin] : [self showNewWindow:currentPin];
+        // 複数ピンじょうたいだとhistory判定が妥当でないので1クラスで対応
+        [self showNewWindow:currentPin];
+//        NSRange range = [currentPin.packageType rangeOfString:@"history"];
+//        ((int)range.length > 0) ? [self showHistoryWindow:currentPin] : [self showNewWindow:currentPin];
         
     } else {
         NSSet *visitableAnnotations = [mapView annotationsInMapRect:[mapView visibleMapRect]];
@@ -665,6 +681,7 @@
 }
 
 -(void) showNewWindow:(MDPin *)pin{
+    // 荷物に関するウィンドウ(終了済みにも対応する)
     CGSize  calloutSize = CGSizeMake(self.view.frame.size.width - 30, 166);
     infoWindow = [[MDPinNewCollectionView alloc] initWithFrame:CGRectMake(15, 121, calloutSize.width, calloutSize.height)];
     infoWindow.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
@@ -672,25 +689,27 @@
     infoWindow.layer.shadowOpacity = 0.3;//阴影透明度，默认0
     infoWindow.layer.shadowRadius = 4;//阴影半径，默认3
     infoWindow.cellDelegate = self;
+    // containedAnnotationsには自分が含まれないので自分をaddObject
     NSMutableArray *pinList = [[NSMutableArray alloc]initWithArray:pin.containedAnnotations];
     [pinList addObject:pin];
     infoWindow.packageList = [[NSMutableArray alloc]initWithArray:pinList];
     [self.view addSubview:infoWindow];
 }
 
--(void) showHistoryWindow:(MDPin *)pin{
-    CGSize calloutSize = CGSizeMake(self.view.frame.size.width - 30, 200);
-    collectionInfoWindow = [[MDPinCollectionView alloc] initWithFrame:CGRectMake(15,81,calloutSize.width, calloutSize.height)];
-    collectionInfoWindow.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
-    collectionInfoWindow.layer.shadowOffset = CGSizeMake(1,1);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    collectionInfoWindow.layer.shadowOpacity = 0.3;//阴影透明度，默认0
-    collectionInfoWindow.layer.shadowRadius = 4;//阴影半径，默认3
-    collectionInfoWindow.cellDelegate = self;
-    NSMutableArray *pinList = [[NSMutableArray alloc]initWithArray:pin.containedAnnotations];
-    [pinList addObject:pin];
-    collectionInfoWindow.packageList = [[NSMutableArray alloc]initWithArray:pinList];
-    [self.view addSubview:collectionInfoWindow];
-}
+// 終了済みも1クラスで対応
+//-(void) showHistoryWindow:(MDPin *)pin{
+//    CGSize calloutSize = CGSizeMake(self.view.frame.size.width - 30, 200);
+//    collectionInfoWindow = [[MDPinCollectionView alloc] initWithFrame:CGRectMake(15,81,calloutSize.width, calloutSize.height)];
+//    collectionInfoWindow.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+//    collectionInfoWindow.layer.shadowOffset = CGSizeMake(1,1);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+//    collectionInfoWindow.layer.shadowOpacity = 0.3;//阴影透明度，默认0
+//    collectionInfoWindow.layer.shadowRadius = 4;//阴影半径，默认3
+//    collectionInfoWindow.cellDelegate = self;
+//    NSMutableArray *pinList = [[NSMutableArray alloc]initWithArray:pin.containedAnnotations];
+//    [pinList addObject:pin];
+//    collectionInfoWindow.packageList = [[NSMutableArray alloc]initWithArray:pinList];
+//    [self.view addSubview:collectionInfoWindow];
+//}
 
 -(void)moveToUserLocation {
     [self.mapView setRegion:[MDUserLocationService getInstance].currentUserRegion animated:YES];
@@ -858,6 +877,56 @@
     MDRequestDetailViewController *rdvc = [[MDRequestDetailViewController alloc]init];
     rdvc.package = pin.package;
     [self.navigationController pushViewController:rdvc animated:YES];
+}
+
+// 現在地と coordinate で示される座標間の経路を描画する
+-(void)drawRouteWithCoordinateFrom:(CLLocationCoordinate2D)from To:(CLLocationCoordinate2D)to
+{
+    __weak typeof(self)   weakSelf = self;
+    
+    MKPlacemark * placemark_from, * placemark_to;
+    placemark_from = [[MKPlacemark alloc]
+                 initWithCoordinate:from addressDictionary:nil];
+    placemark_to = [[MKPlacemark alloc]
+                 initWithCoordinate:to addressDictionary:nil];
+    
+    MKMapItem *   mapItem_from, * mapItem_to;
+    mapItem_from = [[MKMapItem alloc] initWithPlacemark:placemark_from];
+    mapItem_to = [[MKMapItem alloc] initWithPlacemark:placemark_to];
+    
+    MKDirectionsHandler   completionHandler = ^(MKDirectionsResponse * response, NSError * error) {
+        if (!error) {
+            if (response.routes.count > 0) { // 有効な経路が見つかった
+                MKRoute * route = response.routes[0];
+                [weakSelf.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+            }
+        }
+    };
+    
+    MKDirectionsRequest * request = [MKDirectionsRequest new];
+    request.transportType = MKDirectionsTransportTypeAutomobile; // 徒歩は Walking
+    request.source        = mapItem_from;
+    request.destination   = mapItem_to;
+    
+    MKDirections *        directions;
+    directions = [[MKDirections alloc] initWithRequest:request];
+    [directions calculateDirectionsWithCompletionHandler:completionHandler];
+}
+
+// XXX: 地図上に描画する経路の色などを指定（これを実装しないと何も表示されない）
+#pragma mark - MKMapViewDelegate for route overlay
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id <MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+//        [self.overlays addObject:overlay];
+        MKPolyline * polyline = overlay;
+        MKPolylineRenderer * renderer;
+        renderer = [[MKPolylineRenderer alloc] initWithPolyline:polyline];
+        renderer.lineWidth   = 3.0f; // 描画する線の太さはココで指定
+        renderer.strokeColor = [UIColor blueColor]; // 経路の色指定はココ
+        return renderer;
+    }
+    return nil;
 }
 
 @end

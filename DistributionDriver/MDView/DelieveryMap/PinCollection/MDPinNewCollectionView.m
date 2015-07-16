@@ -32,7 +32,7 @@
         _collectionView.dataSource = self;
         [_collectionView setPagingEnabled:YES];
         [_collectionView setShowsHorizontalScrollIndicator:NO];
-        [_collectionView setBackgroundColor:[UIColor clearColor]];
+        [_collectionView setBackgroundColor:[UIColor whiteColor]];
         
         [self.collectionView setCollectionViewLayout:vFlowLayout animated:YES];
         
