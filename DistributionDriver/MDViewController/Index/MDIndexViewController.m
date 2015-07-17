@@ -89,6 +89,7 @@
 }
 
 -(void) initOpeningMovie {
+    if(self.avPlayer)return;
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"trux_bgvideo_portrait" ofType:@"mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
     self.avPlayer = [AVPlayer playerWithURL:fileURL];
@@ -113,6 +114,13 @@
     [p seekToTime:kCMTimeZero];
 }
 
+- (void) releaseOpeningMovie{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.avPlayer pause];
+    self.avPlayer = nil;
+}
+
+
 #pragma indexDelegate
 -(void)signTouched {
     MDPhoneViewController *phoneViewController = [[MDPhoneViewController alloc]init];
@@ -127,6 +135,7 @@
 }
 
 -(void)gotoDelivery{
+    [self releaseOpeningMovie];
     MDDeliveryViewController *deliveryViewController = [[MDDeliveryViewController alloc]init];
     UINavigationController *deliveryNavigationController = [[UINavigationController alloc]initWithRootViewController:deliveryViewController];
     [self presentViewController:deliveryNavigationController animated:YES completion:nil];
